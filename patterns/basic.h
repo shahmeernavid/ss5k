@@ -4,10 +4,10 @@
 #include "pattern.h"
 
 class BasicPattern: public Pattern{
-  
+
   public:
     BasicPattern(int p = 0);
-    virtual bool check(int r, int c, Grid& g);
+    bool check(int r, int c, Grid& g) const;
 };
 
 

@@ -3,23 +3,18 @@
 
 #include <vector>
 #include "squares/square.h"
-#include "patterns/pattern.h"
 #include "levels/level.h"
+#include "patterns/pattern.h"
 
 class Grid{
   std::vector<std::vector<Square*> > board;
-  std::vector<Pattern*> patterns;
   Level* level;
-  static Grid* instance;
-
-  Grid(int n, int m, Level* l);
-  int processSwap();
-  static void clean();
-  ~Grid();
 
   public:
-    static Grid* getInstance(int n, int m, Level* l);
-    int swap(int r, int c, int z);
+    Grid(int n, int m, Level* l);
+    ~Grid();
+    bool swap(int r, int c, int z);
+    std::vector<int> process();
     void remove(int r, int c);
     void removeRow(int r);
     void removeCol(int c);

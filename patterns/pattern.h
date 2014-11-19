@@ -13,7 +13,7 @@ class Pattern{
   public:
     Pattern(int p);
     virtual ~Pattern();
-    virtual bool check(int r, int c, Grid& g) = 0;
+    virtual bool check(int r, int c, Grid& g) const = 0;
     int getPriority();
 };
 

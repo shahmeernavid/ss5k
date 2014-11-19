@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Square::Square(int r, int c, const std::string& type, const std::string& color, Grid* g)
-  :r(r), c(c), grid(g), type(type), color(color){}
+Square::Square(int r, int c, const std::string& color, Grid* g)
+  :r(r), c(c), grid(g), color(color){}
 
 Square::~Square(){}
 
@@ -30,8 +30,6 @@ int Square::remove(string c){
 }
 
 ostream& operator<<(ostream& out, Square& square){
-  out << square.type;
-  out << "-";
   out << square.color;
   return out;
 }

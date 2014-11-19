@@ -8,13 +8,21 @@
 
 using namespace std;
 
-int main(){
+int main(int cargs, char*[] args){
+  // create a new level
   Level* l = new Level0();
+  l->init(10, 10);
+  l->init(stream);
+
+  // give the level the basic pattern
   Pattern* p = new BasicPattern(0);
   l->registerPattern(p);
-  Grid* g = Grid::getInstance(10, 10, l);
 
-  cout << *g;
+  l->print(cout);
+
+  l->swap(0, 0, 1);
+
+  l->print(cout);
 
   delete l;
   delete p;
