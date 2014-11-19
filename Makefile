@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -Wall -MMD
 EXEC = a5
-OBJECTS = main.o grid.o square.o level.o
+OBJECTS = grid.o squares/square.o levels/level.o levels/level0.o patterns/pattern.o patterns/basic.o main.o
 DEPENDS = ${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}
