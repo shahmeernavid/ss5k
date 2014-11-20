@@ -5,7 +5,10 @@
 #include <string>
 #include <map>
 #include <ostream>
-#include "../patterns/pattern.h"
+#include "patterns/pattern.h"
+
+class Grid;
+class Square;
 
 class Game{
   std::vector<std::string> colors;
@@ -27,13 +30,15 @@ class Game{
 
 
   public:
-    static Grid& getInstance();
+    static Game* getInstance();
+    static void clean();
     ~Game();
     std::vector<Pattern*>& getPatterns();
-    void registerPattern(Pattern* p);
-    std::map<std::string, std::string> generateSquare();
+    Square* generateSquare(int r, int c);
+    int calculateScore(int removeCount);
 
     // gameplay interactions
+    void init(std::istream& in);
     void init(int n, int m);
     int swap(int r, int c, int z);
     int incrementLevel();

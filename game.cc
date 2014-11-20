@@ -1,11 +1,25 @@
 #include <cmath>
 #include "game.h"
-#include "../grid.h"
+#include "grid.h"
+#include "squares/basic.h"
 using namespace std;
 
-Game::Game():grid(NULL),level(0){
-  // register patterns here
+Game* Game::instance = NULL;
 
+void Game::clean(){
+  delete instance;
+}
+
+Game* Game::getInstance(){
+  if(instance){
+    instance = new Game();
+    atexit(clean);
+  }
+  return instance;
+}
+
+Game::Game():grid(),level(0){
+  // register patterns here
 }
 
 Game::~Game(){
@@ -20,7 +34,18 @@ void Game::init(istream& in){
 }
 
 void Game::init(int n, int m){
-  grid = new Grid(n, m, this);
+  cerr << "this" << endl;
+  Grid* holder = new Grid(n, m, this);
+  // grid = holder;
+}
+
+// edit to intoduce randomness
+Square* Game::generateSquare(int r, int c){
+  cerr << "creating square";
+  // Grid* t = grid;
+  cerr << grid;
+  // return new BasicSquare(r, c, "red", grid);
+  return NULL;
 }
 
 // ensures patterns are in correct order
@@ -39,13 +64,21 @@ vector<Pattern*>& Game::getPatterns(){
   return patterns;
 }
 
+int Game::calculateScore(int removeCount){
+  if(removeCount > 2){
+    return ((removeCount-2 > 3) ? 4 : removeCount-2)*removeCount;  
+  }
+  return 0;
+  
+}
+
 
 // gameplay interactions
 
-int incrementLevel(){
+int Game::incrementLevel(){
   return level++;
 }
-int decrementLevel(){
+int Game::decrementLevel(){
   if(level > 0){
     return level--;  
   }

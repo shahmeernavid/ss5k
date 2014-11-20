@@ -3,25 +3,23 @@
 #include <cstdlib>
 #include <vector>
 #include "grid.h"
-#include "levels/level.h"
+#include "game.h"
+#include "squares/square.h"
 //#include "settings.h"
 
 using namespace std;
 
-Grid::Grid(istream& in, Level* l):level(l){
-  while(in >> current){
-
-  }
+// initialize a grid using a predefined sequence
+Grid::Grid(istream& in, Game* g):game(g){
+  
 }
 
-Grid::Grid(int n, int m, Level* l):level(l){
+Grid::Grid(int n, int m, Game* g):game(g){
   board = vector<vector<Square*> >(n, vector<Square*>(m, NULL));
   for(int r = 0; r < n; r++){
     for(int c = 0; c < m; c++){
       // generate random type and color
-      map<string, string> squareInfo = level->generateSquare();
-      // Square::create(squareInfo[""], squareInfo["color"]);
-      board[r][c] = new Square(r, c, squareInfo["color"], this);
+      board[r][c] = game->generateSquare(r, c);
     }
   }
 }
@@ -35,10 +33,11 @@ Grid::~Grid(){
 }
 
 
-void Grid::remove(int r, int c){
+int Grid::remove(int r, int c){
   Square* target = getSquare(r, c);
   board[r][c] = NULL;
   delete target;
+  return 1;
 }
 
 Square* Grid::getSquare(int r, int c){
@@ -48,9 +47,10 @@ Square* Grid::getSquare(int r, int c){
   return board[r][c];
 }
 
+// of the square doesnt match the color, return NULL
 Square* Grid::getSquare(int r, int c, string color){
   if(r < 0 || c < 0 || r >= board.size() || c >= board[r].size() || 
-      board[r][c] == NULL || board[r][c]->getColor() != color){
+      !board[r][c] || board[r][c]->getColor() != color){
 
     return NULL;
   }
@@ -63,7 +63,7 @@ Square* Grid::getSquare(int r, int c, string color){
 vector<int> Grid::process(){
   vector<int> scores;
   int oldLength = -1;
-  vector<Pattern*> patterns = level->getPatterns();
+  vector<Pattern*> patterns = game->getPatterns();
   // keep looking until we've found all combo matches
   while(scores.size() != oldLength){
     // # of sqares removed for this passthrough of the grid
@@ -76,12 +76,16 @@ vector<int> Grid::process(){
         if(square){
           // go through each pattern
           for(int p = 0; p < patterns.size(); p++){
+            vector<Square*> results = patterns[p]->check(r, c, *this);
             // if the current square creates a pattern
-            if(patterns[p]->check(r, c, *this)){
+            // if at least one square was removed
+            if(results.size()){
+              int removeCount = 0;
+              for(int i = 0; i< results.size(); i++){
+                removeCount += results[i]->remove();
+              }
               // add to the loop count
-              int removeCount = square->remove();
-              cerr << removeCount << endl;
-              loopCount += ((removeCount-2 > 3) ? 4 : removeCount-2)*removeCount;
+              loopCount += game->calculateScore(removeCount);
               // dont check for any more patterns
               break;
             }

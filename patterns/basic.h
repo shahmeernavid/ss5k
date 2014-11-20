@@ -7,7 +7,7 @@ class BasicPattern: public Pattern{
 
   public:
     BasicPattern(int p = 0);
-    std::vector<Square*> check(int r, int c, Grid& g) const;
+    std::vector<Square*> check(int r, int c, Grid& g);
 };
 
 

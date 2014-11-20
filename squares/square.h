@@ -18,6 +18,8 @@ class Square{
   std::vector<Square*> neighbours;
   // cell's color
   std::string color;
+  // marker for if this square has been removed
+  bool removed;
 
   public:
     // constructors
@@ -28,7 +30,7 @@ class Square{
     std::string getColor();
     virtual int remove();
     virtual int remove(std::string c);
-    static Square* create(int r, int c, std::string color, std::string type, Grid* g);
+    // static Square* create(int r, int c, std::string color, std::string type, Grid* g);
     friend std::ostream& operator<<(std::ostream& out, Square& square);
 
 };

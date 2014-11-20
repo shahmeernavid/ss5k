@@ -15,7 +15,7 @@ class Pattern{
     Pattern(int p);
     virtual ~Pattern();
     // returns squares to be removed
-    virtual std::vector<Square*> check(int r, int c, Grid& g) const = 0;
+    virtual std::vector<Square*> check(int r, int c, Grid& g) = 0;
     int getPriority();
 };
 
