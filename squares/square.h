@@ -21,13 +21,14 @@ class Square{
 
   public:
     // constructors
-    Square(int r, int c, const std::string& color, Grid* g);
+    Square(int r, int c, std::string color, Grid* g);
     //destructor
     virtual ~Square();
     // getter for color
     std::string getColor();
     virtual int remove();
     virtual int remove(std::string c);
+    static Square* create(int r, int c, std::string color, std::string type, Grid* g);
     friend std::ostream& operator<<(std::ostream& out, Square& square);
 
 };

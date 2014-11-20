@@ -12,6 +12,7 @@ class Level{
   std::vector<std::string> squareTypes;
   std::vector<Pattern*> patterns;
   Grid* grid;
+  vector<vector<int>> probabilities;
 
 
   public:

@@ -1,0 +1,16 @@
+Question: How could you design your system to make sure that only these kinds of squares can be generated?
+
+Since the generation of squares is a property of the level, the Level class should generate the squares to populate the grid. By using the factory method, we allow the Level to do the generation of the square itself: it examines the constraints for the current level (e.g. perhaps more green/red blocks are to be spawned), and returns the type of square to be added. We can then send this information to Grid, which can create and register the cell in the appropriate location.
+
+
+Question: How could you design your system to allow quick addition of new squares with different abilities without major changes to the existing code?
+
+By implementing specific types of squares as concrete subclasses of an abstract superclass, we can define the game logic to operate on Squares in general. Thus, if we wish to add a new type of square, it is simply a matter of writing a new subclass and implementing the remove() method as desired, as well as ensuring that the Level class has a chance to create the new block as appropriate.
+                      
+Question: How could you design your program to accommodate the possibility of introducing additional levels into the system, with minimum recompilation? 
+
+We are using a concrete class Level to hold the various levels. By adding private fields, such as the relative drop rate for the different colours, and whether or not to spawn special blocks, we can create a huge variety of levels simply by specifying these values in a call to the Level constructor. We also considered using an abstract parent class Level, with each specific level inheriting from the abstract class. The advantage this approach is further flexibility with new/different level constraints, but it also means writing a new subclass for each individual level, and adding it to some sort of global list, so that the program is aware of the maximum level. We decided that using the concrete class approach provides sufficient level variety, while simplifying the code overall.
+
+Question: How could you design your system to accommodate the addition of new command names, or changes to existing command names, with minimal changes to source and minimal recompilation? (We acknowledge, of course, that adding a new command probably means adding a new feature, which can mean adding a non-trivial amount of code.) How difficult would it be to adapt your system to support a command whereby a user could rename existing commands (e.g. something like rename swap s)?
+
+We need to talk about how we’re handling this

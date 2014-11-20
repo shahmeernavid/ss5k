@@ -4,7 +4,27 @@
 
 using namespace std;
 
-Square::Square(int r, int c, const std::string& color, Grid* g)
+
+Square* Square::create(int r, int c, string color, string type, Grid* g){
+  if(type == "lateral"){
+    return LateralSquare(r, c, color, g);
+  }
+  else if(type == "upright"){
+    return UprightSquare(r, c, color, g);
+  }
+  else if(type == "unstable"){
+    return UnstableSquare(r, c, color, g);
+  }
+  else if(type == "psychedelic"){
+    return PsychedelicSquare(r, c, color, g);
+  }
+  else if(type == "basic"){
+    return Square(r, c, color, g);
+  }
+  return NULL;
+}
+
+Square::Square(int r, int c, string color, Grid* g)
   :r(r), c(c), grid(g), color(color){}
 
 Square::~Square(){}
