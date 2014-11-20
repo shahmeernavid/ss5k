@@ -10,7 +10,7 @@ using namespace std;
 
 Grid::Grid(istream& in, Level* l):level(l){
   while(in >> current){
-    
+
   }
 }
 
@@ -79,7 +79,6 @@ vector<int> Grid::process(){
             // if the current square creates a pattern
             if(patterns[p]->check(r, c, *this)){
               // add to the loop count
-              cerr << "removing " << r << c << endl;
               int removeCount = square->remove();
               cerr << removeCount << endl;
               loopCount += ((removeCount-2 > 3) ? 4 : removeCount-2)*removeCount;

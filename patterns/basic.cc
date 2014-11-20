@@ -7,24 +7,21 @@ using namespace std;
 
 BasicPattern::BasicPattern(int p):Pattern(p){}
 
-bool BasicPattern::check(int r, int c, Grid& g) const{
-  Square* start = g.getSquare(r, c);
+vector<Square*> check(int r, int c, Grid& g) const{
+  vector<Square*> output(1, g.getSquare(r, c));
   if(!start){
     return false;
   }
   string color = start->getColor();
-  int count = 1;
-  if(g.getSquare(r+1, c, color)){
-    count += (g.getSquare(r+2, c, color)) ? 2 : 1;
+  // down
+  if(g.getSquare(r+1, c, color) && g.getSquare(r+2, c, color)){
+    output.push(g.getSquare(r+1, c, color));
+    output.push(g.getSquare(r+2, c, color));
   }
-  if(g.getSquare(r-1, c, color)){
-    count += (g.getSquare(r-2, c, color)) ? 2 : 1;
+  // right
+  else if(g.getSquare(r, c+1, color) && g.getSquare(r, c+2, color)){
+    output.push(g.getSquare(r, c+1, color));
+    output.push(g.getSquare(r, c+2, color));
   }
-  if(g.getSquare(r, c+1, color)){
-    count += (g.getSquare(r, c+2, color)) ? 2 : 1;
-  }
-  if(g.getSquare(r, c-1, color)){
-    count += (g.getSquare(r, c-2, color)) ? 2 : 1;
-  }
-  return count >= 3;
+  return output;
 }

@@ -1,6 +1,7 @@
 #ifndef __PATTERN_H__
 #define __PATTERN_H__
 
+#include <vector>
 
 // forward declarations
 class Grid;
@@ -13,7 +14,8 @@ class Pattern{
   public:
     Pattern(int p);
     virtual ~Pattern();
-    virtual bool check(int r, int c, Grid& g) const = 0;
+    // returns squares to be removed
+    virtual std::vector<Square*> check(int r, int c, Grid& g) const = 0;
     int getPriority();
 };
 

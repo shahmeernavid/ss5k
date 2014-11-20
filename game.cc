@@ -1,24 +1,30 @@
 #include <cmath>
-#include "level.h"
+#include "game.h"
 #include "../grid.h"
 using namespace std;
 
-Level::Level():grid(NULL){}
+Game::Game():grid(NULL),level(0){
+  // register patterns here
 
-Level::~Level(){
-  delete grid;
 }
 
-void Level::init(istream& in){
+Game::~Game(){
+  delete grid;
+  for(int i =0; i < patterns.size(); i++){
+    delete patterns[i];
+  }
+}
+
+void Game::init(istream& in){
   grid = new Grid(in, this);
 }
 
-void Level::init(int n, int m){
+void Game::init(int n, int m){
   grid = new Grid(n, m, this);
 }
 
 // ensures patterns are in correct order
-void Level::registerPattern(Pattern* p){
+void Game::registerPattern(Pattern* p){
   for(int i = 0; i < patterns.size(); i++){
     if(patterns[i]->getPriority() > p->getPriority()){
       patterns.insert(patterns.begin()+i, p);
@@ -29,11 +35,24 @@ void Level::registerPattern(Pattern* p){
   patterns.push_back(p);
 }
 
-vector<Pattern*>& Level::getPatterns(){
+vector<Pattern*>& Game::getPatterns(){
   return patterns;
 }
 
-int Level::swap(int r, int c, int z){
+
+// gameplay interactions
+
+int incrementLevel(){
+  return level++;
+}
+int decrementLevel(){
+  if(level > 0){
+    return level--;  
+  }
+  return level;
+}
+
+int Game::swap(int r, int c, int z){
   bool result = grid->swap(r, c, z);
   if(result){
     cerr << "process" << endl;
@@ -47,6 +66,6 @@ int Level::swap(int r, int c, int z){
   return 0;
 }
 
-void Level::print(ostream& out){
+void Game::print(ostream& out){
   out << *grid;
 }
