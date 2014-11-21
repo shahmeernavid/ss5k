@@ -2,6 +2,7 @@
 #include "game.h"
 #include "grid.h"
 #include "squares/basic.h"
+#include "patterns/basic.h"
 using namespace std;
 
 Game* Game::instance = NULL;
@@ -11,19 +12,20 @@ void Game::clean(){
 }
 
 Game* Game::getInstance(){
-  if(instance){
+  if(!instance){
     instance = new Game();
     atexit(clean);
   }
   return instance;
 }
 
-Game::Game():grid(),level(0){
+Game::Game():grid(NULL),level(0){
   // register patterns here
+  patterns.push_back(new BasicPattern(0));
 }
 
 Game::~Game(){
-  delete grid;
+  //delete grid;
   for(int i =0; i < patterns.size(); i++){
     delete patterns[i];
   }
@@ -34,18 +36,12 @@ void Game::init(istream& in){
 }
 
 void Game::init(int n, int m){
-  cerr << "this" << endl;
-  Grid* holder = new Grid(n, m, this);
-  // grid = holder;
+  grid = new Grid(n, m, this);
 }
 
 // edit to intoduce randomness
 Square* Game::generateSquare(int r, int c){
-  cerr << "creating square";
-  // Grid* t = grid;
-  cerr << grid;
-  // return new BasicSquare(r, c, "red", grid);
-  return NULL;
+  return new BasicSquare(r, c, "red");
 }
 
 // ensures patterns are in correct order

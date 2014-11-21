@@ -3,11 +3,10 @@
 
 #include "square.h"
 
-class BasicSquare{
+class BasicSquare: public Square{
 
   public:
-    BasicSquare(int r, int c, std::string color, Grid* g);
-    ~BasicSquare();
+    BasicSquare(int r, int c, std::string color);
 
 };
 

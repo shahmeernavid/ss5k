@@ -24,13 +24,14 @@ using namespace std;
 //   return NULL;
 // }
 
-Square::Square(int r, int c, string color, Grid* g)
-  :r(r), c(c), grid(g), color(color), removed(false){
-
-    cerr << "created";
-  }
+Square::Square(int r, int c, string color)
+  :r(r), c(c), color(color), removed(false){}
 
 Square::~Square(){}
+
+void Square::setGrid(Grid* g){
+  grid = g;
+}
 
 int Square::remove(){
   if(!removed){

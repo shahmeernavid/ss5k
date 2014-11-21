@@ -23,11 +23,12 @@ class Square{
 
   public:
     // constructors
-    Square(int r, int c, std::string color, Grid* g);
+    Square(int r, int c, std::string color);
     //destructor
     virtual ~Square();
     // getter for color
     std::string getColor();
+    void setGrid(Grid* g);
     virtual int remove();
     virtual int remove(std::string c);
     // static Square* create(int r, int c, std::string color, std::string type, Grid* g);

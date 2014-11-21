@@ -1,5 +1,5 @@
-#ifndef __LEVEL_H_
-#define __LEVEL_H_
+#ifndef __GAME_H_
+#define __GAME_H_
 
 #include <vector>
 #include <string>
@@ -25,13 +25,13 @@ class Game{
   void registerPattern(Pattern* p);
 
   // singleton pattern stuff
-  Game();
   static Game* instance;
 
 
   public:
     static Game* getInstance();
     static void clean();
+    Game();
     ~Game();
     std::vector<Pattern*>& getPatterns();
     Square* generateSquare(int r, int c);

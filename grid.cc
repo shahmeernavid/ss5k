@@ -20,6 +20,7 @@ Grid::Grid(int n, int m, Game* g):game(g){
     for(int c = 0; c < m; c++){
       // generate random type and color
       board[r][c] = game->generateSquare(r, c);
+      board[r][c]->setGrid(this);
     }
   }
 }
