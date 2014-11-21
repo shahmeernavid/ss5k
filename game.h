@@ -35,7 +35,9 @@ class Game{
     ~Game();
     std::vector<Pattern*>& getPatterns();
     Square* generateSquare(int r, int c);
+    Square* createSquare(int r, int c, std::string color, std::string type);
     int calculateScore(int removeCount);
+
 
     // gameplay interactions
     void init(std::istream& in);

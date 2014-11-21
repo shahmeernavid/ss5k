@@ -10,6 +10,9 @@
 class Grid{
   std::vector<std::vector<Square*> > board;
   Game* game;
+  int numCols;
+
+  void collapse();
 
   public:
     Grid(int n, int m, Game* g);

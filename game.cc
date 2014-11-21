@@ -25,7 +25,7 @@ Game::Game():grid(NULL),level(0){
 }
 
 Game::~Game(){
-  //delete grid;
+  delete grid;
   for(int i =0; i < patterns.size(); i++){
     delete patterns[i];
   }
@@ -39,10 +39,19 @@ void Game::init(int n, int m){
   grid = new Grid(n, m, this);
 }
 
+// string getColor(int r, int c){
+  
+// }
+
 // edit to intoduce randomness
 Square* Game::generateSquare(int r, int c){
   return new BasicSquare(r, c, "red");
 }
+
+Square* createSquare(int r, int c, string color, string type){
+  
+}
+
 
 // ensures patterns are in correct order
 void Game::registerPattern(Pattern* p){

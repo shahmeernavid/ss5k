@@ -5,12 +5,43 @@
 
 using namespace std;
 
-int main(int argc, char* args[]){
-  Game* g = Game::getInstance();
-  g->init(10, 10);
-  g->print(cout);
-  g->swap(0, 0, 1);
-  g->print(cout);
+Game* game = Game::getInstance();
 
-  // delete g;
+void play(int x, int y, int z){
+  game->swap(x, y, z);
+  game->print(cout);
+}
+
+
+int main(int argc, char* args[]){
+  game->init(10, 10);
+  game->print(cout);
+  game->swap(0, 0, 1);
+  game->print(cout);
+
+  // string cmd;
+  
+  // while(cin >> cmd){
+  //   if(cmd == "swap"){
+  //     int x, y, z;
+  //     cin >> x >> y >> z;
+  //   }
+  //   else if(cmd == "hint"){
+  //     // game->hint();
+  //   }
+  //   else if(cmd == "scramble"){
+  //     // game->shuffle();
+  //   }
+  //   else if(cmd == "levelup"){
+  //     game->incrementLevel();
+  //   }
+  //   else if(cmd == "leveldown"){
+  //     game->decrementLevel();
+  //   }
+  //   else if(cmd == "restart"){
+  //     // game->restart();
+  //   }
+  // }
+
+
 }
