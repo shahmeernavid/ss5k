@@ -1,4 +1,5 @@
 #include <cmath>
+#include <cstdlib>
 #include "game.h"
 #include "grid.h"
 #include "squares/basic.h"
