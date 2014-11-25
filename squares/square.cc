@@ -30,6 +30,13 @@ Square::Square(int r, int c, string color, string t)
 
 Square::~Square(){}
 
+int Square::getRow(){
+  return r;
+}
+int Square::getCol(){
+  return c;
+}
+
 void Square::setGrid(Grid* g){
   grid = g;
 }

@@ -27,6 +27,8 @@ class Square{
     virtual ~Square();
     // getter for color
     std::string getColor();
+    int getRow();
+    int getCol();
     void setGrid(Grid* g);
     virtual int remove();
     virtual int remove(std::string c);

@@ -125,6 +125,7 @@ vector<int> Grid::process(){
   while(scores.size() != oldLength){
     // # of sqares removed for this passthrough of the grid
     int loopCount = 0;
+    vector<Square*> toAdd = vector<Square*>();
     // go through rows
     for(int r = 0; r < board.size(); r++){
       // go through columns
@@ -135,6 +136,9 @@ vector<int> Grid::process(){
           for(int p = 0; p < patterns.size(); p++){
             pair<vector<Square*>, pair<string, pair<int, int> > > results = patterns[p]->check(r, c, *this);
             vector<Square*> pendingRemove = results.first;
+            int nr = results.second.second.first;
+            int nc = results.second.second.second;
+            string color = results.second.first;
             // if the current square creates a pattern
             // if at least one square was removed
             if(pendingRemove.size()){
@@ -144,12 +148,19 @@ vector<int> Grid::process(){
               }
               // add to the loop count
               loopCount += settings->calculateScore(removeCount);
+              toAdd.push_back(factory->createSquare(nr, nc, color, results.second.first));
+              toAdd.back()->setGrid(this);
               // dont check for any more patterns
               break;
             }
+            
           }  
         }
       }
+    }
+
+    for(int i = 0; i < toAdd.size(); i++){
+      board[toAdd[i]->getRow()][toAdd[i]->getCol()] = toAdd[i];
     }
     oldLength = scores.size();
     if(loopCount > 0){
@@ -159,6 +170,7 @@ vector<int> Grid::process(){
     // called once more than we need it
     // can result in infinite chains
     collapse();
+
   }
   
   return scores;
@@ -233,6 +245,7 @@ ostream& operator<<(ostream& out, Grid& grid){
     for(int c = 0; c < grid.board[r].size(); c++){
       Square* s = grid.getSquare(r, c); 
       if(s){
+        out << "_";
         out << *s;
       }
       else{

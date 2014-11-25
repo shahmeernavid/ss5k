@@ -18,8 +18,9 @@ int main(int argc, char* args[]){
   game->print(cout);
 
 
-  //game->swap(0, 0, 1);
-  //game->print(cout);
+  // game->swap(0, 0, 1);
+  // cerr << "done" << endl;
+  game->print(cout);
 
 
   // string cmd;

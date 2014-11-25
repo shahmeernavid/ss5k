@@ -98,7 +98,6 @@ double Settings::getColorProbability(string color, int l) const{
 }
 
 vector<Pattern*> Settings::getPatterns(int l) const{
-  cerr << "key: " << l << endl;
   return levels.at(l)->getPatterns();
 }
 
