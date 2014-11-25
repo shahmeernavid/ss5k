@@ -1,4 +1,4 @@
-#include "display.h"
+#include "game_display.h"
 
 void GameDisplay::updateTextDisplay() {
 

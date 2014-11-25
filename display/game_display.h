@@ -1,5 +1,5 @@
-#ifndef __DISPLAY_H__
-#define __DISPLAY_H__
+#ifndef __GAME_DISPLAY_H__
+#define __GAME_DISPLAY_H__
 #include <iostream>
 #include <string>
 #include "window.h"
