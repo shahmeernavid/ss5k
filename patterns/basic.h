@@ -7,7 +7,9 @@ class BasicPattern: public Pattern{
 
   public:
     BasicPattern(int p = 0);
-    std::vector<Square*> check(int r, int c, Grid& g);
+    std::pair<std::vector<Square*>, std::pair<std::string, std::pair<int, int> > > check(int r, int c, Grid& g);
+
+    Pattern* copy();
 };
 
 

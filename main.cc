@@ -18,7 +18,7 @@ int main(int argc, char* args[]){
   game->print(cout);
 
 
-  game->swap(0, 0, 1);
+  //game->swap(0, 0, 1);
   //game->print(cout);
 
 

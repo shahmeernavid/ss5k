@@ -1,8 +1,9 @@
 #include "levelsettings.h"
+#include <iostream>
 
 using namespace std;
 
-LevelSettings::LevelSettings(){
+LevelSettings::LevelSettings():patterns(vector<Pattern*>(0)){
 }
 
 LevelSettings::~LevelSettings(){
@@ -55,6 +56,10 @@ void LevelSettings::registerPattern(Pattern* p){
   }
   // if we dont insert, then just push
   patterns.push_back(p);  
+}
+
+void LevelSettings::setLevelUpScore(int l){
+  levelUpScore = l;
 }
 
 int LevelSettings::getLevelUpScore() const{

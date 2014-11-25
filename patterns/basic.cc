@@ -7,11 +7,11 @@ using namespace std;
 
 BasicPattern::BasicPattern(int p):Pattern(p){}
 
-vector<Square*> BasicPattern::check(int r, int c, Grid& g) {
+pair<vector<Square*>, pair<string, pair<int, int> > > BasicPattern::check(int r, int c, Grid& g) {
   Square* start = g.getSquare(r, c);
   vector<Square*> output;
   if(!start){
-    return output;
+    return make_pair(output, make_pair("basic", make_pair(r, c)));
   }
 
   output.push_back(start);
@@ -26,5 +26,10 @@ vector<Square*> BasicPattern::check(int r, int c, Grid& g) {
     output.push_back(g.getSquare(r, c+1, color));
     output.push_back(g.getSquare(r, c+2, color));
   }
-  return output;
+  return make_pair(output, make_pair("basic", make_pair(r, c)));
+}
+
+Pattern* BasicPattern::copy(){
+  BasicPattern* copy = new BasicPattern(priority);
+  return copy;
 }

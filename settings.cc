@@ -1,6 +1,7 @@
 #include "settings.h"
 #include "patterns/basic.h"
 #include <iostream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -21,6 +22,8 @@ void Settings::clean(){
 Settings::Settings(){
   // configure everything here
   registerLevel(new LevelSettings(), 0);
+  registerLevel(new LevelSettings(), 1);
+  registerLevel(new LevelSettings(), 2);
   
   registerPattern(new BasicPattern(0), -1);
   addType("basic", "_", -1, -1);
@@ -37,7 +40,8 @@ Settings::~Settings(){
 void Settings::registerPattern(Pattern* p, int level){
   if(level == -1){
     for(int i = 0; i < levels.size(); i++){
-      levels[i]->registerPattern(p);
+      Pattern* copy = p->copy();
+      levels[i]->registerPattern(copy);
     }
   }
   else if(level > -1){

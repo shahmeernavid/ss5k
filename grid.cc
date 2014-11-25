@@ -2,6 +2,7 @@
 #include <ostream>
 #include <cstdlib>
 #include <vector>
+#include <utility>
 #include "grid.h"
 #include "squares/square.h"
 
@@ -132,13 +133,14 @@ vector<int> Grid::process(){
         if(square){
           // go through each pattern
           for(int p = 0; p < patterns.size(); p++){
-            vector<Square*> results = patterns[p]->check(r, c, *this);
+            pair<vector<Square*>, pair<string, pair<int, int> > > results = patterns[p]->check(r, c, *this);
+            vector<Square*> pendingRemove = results.first;
             // if the current square creates a pattern
             // if at least one square was removed
-            if(results.size()){
+            if(pendingRemove.size()){
               int removeCount = 0;
-              for(int i = 0; i< results.size(); i++){
-                removeCount += results[i]->remove();
+              for(int i = 0; i< pendingRemove.size(); i++){
+                removeCount += pendingRemove[i]->remove();
               }
               // add to the loop count
               loopCount += settings->calculateScore(removeCount);

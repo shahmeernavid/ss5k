@@ -40,7 +40,7 @@ class LevelSettings{
     std::vector<std::string> getTypes() const;
     std::vector<Pattern*> getPatterns() const;
     void registerPattern(Pattern* p);
-
+    void setLevelUpScore(int l);
     int getLevelUpScore() const;
    
 };
