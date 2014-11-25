@@ -16,8 +16,11 @@ void play(int x, int y, int z){
 int main(int argc, char* args[]){
   game->init(10, 10);
   game->print(cout);
+
+
   game->swap(0, 0, 1);
-  game->print(cout);
+  //game->print(cout);
+
 
   // string cmd;
   
@@ -43,5 +46,5 @@ int main(int argc, char* args[]){
   //   }
   // }
 
-
+  // delete game;
 }

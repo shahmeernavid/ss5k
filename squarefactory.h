@@ -7,24 +7,34 @@
 #include <ostream>
 #include "squares/square.h"
 #include "squares/basic.h"
+#include "settings.h"
 
 
 class SquareFactory{
-  // outermost index represents level
-  // contains a map of each color/type -> porbability of that type occuring
-  // so to get probability of red psychadelic square on level 3: probs[2]["psychadelic"]
-  // restriction: colors and types cant have same name, ie: dont be an idiot
-  std::vector<std::map<std::string, double> > probs;
+  static SquareFactory* instance;
 
-  string getColor(int r, int c, int level, Grid* g);
-  string getType(int r, int c, int level, Grid* g);
+  // const pointer - cant modify settings
+  Settings const * settings;
+
+  std::vector<std::string> colorSequence;
+  // for color sequence
+  int index;
+  int productionCount;
+
+  SquareFactory();
+  ~SquareFactory();
 
   public:
-    SquareFactory();
+    static SquareFactory* getInstance();
+    static void clean();
+
     // generate a square based on level/cords, etc
     Square* generateSquare(int r, int c, int level, Grid* g);
     // specifically create this square
     Square* createSquare(int r, int c, std::string color, std::string type);
+    void reset();
+
+    void setSequence(std::string seq);
     
 };
 

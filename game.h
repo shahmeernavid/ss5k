@@ -6,37 +6,26 @@
 #include <map>
 #include <ostream>
 #include "patterns/pattern.h"
+#include "settings.h"
 
 class Grid;
 class Square;
 
 class Game{
-  std::vector<std::string> colors;
-  std::vector<std::string> squareTypes;
-  std::vector<Pattern*> patterns;
   Grid* grid;
   int level;
-  // outermost index represents level
-  // contains a map of each color/type -> porbability of that type occuring
-  // so to get probability of red psychadelic square on level 3: probs[2]["psychadelic"]
-  // restriction: colors and types cant have same name, ie: dont be an idiot
-  std::vector<std::map<std::string, int> > probs;
-
-  void registerPattern(Pattern* p);
+  Settings const * settings;
 
   // singleton pattern stuff
   static Game* instance;
 
+  int setLevel(int l);
 
   public:
     static Game* getInstance();
     static void clean();
     Game();
     ~Game();
-    std::vector<Pattern*>& getPatterns();
-    Square* generateSquare(int r, int c);
-    Square* createSquare(int r, int c, std::string color, std::string type);
-    int calculateScore(int removeCount);
 
 
     // gameplay interactions
@@ -45,6 +34,9 @@ class Game{
     int swap(int r, int c, int z);
     int incrementLevel();
     int decrementLevel();
+    void hint();
+    void scramble();
+    void reset();
 
     // temporary (maybe)
     void print(std::ostream& out);

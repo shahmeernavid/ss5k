@@ -4,27 +4,32 @@
 #include <vector>
 #include <istream>
 #include "squares/square.h"
-#include "game.h"
-#include "patterns/pattern.h"
+#include "squarefactory.h"
+#include "settings.h"
 
 class Grid{
   std::vector<std::vector<Square*> > board;
-  Game* game;
   int numCols;
+  int level;
+  Settings const * settings;
+  SquareFactory* factory;
 
   void collapse();
 
   public:
-    Grid(int n, int m, Game* g);
-    Grid(std::istream& in, Game* g); 
+    Grid(int n, int m);
+    Grid(std::istream& in); 
     ~Grid();
     bool swap(int r, int c, int z);
     std::vector<int> process();
     int remove(int r, int c);
-    // int removeRow(int r);
-    // int removeCol(int c);
+    int removeRow(int r);
+    int removeCol(int c);
+    int removeColor(std::string color);
+    int removeRect(int tr, int tc, int w, int h);
     Square* getSquare(int r, int c);
     Square* getSquare(int r, int c, std::string color);
+    void levelChanged(int l);
     friend std::ostream& operator<<(std::ostream& out, Grid& grid);
 
 };

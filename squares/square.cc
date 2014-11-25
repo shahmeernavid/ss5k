@@ -1,6 +1,7 @@
 #include <ostream>
 #include "square.h"
 #include "../grid.h"
+#include "../settings.h"
 
 using namespace std;
 
@@ -24,8 +25,8 @@ using namespace std;
 //   return NULL;
 // }
 
-Square::Square(int r, int c, string color)
-  :r(r), c(c), color(color), removed(false){}
+Square::Square(int r, int c, string color, string t)
+  :r(r), c(c), color(color), type(t), removed(false){}
 
 Square::~Square(){}
 
@@ -53,6 +54,8 @@ string Square::getColor(){
 }
 
 ostream& operator<<(ostream& out, Square& square){
-  out << square.color;
+  Settings const * settings = Settings::getInstance();
+  out << settings->getTypeEncoding(square.type);
+  out << settings->getColorEncoding(square.color);
   return out;
 }

@@ -14,16 +14,15 @@ class Square{
   int r, c;
   // the grid this cell is on
   Grid* grid;
-  // neighbouring cells
-  std::vector<Square*> neighbours;
   // cell's color
   std::string color;
+  std::string type;
   // marker for if this square has been removed
   bool removed;
 
   public:
     // constructors
-    Square(int r, int c, std::string color);
+    Square(int r, int c, std::string color, std::string t);
     //destructor
     virtual ~Square();
     // getter for color
