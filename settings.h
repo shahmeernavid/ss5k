@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <ostream>
+#include <cstdlib>
 #include "levelsettings.h"
 
 class Pattern;
