@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <iostream>
+#include "../display/window.h"
 
 // forward decaration
 class Grid;
@@ -32,6 +33,7 @@ class Square{
     void setGrid(Grid* g);
     virtual int remove();
     virtual int remove(std::string c);
+    virtual void draw(Xwindow *window, int x, int y) = 0;
     // static Square* create(int r, int c, std::string color, std::string type, Grid* g);
     friend std::ostream& operator<<(std::ostream& out, Square& square);
 

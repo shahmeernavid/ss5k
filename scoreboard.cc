@@ -1,5 +1,11 @@
 #include "scoreboard.h"
 
+ScoreBoard::ScoreBoard() :
+    score(0),
+    levelScore(0),
+    movesMade(0)
+    { }
+
 void ScoreBoard::addPoints(int n) {
     
     score += n;

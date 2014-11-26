@@ -6,6 +6,7 @@ class ScoreBoard {
     int score, levelScore, movesMade;
 
   public:
+    ScoreBoard();
     void addPoints(int n);
     int getScore();
     void resetScore();
