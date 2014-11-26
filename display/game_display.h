@@ -20,6 +20,7 @@ class GameDisplay {
     GameDisplay(Grid *theGrid, ScoreBoard *sb);
     void update();
     void output(std::string t);
+    void setWindow(Xwindow *w);
 };
 
 #endif

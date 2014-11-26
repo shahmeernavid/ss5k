@@ -2,6 +2,8 @@
 #include "grid.h"
 #include "game.h"
 #include "squares/square.h"
+#include "scoreboard.h"
+#include "display/game_display.h"
 
 using namespace std;
 
@@ -21,6 +23,19 @@ int main(int argc, char* args[]){
   // game->swap(0, 0, 1);
   // cerr << "done" << endl;
   game->print(cout);
+
+  Grid *g = new Grid(10, 10);
+  ScoreBoard *sb = new ScoreBoard;
+  Xwindow *window = new Xwindow;
+
+  GameDisplay *d = new GameDisplay(g, sb);
+  d->setWindow(window);
+  d->update();
+
+    int n;
+  while (cin >> n) {
+
+  }
 
 
   // string cmd;

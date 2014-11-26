@@ -13,7 +13,8 @@ void GameDisplay::updateTextDisplay() {
 
 GameDisplay::GameDisplay(Grid *theGrid, ScoreBoard *sb) :
     theGrid(theGrid),
-    sb(sb)
+    sb(sb),
+    out(&cout) 
     { }
 
 void GameDisplay::updateWindowDisplay() {
@@ -29,4 +30,9 @@ void GameDisplay::update() {
     if (w) {
         updateWindowDisplay();
     }
+}
+
+void GameDisplay::setWindow(Xwindow *w) {
+    
+    this->w = w;
 }
