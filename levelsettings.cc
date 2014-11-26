@@ -3,7 +3,7 @@
 
 using namespace std;
 
-LevelSettings::LevelSettings():patterns(vector<Pattern*>(0)){
+LevelSettings::LevelSettings():levelUpScore(0),specialCount(-1),lockedCellsPercent(0),patterns(vector<Pattern*>(0)) {
 }
 
 LevelSettings::~LevelSettings(){
@@ -29,6 +29,12 @@ double LevelSettings::getColorProbability(string name) const{
 }
 double LevelSettings::getTypeProbability(string name) const{
   return typeProbabilities.at(name);
+}
+map<string, double> LevelSettings::getColorProbabilities() const{
+  return colorProbabilities;
+}
+map<string, double> LevelSettings::getTypeProbabilities() const{
+  return typeProbabilities;
 }
 string LevelSettings::getColorEncoding(string name) const{
   return colorEncodings.at(name);
@@ -64,4 +70,18 @@ void LevelSettings::setLevelUpScore(int l){
 
 int LevelSettings::getLevelUpScore() const{
   return levelUpScore;
+}
+
+void LevelSettings::setSpecialCount(int c){
+  specialCount = c;
+}
+int LevelSettings::getSpecialCount() const{
+  return specialCount;
+}
+
+void LevelSettings::setLockedCellsPercent(double p){
+  lockedCellsPercent = p;
+}
+double LevelSettings::getLockedCellsPercent() const{
+  return lockedCellsPercent;
 }

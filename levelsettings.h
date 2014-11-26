@@ -9,6 +9,8 @@
 
 class LevelSettings{
   int levelUpScore;
+  int specialCount;
+  double lockedCellsPercent;
   // type -> encoding
   std::map<std::string, std::string> typeEncodings;
   // color -> encoding
@@ -34,6 +36,8 @@ class LevelSettings{
     // accessor methods
     double getColorProbability(std::string) const;
     double getTypeProbability(std::string) const;
+    std::map<std::string, double> getColorProbabilities() const;
+    std::map<std::string, double> getTypeProbabilities() const;
     std::string getColorEncoding(std::string) const;
     std::string getTypeEncoding(std::string) const;
     std::vector<std::string> getColors() const;
@@ -42,6 +46,10 @@ class LevelSettings{
     void registerPattern(Pattern* p);
     void setLevelUpScore(int l);
     int getLevelUpScore() const;
+    void setSpecialCount(int c);
+    int getSpecialCount() const;
+    void setLockedCellsPercent(double p);
+    double getLockedCellsPercent() const;
    
 };
 

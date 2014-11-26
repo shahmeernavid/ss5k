@@ -44,12 +44,15 @@ class Settings{
 
     double getTypeProbability(std::string type, int l = 0) const;
     double getColorProbability(std::string color, int l = 0) const;
+    std::map<std::string, double> getTypeProbabilities(int l = 0) const;
+    std::map<std::string, double> getColorProbabilities(int l = 0) const;
 
     std::vector<Pattern*> getPatterns(int l = 0) const;
 
     int calculateScore(int removeCount) const;
 
     int levelUpScore(int l = 0) const;
+    int getSpecialCount(int l = 0) const;
 
     
 };

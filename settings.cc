@@ -22,12 +22,33 @@ void Settings::clean(){
 Settings::Settings(){
   // configure everything here
   registerLevel(new LevelSettings(), 0);
+  levels[0]->addColor("red", "1", .25);
+  levels[0]->addColor("blue", "3", .25);
+  levels[0]->addColor("green", "2", .25);
+  levels[0]->addColor("white", "0", .25);
+  levels[0]->setLevelUpScore(200);
+
   registerLevel(new LevelSettings(), 1);
+  levels[1]->addColor("red", "1", 1/3);
+  levels[1]->addColor("blue", "3", 1/6);
+  levels[1]->addColor("green", "2", 1/6);
+  levels[1]->addColor("white", "0", 1/3);
+  levels[1]->setLevelUpScore(300);
+  levels[1]->setSpecialCount(5);
+
   registerLevel(new LevelSettings(), 2);
+  levels[2]->addColor("red", "1", 1/4);
+  levels[2]->addColor("blue", "3", 1/4);
+  levels[2]->addColor("green", "2", 1/4);
+  levels[2]->addColor("white", "0", 1/4);
+  levels[2]->setLevelUpScore(500);
+  levels[2]->setLockedCellsPercent(.2);
   
-  registerPattern(new BasicPattern(0), -1);
-  addType("basic", "_", -1, -1);
-  addColor("red", "1", -1, -1);
+
+
+  registerPattern(new BasicPattern(0));
+  addType("basic", "_", 1);
+  
 
 }
 Settings::~Settings(){
@@ -97,6 +118,13 @@ double Settings::getColorProbability(string color, int l) const{
   return levels.at(l)->getColorProbability(color);
 }
 
+map<string, double> Settings::getTypeProbabilities(int l) const{
+  return levels.at(l)->getTypeProbabilities();
+}
+map<string, double> Settings::getColorProbabilities(int l) const{
+  return levels.at(l)->getColorProbabilities();
+}
+
 vector<Pattern*> Settings::getPatterns(int l) const{
   return levels.at(l)->getPatterns();
 }
@@ -107,6 +135,10 @@ int Settings::calculateScore(int removeCount) const{
 
 int Settings::levelUpScore(int l) const{
   return levels.at(l)->getLevelUpScore();
+}
+
+int Settings::getSpecialCount(int l) const{
+  return levels.at(l)->getSpecialCount(); 
 }
 
 

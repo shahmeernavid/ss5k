@@ -16,12 +16,12 @@ Grid::Grid(istream& in):settings(Settings::getInstance()){
   }
 }
 
-Grid::Grid(int n, int m):numCols(m),settings(Settings::getInstance()),factory(SquareFactory::getInstance()),level(0){
+Grid::Grid(int n, int m):numCols(m),level(0),settings(Settings::getInstance()),factory(SquareFactory::getInstance()){
   board = vector<vector<Square*> >(n, vector<Square*>(m, NULL));
   for(int r = 0; r < n; r++){
     for(int c = 0; c < m; c++){
       // generate random type and color
-      board[r][c] = factory->generateSquare(r, c, level, this);
+      board[r][c] = factory->generateSquare(r, c, level);
       board[r][c]->setGrid(this);
     }
   }
@@ -201,7 +201,7 @@ void Grid::collapse(){
   // locality of reference!
   for(int c = 0; c < holes.size(); c++){
     for(int r = 0; r < board.size(); r++){
-      board[r][c] = factory->generateSquare(r, c, level, this);
+      board[r][c] = factory->generateSquare(r, c, level);
       // remember to set grid!
       board[r][c]->setGrid(this);
     }
