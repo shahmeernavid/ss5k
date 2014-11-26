@@ -37,6 +37,13 @@ int Square::getCol(){
   return c;
 }
 
+void Square::setRow(int row){
+  r = row;
+}
+void Square::setCol(int col){
+  c = col;
+}
+
 void Square::setGrid(Grid* g){
   grid = g;
 }
@@ -62,7 +69,11 @@ string Square::getColor(){
 
 ostream& operator<<(ostream& out, Square& square){
   Settings const * settings = Settings::getInstance();
+  // cerr << endl << "type: " << square.type << endl;
   out << settings->getTypeEncoding(square.type);
+  // cerr << endl << "color: " << square.color << endl;
+  // cerr << square.r << " " << square.c << endl;
   out << settings->getColorEncoding(square.color);
+  
   return out;
 }

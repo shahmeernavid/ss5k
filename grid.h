@@ -15,11 +15,13 @@ class Grid{
   SquareFactory* factory;
 
   void collapse();
+  void fill();
 
   public:
     Grid(int n, int m);
     Grid(std::istream& in); 
     ~Grid();
+    bool match(int r, int c, std::string color);
     bool swap(int r, int c, int z);
     std::vector<int> process();
     int remove(int r, int c);

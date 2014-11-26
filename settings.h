@@ -41,6 +41,7 @@ class Settings{
 
     std::string getTypeEncoding(std::string type, int l = 0) const;
     std::string getColorEncoding(std::string color, int l = 0) const;
+    std::string getColorFromEncoding(std::string e) const;
 
     double getTypeProbability(std::string type, int l = 0) const;
     double getColorProbability(std::string color, int l = 0) const;

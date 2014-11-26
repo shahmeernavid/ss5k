@@ -141,5 +141,15 @@ int Settings::getSpecialCount(int l) const{
   return levels.at(l)->getSpecialCount(); 
 }
 
+string Settings::getColorFromEncoding(string e) const{
+  vector<string> colors = getSquareColors();
+  for(int i = 0; i < colors.size(); i++){
+    if(getColorEncoding(colors[i]) == e){
+      return colors[i];
+    }
+  }
+  return "";
+}
+
 
 

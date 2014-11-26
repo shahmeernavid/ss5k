@@ -20,22 +20,23 @@ int main(int argc, char* args[]){
   game->print(cout);
 
 
-  // game->swap(0, 0, 1);
-  // cerr << "done" << endl;
+  game->swap(0, 0, 1);
   game->print(cout);
+  // cerr << "done" << endl;
+  //game->print(cout);
 
-  Grid *g = new Grid(10, 10);
-  ScoreBoard *sb = new ScoreBoard;
-  Xwindow *window = new Xwindow;
+  // Grid *g = new Grid(10, 10);
+  // ScoreBoard *sb = new ScoreBoard;
+  // Xwindow *window = new Xwindow;
 
-  GameDisplay *d = new GameDisplay(g, sb);
-  d->setWindow(window);
-  d->update();
+  // GameDisplay *d = new GameDisplay(g, sb);
+  // d->setWindow(window);
+  // d->update();
 
-    int n;
-  while (cin >> n) {
+  //   int n;
+  // while (cin >> n) {
 
-  }
+  // }
 
 
   // string cmd;

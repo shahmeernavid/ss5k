@@ -30,6 +30,8 @@ class Square{
     std::string getColor();
     int getRow();
     int getCol();
+    void setRow(int row);
+    void setCol(int col);
     void setGrid(Grid* g);
     virtual int remove();
     virtual int remove(std::string c);

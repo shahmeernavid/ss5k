@@ -136,20 +136,25 @@ vector<int> Grid::process(){
           for(int p = 0; p < patterns.size(); p++){
             pair<vector<Square*>, pair<string, pair<int, int> > > results = patterns[p]->check(r, c, *this);
             vector<Square*> pendingRemove = results.first;
-            int nr = results.second.second.first;
-            int nc = results.second.second.second;
-            string color = results.second.first;
             // if the current square creates a pattern
             // if at least one square was removed
             if(pendingRemove.size()){
+              string color = pendingRemove[0]->getColor();
               int removeCount = 0;
               for(int i = 0; i< pendingRemove.size(); i++){
+                cerr << "removing " << pendingRemove[i]->getRow() << " " << pendingRemove[i]->getCol() << endl;
+                cerr << "color: " << pendingRemove[i]->getColor() << endl;
                 removeCount += pendingRemove[i]->remove();
               }
               // add to the loop count
               loopCount += settings->calculateScore(removeCount);
-              toAdd.push_back(factory->createSquare(nr, nc, color, results.second.first));
-              toAdd.back()->setGrid(this);
+              int nr = results.second.second.first;
+              int nc = results.second.second.second;
+              string nt = results.second.first; 
+              if(nr > -1 && nc > -1 && nt.size()){
+                toAdd.push_back(factory->createSquare(nr, nc, color, nt));
+                toAdd.back()->setGrid(this);  
+              }
               // dont check for any more patterns
               break;
             }
@@ -165,47 +170,78 @@ vector<int> Grid::process(){
     oldLength = scores.size();
     if(loopCount > 0){
       scores.push_back(loopCount);
+      loopCount = 0;
     }
+    cerr << "this" << endl;
+    cerr << *this << endl;
     // fill all the holes!
     // called once more than we need it
     // can result in infinite chains
     collapse();
+    fill();
+    //cerr << "done this loop " << loopCount << endl;
 
   }
   
   return scores;
 }
 
+bool Grid::match(int r, int c, string color){
+  bool output = false;
+  Square* holder = getSquare(r, c);
+  // put in temporary square
+  board[r][c] = factory->createSquare(r, c, color, "basic", false);
+  board[r][c]->setGrid(this);
+  vector<Pattern*> patterns = settings->getPatterns(level);
+  for(int i = 0 ; i < patterns.size(); i++){
+    pair<vector<Square*>, pair<string, pair<int, int> > > result = patterns[i]->check(r, c, *this);
+    if(result.first.size()){
+      output =  true;
+    }
+  }
+  // delete the temp square
+  delete board[r][c];
+  // restore orignal state of the board
+  board[r][c] = holder;
+  cerr << "match: " << output << " " << r << " " << c << " " << color << endl;
+  return output;
+}
 
+void Grid::fill(){
+  // create new squares to fill holes
+  // locality of reference!
+  for(int r = 0; r < board.size(); r++){
+    for(int c = 0; c < board[r].size(); c++){
+      if(getSquare(r, c) == NULL){
+        board[r][c] = factory->generateIndependantSquare(r, c, level, *this);
+        // remember to set grid!
+        board[r][c]->setGrid(this);  
+      }
+    }
+  }
+
+  cerr << "fill" << endl;
+  cerr << *this << endl;
+}
 
 void Grid::collapse(){
-  vector<int> holes = vector<int>(board[0].size(), 0);
   // go thorugh the grid, top down
   for(int r = 0; r < board.size(); r++){
     for(int c = 0; c < board[r].size(); c++){
       // if the square at index r,c is NULL
       if(getSquare(r, c) == NULL){
-        // keep track of how many holes each column has
-        holes[c]++;
         // go up in the current column
         // bubble up the hole
-        for(int i = c-1; i > 0; i--){
-          // swap down
-          swap(r, i, 1);
+        for(int i = r; i > -1; i--){
+          // swap up
+          swap(i, c, 0);
         }
       }
     }
   }
 
-  // create new squares to fill holes
-  // locality of reference!
-  for(int c = 0; c < holes.size(); c++){
-    for(int r = 0; r < board.size(); r++){
-      board[r][c] = factory->generateSquare(r, c, level);
-      // remember to set grid!
-      board[r][c]->setGrid(this);
-    }
-  }
+  cerr << "collapse" << endl;
+  cerr << *this << endl;  
 }
 
 bool Grid::swap(int r, int c, int z){
@@ -226,11 +262,22 @@ bool Grid::swap(int r, int c, int z){
   else if(z == 3){
     tc++;
   }
-
-  Square* holder = getSquare(tr, tc);
-  if(holder){
+  if(tr > -1 && tc > -1 && tr < board.size() && tc < board[tc].size()){
+    // do the swap
+    Square* holder = getSquare(tr, tc);
     board[tr][tc] = getSquare(r, c);
     board[r][c] = holder;
+    
+    // update coordinates
+    if(board[tr][tc]){
+      board[tr][tc]->setRow(tr);
+      board[tr][tc]->setCol(tc);  
+    }
+    if(board[r][c]){
+      board[r][c]->setCol(c);
+      board[r][c]->setRow(r);
+    }
+
     return true;  
   }
   return false;
@@ -247,13 +294,16 @@ ostream& operator<<(ostream& out, Grid& grid){
       if(s){
         out << "_";
         out << *s;
+        out << " ";
       }
       else{
         out << "___";
+        out << " ";
       }
     }
     out << endl;
   }
+  out << "----------------" << endl;
   return out;
 }
 

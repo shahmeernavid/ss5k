@@ -1,6 +1,8 @@
 #include <iostream>
+#include <sstream>
 #include "squarefactory.h"
 #include "settings.h"
+#include "grid.h"
 
 using namespace std;
 
@@ -29,6 +31,45 @@ Square* SquareFactory::generateSquare(int r, int c, int level, string type){
   type = (type.size()) ? type : getType(r, c, level);
   cerr << "generating square " << productionCount << " " << color << " " << type << endl;
   return createSquare(r, c, color, type, false);
+}
+
+Square* SquareFactory::generateIndependantSquare(int r, int c, int level, Grid& g, string type){
+  map<string, double> colors = settings->getColorProbabilities(level);
+  if(index == -1){
+    int invalidCount = 0;
+    for(map<string, double>::iterator i = colors.begin(); i != colors.end(); i++){
+      if(g.match(r, c, i->first)){
+        invalidCount++;
+        double prob = i->second;
+        i->second = 0;
+        for(map<string, double>::iterator p = colors.begin(); p != colors.end(); p++){
+          if(i->first != p->first){
+            // distribute probability evenly
+            p->second += prob/(colors.size()-invalidCount);
+          }
+        }
+      }
+    }
+    return createSquare(r, c, pick(colors), (type.size()) ? type : getType(r, c, level), false);
+  }
+  map<string, bool> invalids;
+  for(map<string, double>::iterator i = colors.begin(); i != colors.end(); i++){
+    if(g.match(r, c, i->first)){
+      invalids[i->first] = true;
+    }
+  }
+  // go through the sequence until we get a square that doesnt 
+  // create a chain reaction
+  int start = index;
+  while(!invalids[colorSequence[(index++)%colorSequence.size()]]){
+    // however, if we;ve checked everythikng, stop the loop and just return it
+    if(index == start){
+      break;
+    }
+  }
+  string color = colorSequence[(index++)%colorSequence.size()];
+  return createSquare(r, c, color, (type.size()) ? type : "basic", false);
+  
 }
 
 // specifically create this square
@@ -65,11 +106,12 @@ string SquareFactory::pick(map<string, double> mapping){
   double random = rand() % 100;
   for(map<string, double>::iterator i = mapping.begin(); i != mapping.end(); i++){
     // if we are in the right range
-    if(random <= sum+i->second*100 && random > sum){
+    if(random <= sum+i->second*100 && random >= sum){
       return i->first;
     }
     sum += i->second*100;
   }
+  cerr << "ERROR: " << random << endl;
   return "";
 }
 
@@ -105,5 +147,11 @@ void SquareFactory::reset(){
 }
 
 void SquareFactory::setSequence(string seq){
-
+  cerr << "calling" << endl;
+  index = 0;
+  stringstream stream(seq);
+  int current;
+  while(stream >> current){
+    colorSequence.push_back(settings->getColorFromEncoding(to_string(current)));
+  }
 }
