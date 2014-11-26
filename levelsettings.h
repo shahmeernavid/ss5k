@@ -13,7 +13,7 @@ class LevelSettings{
   double lockedCellsPercent;
   // type -> encoding
   std::map<std::string, std::string> typeEncodings;
-  // color -> encoding
+  // color -> encoding (int)
   std::map<std::string, std::string> colorEncodings;
   // type -> probability
   std::map<std::string, double> typeProbabilities;

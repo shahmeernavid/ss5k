@@ -147,11 +147,10 @@ void SquareFactory::reset(){
 }
 
 void SquareFactory::setSequence(string seq){
-  cerr << "calling" << endl;
   index = 0;
   stringstream stream(seq);
-  int current;
+  char current;
   while(stream >> current){
-    colorSequence.push_back(settings->getColorFromEncoding(to_string(current)));
+    colorSequence.push_back(settings->getColorFromEncoding(string(1, current)));
   }
 }
