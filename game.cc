@@ -41,6 +41,11 @@ int Game::setLevel(int l){
   return level = l;
 }
 
+Grid* Game::getGrid() {
+
+    return grid;
+}
+
 
 // gameplay interactions
 
