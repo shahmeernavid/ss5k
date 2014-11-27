@@ -7,10 +7,10 @@
 #include <utility>
 #include <ostream>
 #include <cstdlib>
-#include "squares/square.h"
-#include "squares/basic.h"
 #include "settings.h"
 
+
+class Square;
 
 class SquareFactory{
   static SquareFactory* instance;

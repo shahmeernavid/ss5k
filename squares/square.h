@@ -11,15 +11,14 @@
 class Grid;
 
 class Square{
-  // row and column coords of this cell
-  int r, c;
-  // the grid this cell is on
-  Grid* grid;
-  // cell's color
-  std::string color;
-  std::string type;
-  // marker for if this square has been removed
-  bool removed;
+  protected:
+    // row and column coords of this cell
+    int r, c;
+    // the grid this cell is on
+    Grid* grid;
+    // cell's color
+    std::string color;
+    std::string type;
 
   public:
     // constructors
@@ -33,8 +32,7 @@ class Square{
     void setRow(int row);
     void setCol(int col);
     void setGrid(Grid* g);
-    virtual int remove();
-    virtual int remove(std::string c);
+    virtual int remove(int count = 0);
     virtual void draw(Xwindow *window, int x, int y) = 0;
     // static Square* create(int r, int c, std::string color, std::string type, Grid* g);
     friend std::ostream& operator<<(std::ostream& out, Square& square);

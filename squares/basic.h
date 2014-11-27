@@ -2,7 +2,8 @@
 #define __BASIC_SQUARE_H__
 
 #include "square.h"
-#include "../display/window.h"
+
+class Xwindow;
 
 class BasicSquare: public Square{
 

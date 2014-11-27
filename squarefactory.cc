@@ -4,6 +4,14 @@
 #include "settings.h"
 #include "grid.h"
 
+#include "squares/square.h"
+#include "squares/basic.h"
+#include "squares/lateral.h"
+#include "squares/upright.h"
+#include "squares/psychedelic.h"
+#include "squares/unstable.h"
+
+
 using namespace std;
 
 SquareFactory* SquareFactory::instance = NULL;
@@ -68,7 +76,8 @@ Square* SquareFactory::generateIndependantSquare(int r, int c, int level, Grid& 
     }
   }
   string color = colorSequence[(index++)%colorSequence.size()];
-  return createSquare(r, c, color, (type.size()) ? type : "basic", false);
+  string t = (type.size()) ? type : "basic"; 
+  return createSquare(r, c, color, t, false);
   
 }
 
@@ -79,6 +88,18 @@ Square* SquareFactory::createSquare(int r, int c, string color, string type, boo
   }
   if(type == "basic"){
     return new BasicSquare(r, c, color);
+  }
+  else if(type == "lateral"){
+    return new LateralSquare(r, c, color);
+  }
+  else if(type == "upright"){
+    return new UprightSquare(r, c, color);
+  }
+  else if(type == "unstable"){
+    return new UnstableSquare(r, c, color);
+  }
+  else if(type == "psychedelic"){
+    return new PsychedelicSquare(r, c, color);
   }
   else{
     return NULL;
@@ -101,7 +122,7 @@ void SquareFactory::insert(vector<pair<string, double> >& array, pair<string, do
 // value that corresponds to correct probability proportions
 string SquareFactory::pick(map<string, double> mapping){
   // idea is to build a cdf
-  // let x be the random number. 0 <= x <= 100
+  // let x be the random number. 0 <= x < 100
   double sum = 0;
   double random = rand() % 100;
   for(map<string, double>::iterator i = mapping.begin(); i != mapping.end(); i++){

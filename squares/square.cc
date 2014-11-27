@@ -26,7 +26,7 @@ using namespace std;
 // }
 
 Square::Square(int r, int c, string color, string t)
-  :r(r), c(c), color(color), type(t), removed(false){}
+  :r(r), c(c), color(color), type(t){}
 
 Square::~Square(){}
 
@@ -48,20 +48,10 @@ void Square::setGrid(Grid* g){
   grid = g;
 }
 
-int Square::remove(){
-  if(!removed){
-    removed = true;
-    return grid->remove(r, c);
-  }
-  return 0;
+int Square::remove(int count){
+  return grid->remove(r, c);
 }
 
-int Square::remove(string c){
-  if(color == c){
-    return remove();
-  }
-  return 0;
-}
 
 string Square::getColor(){
   return color;
