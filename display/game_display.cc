@@ -17,8 +17,15 @@ GameDisplay::GameDisplay(Grid *theGrid, ScoreBoard *sb) :
     out(&cout) 
     { }
 
+GameDisplay::~GameDisplay() {
+
+    delete sb;
+    delete w;
+}
+
 void GameDisplay::updateWindowDisplay() {
 
+    theGrid->drawSquares(w);
 }
 
 

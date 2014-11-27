@@ -18,6 +18,7 @@ class GameDisplay {
 
   public:
     GameDisplay(Grid *theGrid, ScoreBoard *sb);
+    ~GameDisplay(); 
     void update();
     void output(std::string t);
     void setWindow(Xwindow *w);

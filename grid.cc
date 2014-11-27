@@ -287,6 +287,15 @@ void Grid::levelChanged(int l){
   level = l;
 }
 
+void Grid::drawSquares(Xwindow *window) {
+
+    for(int r = 0; r < board.size(); r++){
+        for(int c = 0; c < board[r].size(); c++){
+            getSquare(r, c)->draw(window, r * Settings::SQUARE_WIDTH, c * Settings::SQUARE_HEIGHT);
+        }
+    }
+}
+
 ostream& operator<<(ostream& out, Grid& grid){
   for(int r = 0; r < grid.board.size(); r++){
     for(int c = 0; c < grid.board[r].size(); c++){

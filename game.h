@@ -37,6 +37,7 @@ class Game{
     void hint();
     void scramble();
     void reset();
+    Grid* getGrid();
 
     // temporary (maybe)
     void print(std::ostream& out);

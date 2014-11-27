@@ -32,6 +32,7 @@ class Grid{
     Square* getSquare(int r, int c);
     Square* getSquare(int r, int c, std::string color);
     void levelChanged(int l);
+    void drawSquares(Xwindow *window);
     friend std::ostream& operator<<(std::ostream& out, Grid& grid);
 
 };
