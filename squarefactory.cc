@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <string>
 #include "squarefactory.h"
 #include "settings.h"
 #include "grid.h"
