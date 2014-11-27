@@ -26,7 +26,7 @@ int main(int argc, char* args[]){
   GameDisplay *d = new GameDisplay(game->getGrid(), sb);
   d->setWindow(window);
   d->update();
-
+  cerr << "before swap" << endl;
   game->swap(0, 0, 1);
   game->print(cout);
   // cerr << "done" << endl;
@@ -34,10 +34,10 @@ int main(int argc, char* args[]){
   d->update();
 
 
-    int n;
-  while (cin >> n) {
+  //   int n;
+  // while (cin >> n) {
 
-  }
+  // }
 
 
   // string cmd;
@@ -63,6 +63,4 @@ int main(int argc, char* args[]){
   //     // game->restart();
   //   }
   // }
-
-  // delete game;
 }

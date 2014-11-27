@@ -17,7 +17,11 @@ class Pattern{
     Pattern(int p);
     virtual ~Pattern();
     // returns squares to be removed + square to be generated
-    virtual std::pair<std::vector<Square*>, std::pair<std::string, std::pair<int, int> > > check(int r, int c, Grid& g) = 0;
+    virtual std::vector<Square*> check(int r, int c, Grid& g) = 0;
+    // given left top most square, gives position of new square
+    virtual std::pair<int, int> newPos(int r, int c) = 0;
+    // gives type of new square
+    virtual std::string newType() = 0;
     int getPriority();
 
     virtual Pattern* copy() = 0;

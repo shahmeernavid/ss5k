@@ -134,8 +134,7 @@ vector<int> Grid::process(){
         if(square){
           // go through each pattern
           for(int p = 0; p < patterns.size(); p++){
-            pair<vector<Square*>, pair<string, pair<int, int> > > results = patterns[p]->check(r, c, *this);
-            vector<Square*> pendingRemove = results.first;
+            vector<Square*> pendingRemove = patterns[p]->check(r, c, *this);
             // if the current square creates a pattern
             // if at least one square was removed
             if(pendingRemove.size()){
@@ -144,13 +143,14 @@ vector<int> Grid::process(){
               for(int i = 0; i< pendingRemove.size(); i++){
                 cerr << "removing " << pendingRemove[i]->getRow() << " " << pendingRemove[i]->getCol() << endl;
                 cerr << "color: " << pendingRemove[i]->getColor() << endl;
-                removeCount += pendingRemove[i]->remove();
+                removeCount += pendingRemove[i]->remove(pendingRemove.size());
               }
               // add to the loop count
               loopCount += settings->calculateScore(removeCount);
-              int nr = results.second.second.first;
-              int nc = results.second.second.second;
-              string nt = results.second.first; 
+              pair<int, int> coord = patterns[p]->newPos(r, c);
+              int nr = coord.first;
+              int nc = coord.second;
+              string nt = patterns[p]->newType(); 
               if(nr > -1 && nc > -1 && nt.size()){
                 toAdd.push_back(factory->createSquare(nr, nc, color, nt));
                 toAdd.back()->setGrid(this);  
@@ -194,8 +194,8 @@ bool Grid::match(int r, int c, string color){
   board[r][c]->setGrid(this);
   vector<Pattern*> patterns = settings->getPatterns(level);
   for(int i = 0 ; i < patterns.size(); i++){
-    pair<vector<Square*>, pair<string, pair<int, int> > > result = patterns[i]->check(r, c, *this);
-    if(result.first.size()){
+    vector<Square*> result = patterns[i]->check(r, c, *this);
+    if(result.size()){
       output =  true;
     }
   }
