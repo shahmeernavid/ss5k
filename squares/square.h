@@ -28,6 +28,8 @@ class Square{
     virtual ~Square();
     // getter for color
     std::string getColor();
+    // get for colour, returning int for Xwindow drawing
+    int getColorInt();
     int getRow();
     int getCol();
     void setRow(int row);
@@ -36,6 +38,7 @@ class Square{
     virtual int remove();
     virtual int remove(std::string c);
     virtual void draw(Xwindow *window, int x, int y) = 0;
+
     // static Square* create(int r, int c, std::string color, std::string type, Grid* g);
     friend std::ostream& operator<<(std::ostream& out, Square& square);
 

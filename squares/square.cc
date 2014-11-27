@@ -67,6 +67,35 @@ string Square::getColor(){
   return color;
 }
 
+// this returns the appropriate integer representation of the colour for the
+// Xwindow class
+int Square::getColorInt() {
+    if (color == "white") {
+        return 0; 
+    } else if (color == "black") {
+        return 1;
+    } else if (color == "red") {
+        return 2;
+    } else if (color == "green") {
+        return 3;
+    } else if (color == "blue") {
+        return 4;
+    } else if (color == "cyan") {
+        return 5;
+    } else if (color == "yellow") {
+        return 6;
+    } else if (color == "magenta") {
+        return 7;
+    } else if (color == "orange") {
+        return 8;
+    } else if (color == "brown") {
+        return 9;
+    } else {
+        // should never reach here; bad colour
+        return -1;
+    }
+}
+
 ostream& operator<<(ostream& out, Square& square){
   Settings const * settings = Settings::getInstance();
   // cerr << endl << "type: " << square.type << endl;
