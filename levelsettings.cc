@@ -3,7 +3,7 @@
 
 using namespace std;
 
-LevelSettings::LevelSettings():levelUpScore(0),specialCount(-1),lockedCellsPercent(0),patterns(vector<Pattern*>(0)) {
+LevelSettings::LevelSettings():levelUpScore(0),specialCount(-1),lockedCellsPercent(0),patterns(vector<Pattern*>(0)), inputFile("") {
 }
 
 LevelSettings::~LevelSettings(){
@@ -77,4 +77,11 @@ void LevelSettings::setLockedCellsPercent(double p){
 }
 double LevelSettings::getLockedCellsPercent() const{
   return lockedCellsPercent;
+}
+
+void LevelSettings::setInputFile(string name){
+  inputFile = name;
+}
+string LevelSettings::getInputFile(){
+  return inputFile;
 }

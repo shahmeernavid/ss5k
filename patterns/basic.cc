@@ -7,15 +7,15 @@ using namespace std;
 
 BasicPattern::BasicPattern(int p):Pattern(p){}
 
-vector<Square*> BasicPattern::check(int r, int c, Grid& g) {
+vector<Square*> BasicPattern::check(int r, int c, const Grid& g) {
   Square* start = g.getSquare(r, c);
   vector<Square*> output;
-  
   if(!start){
     return output;
   }
 
   string color = start->getColor();
+  cerr << color << endl;
   // down
   if(g.getSquare(r+1, c, color) && g.getSquare(r+2, c, color)){
     output.push_back(start);

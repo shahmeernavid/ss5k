@@ -14,7 +14,7 @@ using namespace std;
 
 L3Pattern::L3Pattern(int p):Pattern(p){}
 
-vector<Square*> L3Pattern::check(int r, int c, Grid& g) {
+vector<Square*> L3Pattern::check(int r, int c, const Grid& g) {
   Square* start = g.getSquare(r, c);
   vector<Square*> output;
   

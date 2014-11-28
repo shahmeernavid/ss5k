@@ -1,33 +1,41 @@
 #include <iostream>
 #include "game_display.h"
+#include "../game.h"
 
 using namespace std;
 
 void GameDisplay::updateTextDisplay() {
 
     // output score information (make this prettier)
-    (*out) << "Score: " << sb->getScore() << endl;
+    out << "Level: " << game->getLevel() << endl;
+    ScoreBoard *sb = game->getScoreBoard();
+    out << "Score: " << sb->getScore() << endl;
+    out << "Total Score: " << sb->getLevelScore() << endl;
 
-    (*out) << (*theGrid);
+    game->print(out);
+
+    out << "-----------------------" << endl;
 }
 
-GameDisplay::GameDisplay(Grid *theGrid, ScoreBoard *sb) :
-    theGrid(theGrid),
-    sb(sb),
-    out(&cout) 
+GameDisplay::GameDisplay(Game* game, ostream& out) :
+    game(game),
+    w(NULL),
+    out(out)
     { }
 
 GameDisplay::~GameDisplay() {
-
-    delete sb;
     delete w;
 }
 
 void GameDisplay::updateWindowDisplay() {
 
-    theGrid->drawSquares(w);
+    game->drawSquares(w);
 }
 
+
+void GameDisplay::output(std::string t){
+    out << t << endl;
+}
 
 void GameDisplay::update() {
 
@@ -39,7 +47,6 @@ void GameDisplay::update() {
     }
 }
 
-void GameDisplay::setWindow(Xwindow *w) {
-    
-    this->w = w;
+void GameDisplay::createWindow() {
+    w = new Xwindow();
 }

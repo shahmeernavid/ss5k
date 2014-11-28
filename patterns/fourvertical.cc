@@ -7,7 +7,7 @@ using namespace std;
 
 FourVerticalPattern::FourVerticalPattern(int p):Pattern(p){}
 
-vector<Square*> FourVerticalPattern::check(int r, int c, Grid& g) {
+vector<Square*> FourVerticalPattern::check(int r, int c, const Grid& g) {
   Square* start = g.getSquare(r, c);
   vector<Square*> output;
   

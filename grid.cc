@@ -10,7 +10,7 @@
 using namespace std;
 
 // initialize a grid using a predefined sequence
-Grid::Grid(istream& in, int rows):level(0),settings(Settings::getInstance()),factory(SquareFactory::getInstance()){
+Grid::Grid(istream& in, int rows, int l):level(l),settings(Settings::getInstance()),factory(SquareFactory::getInstance()){
   locked = map<int, bool>();
   board = vector<vector<Square*> >();
   string line;
@@ -42,8 +42,10 @@ Grid::Grid(istream& in, int rows):level(0),settings(Settings::getInstance()),fac
   }
 }
 
-Grid::Grid(int n, int m):level(0),settings(Settings::getInstance()),factory(SquareFactory::getInstance()){
+Grid::Grid(int n, int m, int l):level(l),settings(Settings::getInstance()),factory(SquareFactory::getInstance()){
+  cerr << "creatin grid" << endl;
   locked = map<int, bool>();
+  cerr << "locked grid " << locked.size() << endl;
   board = vector<vector<Square*> >(n, vector<Square*>(m, NULL));
   for(int r = n-1; r > -1; r--){
     for(int c = m-1; c > -1; c--){
@@ -129,21 +131,21 @@ int Grid::purgeMarked(){
   return count;
 }
 
-Square* Grid::getSquare(int r, int c){
+Square* Grid::getSquare(int r, int c) const{
   if(r < 0 || c < 0 || r >= board.size() || c >= board[r].size()){
     return NULL;
   }
-  return board[r][c];
+  return board.at(r).at(c);
 }
 
 // of the square doesnt match the color, return NULL
-Square* Grid::getSquare(int r, int c, string color){
+Square* Grid::getSquare(int r, int c, string color) const{
   if(r < 0 || c < 0 || r >= board.size() || c >= board[r].size() || 
       !board[r][c] || board[r][c]->getColor() != color){
 
     return NULL;
   }
-  return board[r][c];
+  return board.at(r).at(c);
 }
 
 bool Grid::isLocked(int r, int c){
@@ -175,10 +177,12 @@ vector<int> Grid::process(){
             // if at least one square was removed
             if(pendingRemove.size()){
               // if one of the squares involved in the match is locked, remove the lock
-              if(isLocked(r, c)){
-                locked[r*10+c] = false;
-                break;
+              for(int s = 0; s < pendingRemove.size(); s++){
+                if(isLocked(pendingRemove[s]->getRow(), pendingRemove[s]->getCol())){
+                  locked[r*10+c] = false;
+                }  
               }
+              
               string color = pendingRemove[0]->getColor();
               for(int i = 0; i< pendingRemove.size(); i++){
                 // cerr << "removing " << pendingRemove[i]->getRow() << " " << pendingRemove[i]->getCol() << endl;
@@ -246,8 +250,41 @@ bool Grid::match(int r, int c, string color){
   delete board[r][c];
   // restore orignal state of the board
   board[r][c] = holder;
-  cerr << "match: " << output << " " << r << " " << c << " " << color << endl;
   return output;
+}
+
+int Grid::match(int r, int c){
+  vector<Pattern*> patterns = settings->getPatterns(level);
+  for(int i = 0; i < 4; i++){
+    
+    swap(r, c, i);
+    int out = -1;
+    for(int p = 0; p < patterns.size(); p++){
+      vector<Square*> results = patterns[p]->check(r, c, *this);
+      if(results.size()){
+        out = i;
+      }
+    }
+    swap(r, c, i);
+    if(out!=-1){
+      return out;
+    }
+  }
+  return -1;
+}
+
+int Grid::hint(){
+  
+  for(int r = 0; r < board.size(); r++){
+    for(int c = 0; c < board[r].size(); c++){
+      int z = match(r, c);
+      if(z != -1){
+        return r*100 + c*10 + z;
+      }
+    }
+  }
+  cerr << "HINTING" << endl;
+  return -1;
 }
 
 void Grid::fill(){
@@ -307,7 +344,8 @@ bool Grid::swap(int r, int c, int z){
   else if(z == 3){
     tc++;
   }
-  if(tr > -1 && tc > -1 && tr < board.size() && tc < board[tc].size()){
+  if(tr > -1 && tc > -1 && tr < board.size() && tc < board[tr].size() && r > -1 && c > -1 
+    && tr < board.size() && tc < board[tr].size()){
     // do the swap
     Square* holder = getSquare(tr, tc);
     board[tr][tc] = getSquare(r, c);
@@ -334,7 +372,10 @@ void Grid::levelChanged(int l){
 void Grid::drawSquares(Xwindow *window) {
   for(int r = 0; r < board.size(); r++){
       for(int c = 0; c < board[r].size(); c++){
-          getSquare(r, c)->draw(window, r * Settings::SQUARE_WIDTH, c * Settings::SQUARE_HEIGHT);
+        Square* target = getSquare(r, c);
+        if(target){
+          target->draw(window, r * Settings::SQUARE_WIDTH, c * Settings::SQUARE_HEIGHT);
+        }
       }
   }
 }
@@ -346,17 +387,22 @@ ostream& operator<<(ostream& out, Grid& grid){
       if(s){
         out << ((grid.isLocked(r, c)) ? "l" : "_");
         out << *s;
-        out << " ";
+        
       }
       else{
-        out << "___";
-        out << " ";
+        out << ((grid.isLocked(r, c)) ? "l" : "_");
+        out << "__";
+        
       }
+      out << " ";
     }
     out << endl;
   }
-  out << "----------------" << endl;
   return out;
+}
+
+int Grid::getLevel(){
+  return level;
 }
 
 

@@ -60,6 +60,7 @@ class Settings{
     int levelUpScore(int l = 0) const;
     double getLockedPercent(int l = 0) const;
     int getSpecialCount(int l = 0) const;
+    std::string getInputFile(int l = 0) const;
     
     // these are used to draw the graphical display
     static const int WINDOW_HEIGHT = 500; 

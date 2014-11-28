@@ -8,8 +8,12 @@ class ScoreBoard {
   public:
     ScoreBoard();
     void addPoints(int n);
+    
+
     int getScore();
+    int getLevelScore();
     void resetScore();
+    void resetLevel();
     
     void addMoves(int n);
     void resetMoves();

@@ -7,7 +7,7 @@ using namespace std;
 
 FiveVerticalPattern::FiveVerticalPattern(int p):Pattern(p){}
 
-vector<Square*> FiveVerticalPattern::check(int r, int c, Grid& g) {
+vector<Square*> FiveVerticalPattern::check(int r, int c, const Grid& g) {
   Square* start = g.getSquare(r, c);
   vector<Square*> output;
   

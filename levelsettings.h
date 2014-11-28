@@ -11,6 +11,7 @@ class LevelSettings{
   int levelUpScore;
   int specialCount;
   double lockedCellsPercent;
+  std::string inputFile;
 
   // type -> probability
   std::map<std::string, double> typeProbabilities;
@@ -45,6 +46,8 @@ class LevelSettings{
     int getSpecialCount() const;
     void setLockedCellsPercent(double p);
     double getLockedCellsPercent() const;
+    void setInputFile(std::string name);
+    std::string getInputFile();
    
 };
 

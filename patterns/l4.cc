@@ -14,7 +14,7 @@ using namespace std;
 
 L4Pattern::L4Pattern(int p):Pattern(p){}
 
-vector<Square*> L4Pattern::check(int r, int c, Grid& g) {
+vector<Square*> L4Pattern::check(int r, int c, const Grid& g) {
   Square* start = g.getSquare(r, c);
   vector<Square*> output;
   

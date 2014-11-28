@@ -15,7 +15,7 @@ x
 
 L1Pattern::L1Pattern(int p):Pattern(p){}
 
-vector<Square*> L1Pattern::check(int r, int c, Grid& g) {
+vector<Square*> L1Pattern::check(int r, int c, const Grid& g) {
   Square* start = g.getSquare(r, c);
   vector<Square*> output;
   

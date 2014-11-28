@@ -29,51 +29,52 @@ void Settings::clean(){
 
 Settings::Settings(){
   // configure everything here
+  // registerLevel(new LevelSettings(), 0);
+  // levels[0]->addColor("red", .25);
+  // levels[0]->addColor("blue", .25);
+  // levels[0]->addColor("green", .25);
+  // levels[0]->addColor("white", .25);
+
+  // levels[0]->addType("basic", .96);
+  // levels[0]->addType("lateral", .01);
+  // levels[0]->addType("upright", .01);
+  // levels[0]->addType("unstable", .01);
+  // levels[0]->addType("psychedelic", .01);
+
+  // levels[0]->setLevelUpScore(30);
+  // levels[0]->setInputFile("sequence.txt");
+///////////////////////
+
+  // registerLevel(new LevelSettings(), 0);
+  // levels[0]->addColor("red", .33);
+  // levels[0]->addColor("blue", .17);
+  // levels[0]->addColor("green", .17);
+  // levels[0]->addColor("white", .33);
+
+  // levels[0]->addType("basic", .2);
+  // levels[0]->addType("lateral", .2);
+  // levels[0]->addType("upright", .2);
+  // levels[0]->addType("unstable", .2);
+  // levels[0]->addType("psychedelic", .2);
+
+  // levels[0]->setLevelUpScore(300);
+  // levels[0]->setSpecialCount(5);
+///////////////////////
+
   registerLevel(new LevelSettings(), 0);
   levels[0]->addColor("red", .25);
   levels[0]->addColor("blue", .25);
   levels[0]->addColor("green", .25);
   levels[0]->addColor("white", .25);
 
-  levels[0]->addType("basic", .96);
-  levels[0]->addType("lateral", .01);
-  levels[0]->addType("upright", .01);
-  levels[0]->addType("unstable", .01);
-  levels[0]->addType("psychedelic", .01);
+  levels[0]->addType("basic", 1);
+  levels[0]->addType("lateral", 0);
+  levels[0]->addType("upright", 0);
+  levels[0]->addType("unstable", 0);
+  levels[0]->addType("psychedelic", 0);
 
-  levels[0]->setLevelUpScore(200);
-///////////////////////
-
-  registerLevel(new LevelSettings(), 1);
-  levels[1]->addColor("red", .33);
-  levels[1]->addColor("blue", .17);
-  levels[1]->addColor("green", .17);
-  levels[1]->addColor("white", .33);
-
-  levels[1]->addType("basic", .2);
-  levels[1]->addType("lateral", .2);
-  levels[1]->addType("upright", .2);
-  levels[1]->addType("unstable", .2);
-  levels[1]->addType("psychedelic", .2);
-
-  levels[1]->setLevelUpScore(300);
-  levels[1]->setSpecialCount(5);
-///////////////////////
-
-  registerLevel(new LevelSettings(), 2);
-  levels[2]->addColor("red", .25);
-  levels[2]->addColor("blue", .25);
-  levels[2]->addColor("green", .25);
-  levels[2]->addColor("white", .25);
-
-  levels[2]->addType("basic", 1);
-  levels[2]->addType("lateral", 0);
-  levels[2]->addType("upright", 0);
-  levels[2]->addType("unstable", 0);
-  levels[2]->addType("psychedelic", 0);
-
-  levels[2]->setLevelUpScore(500);
-  levels[2]->setLockedCellsPercent(.2);
+  levels[0]->setLevelUpScore(500);
+  levels[0]->setLockedCellsPercent(.2);
 
   colorEncodings["red"] = '1';
   colorEncodings["white"] = '0';
@@ -209,6 +210,10 @@ string Settings::getTypeFromEncoding(char e) const{
     }
   }
   return "";
+}
+
+string Settings::getInputFile(int l) const{
+  return levels.at(l)->getInputFile();
 }
 
 

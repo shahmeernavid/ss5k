@@ -6,22 +6,23 @@
 #include "../grid.h"
 #include "../scoreboard.h"
 
+class Game;
+
 class GameDisplay {
 
-    Grid *theGrid;
-    ScoreBoard *sb;
+    Game* game;
     Xwindow *w;
-    std::ostream *out; 
+    std::ostream& out;
 
     void updateTextDisplay();
     void updateWindowDisplay();
 
   public:
-    GameDisplay(Grid *theGrid, ScoreBoard *sb);
+    GameDisplay(Game *game, std::ostream& out);
     ~GameDisplay(); 
     void update();
     void output(std::string t);
-    void setWindow(Xwindow *w);
+    void createWindow();
 };
 
 #endif

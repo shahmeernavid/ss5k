@@ -17,7 +17,7 @@ using namespace std;
 
 SquareFactory* SquareFactory::instance = NULL;
 
-SquareFactory::SquareFactory():settings(Settings::getInstance()),index(-1),productionCount(0){}
+SquareFactory::SquareFactory():settings(Settings::getInstance()),index(-1),productionCount(-1){}
 
 SquareFactory::~SquareFactory(){}
 
@@ -93,7 +93,7 @@ Square* SquareFactory::generateIndependantSquare(int r, int c, int level, Grid& 
 // specifically create this square
 Square* SquareFactory::createSquare(int r, int c, string color, string type, bool count){
   if(count){
-    productionCount++;
+    productionCount=(productionCount==-1) ? 1 : productionCount+1;
   }
   if(type == "basic"){
     return new BasicSquare(r, c, color);
@@ -141,7 +141,7 @@ string SquareFactory::pick(map<string, double> mapping){
     }
     sum += i->second*100;
   }
-  cerr << "ERROR: " << random << " " << mapping["basic"] << endl;
+  cerr << "ERROR: " << random << " " << (mapping.begin())->first << endl;
   return "";
 }
 
@@ -165,9 +165,12 @@ string SquareFactory::getType(int r, int c, int level){
         i->second = 0;
       }
       else{
-        i->second = 1/(probs.size()-1);
+        i->second += 1/(double)(probs.size()-1);
       }
     }
+  }
+  else if(specialCount != -1){
+    return "basic";
   }
   return pick(probs);
 }

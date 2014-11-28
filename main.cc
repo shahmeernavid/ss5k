@@ -18,8 +18,8 @@ void play(int x, int y, int z){
 
 int main(int argc, char* args[]){
   // srand(time(NULL));
-  fstream file("sequence.txt");
-  game->init(file, 10);
+  game->init();
+  game->setUpDisplay(cout, false);
   //game->init(10, 10);
 
   // game->print(cout);
@@ -54,7 +54,7 @@ int main(int argc, char* args[]){
       game->swap(x, y, z);
     }
     else if(cmd == "hint"){
-      // game->hint();
+      game->hint();
     }
     else if(cmd == "scramble"){
       // game->shuffle();

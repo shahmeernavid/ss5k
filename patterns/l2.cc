@@ -13,7 +13,7 @@ using namespace std;
 
 L2Pattern::L2Pattern(int p):Pattern(p){}
 
-vector<Square*> L2Pattern::check(int r, int c, Grid& g) {
+vector<Square*> L2Pattern::check(int r, int c, const Grid& g) {
   Square* start = g.getSquare(r, c);
   vector<Square*> output;
   

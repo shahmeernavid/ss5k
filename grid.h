@@ -18,21 +18,24 @@ class Grid{
   void fill();
 
   public:
-    Grid(int n, int m);
-    Grid(std::istream& in, int rows); 
+    Grid(int n, int m, int l = 0);
+    Grid(std::istream& in, int rows, int l = 0); 
     ~Grid();
     int purgeMarked();
     bool isLocked(int r, int c);
     bool match(int r, int c, std::string color);
+    int match(int r, int c);
     bool swap(int r, int c, int z);
+    int hint();
+    int getLevel();
     std::vector<int> process();
     void remove(int r, int c);
     void removeRow(int r);
     void removeCol(int c);
     void removeColor(std::string color);
     void removeRect(int tr, int tc, int w, int h);
-    Square* getSquare(int r, int c);
-    Square* getSquare(int r, int c, std::string color);
+    Square* getSquare(int r, int c) const;
+    Square* getSquare(int r, int c, std::string color) const;
     void levelChanged(int l);
     void drawSquares(Xwindow *window);
     friend std::ostream& operator<<(std::ostream& out, Grid& grid);

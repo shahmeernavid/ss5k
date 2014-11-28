@@ -7,7 +7,7 @@ class FiveVerticalPattern: public Pattern{
 
   public:
     FiveVerticalPattern(int p = 0);
-    std::vector<Square*> check(int r, int c, Grid& g);
+    std::vector<Square*> check(int r, int c, const Grid& g);
     std::pair<int, int> newPos(int r, int c);
     std::string newType();
 
