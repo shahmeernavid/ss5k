@@ -20,6 +20,7 @@ int main(int argc, char* args[]){
   // srand(time(NULL));
   fstream file("sequence.txt");
   game->init(file, 10);
+  //game->init(10, 10);
 
   // game->print(cout);
 

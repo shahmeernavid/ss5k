@@ -26,6 +26,7 @@ Grid::Grid(istream& in, int rows):level(0),settings(Settings::getInstance()),fac
         string color = settings->getColorFromEncoding(z);
         string type = settings->getTypeFromEncoding(y);
         board[cr].push_back(factory->createSquare(cr, cc, color, type, true));
+        board[cr].back()->setGrid(this);
         if(x == 'l'){
           locked[cr*10+cc] = true;
         }
@@ -331,12 +332,11 @@ void Grid::levelChanged(int l){
 }
 
 void Grid::drawSquares(Xwindow *window) {
-
-    for(int r = 0; r < board.size(); r++){
-        for(int c = 0; c < board[r].size(); c++){
-            getSquare(r, c)->draw(window, r * Settings::SQUARE_WIDTH, c * Settings::SQUARE_HEIGHT);
-        }
-    }
+  for(int r = 0; r < board.size(); r++){
+      for(int c = 0; c < board[r].size(); c++){
+          getSquare(r, c)->draw(window, r * Settings::SQUARE_WIDTH, c * Settings::SQUARE_HEIGHT);
+      }
+  }
 }
 
 ostream& operator<<(ostream& out, Grid& grid){

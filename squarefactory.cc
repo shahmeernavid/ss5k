@@ -58,6 +58,10 @@ Square* SquareFactory::generateIndependantSquare(int r, int c, int level, Grid& 
         }
       }
     }
+    // just default to red if we cant find any square
+    if(invalidCount == colors.size()){
+      return createSquare(r, c, "red", (type.size()) ? type : getType(r, c, level), count);
+    }
     return createSquare(r, c, pick(colors), (type.size()) ? type : getType(r, c, level), count);
   }
   map<string, bool> invalids;
@@ -69,13 +73,18 @@ Square* SquareFactory::generateIndependantSquare(int r, int c, int level, Grid& 
   // go through the sequence until we get a square that doesnt 
   // create a chain reaction
   int start = index;
-  while(!invalids[colorSequence[(index++)%colorSequence.size()]]){
+  while(invalids[colorSequence[index%colorSequence.size()]]) {
+    // cerr << colorSequence[index%colorSequence.size()] << endl;
+    index++;
+    // cerr << "in loop " << index << endl;
     // however, if we;ve checked everythikng, stop the loop and just return it
-    if(index == start){
+    if((index)%colorSequence.size() == (start)%colorSequence.size()){
+      index = rand()%colorSequence.size();
       break;
     }
   }
-  string color = colorSequence[(index++)%colorSequence.size()];
+  string color = colorSequence[(index)%colorSequence.size()];
+  index++;
   string t = (type.size()) ? type : "basic"; 
   return createSquare(r, c, color, t, count);
   
@@ -140,7 +149,9 @@ string SquareFactory::getColor(int r, int c, int level){
   if(index == -1){
     return pick(settings->getColorProbabilities(level));  
   }
-  return colorSequence[(index++)%colorSequence.size()];
+  string color = colorSequence[(index)%colorSequence.size()];
+  index++;
+  return color;
   
 }
 string SquareFactory::getType(int r, int c, int level){

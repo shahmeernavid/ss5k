@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -Wall -MMD -g -lX11 -L/opt/X11/lib/ -I/opt/X11/include/
 EXEC = a5
-OBJECTS = settings.o squarefactory.o levelsettings.o grid.o squares/square.o squares/basic.o squares/lateral.o squares/upright.o squares/unstable.o squares/psychedelic.o game.o patterns/pattern.o patterns/basic.o main.o display/game_display.o display/window.o scoreboard.o
+OBJECTS = settings.o squarefactory.o levelsettings.o grid.o squares/square.o squares/basic.o squares/lateral.o squares/upright.o squares/unstable.o squares/psychedelic.o game.o patterns/pattern.o patterns/basic.o patterns/l1.o patterns/l2.o patterns/l3.o patterns/l4.o patterns/fourhorizontal.o patterns/fourvertical.o patterns/fivehorizontal.o patterns/fivevertical.o main.o display/game_display.o display/window.o scoreboard.o
 DEPENDS = ${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}

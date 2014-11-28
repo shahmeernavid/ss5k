@@ -1,5 +1,13 @@
 #include "settings.h"
 #include "patterns/basic.h"
+#include "patterns/fourhorizontal.h"
+#include "patterns/fourvertical.h"
+#include "patterns/fivehorizontal.h"
+#include "patterns/fivevertical.h"
+#include "patterns/l1.h"
+#include "patterns/l2.h"
+#include "patterns/l3.h"
+#include "patterns/l4.h"
 #include <iostream>
 #include <cstdlib>
 
@@ -78,6 +86,14 @@ Settings::Settings(){
   typeEncodings["psychedelic"] = 'p';
 
   registerPattern(new BasicPattern(0));
+  registerPattern(new FourHorizontalPattern(1));
+  registerPattern(new FourVerticalPattern(2));
+  registerPattern(new FiveHorizontalPattern(7));
+  registerPattern(new FiveVerticalPattern(8));
+  registerPattern(new L1Pattern(3));
+  registerPattern(new L2Pattern(4));
+  registerPattern(new L3Pattern(5));
+  registerPattern(new L4Pattern(6));
   
 
 }

@@ -42,8 +42,7 @@ int Game::setLevel(int l){
 }
 
 Grid* Game::getGrid() {
-
-    return grid;
+  return grid;
 }
 
 
@@ -59,15 +58,39 @@ int Game::decrementLevel(){
   return level;
 }
 
+int Game::oppositeDirection(int z){
+  if(z == 0){
+    return 1;
+  }
+  else if(z == 1){
+    return 0;
+  }
+  else if(z == 2){
+    return 3;
+  }
+  else if(z == 3){
+    return 2;
+  }
+  return -1;
+}
+
 int Game::swap(int r, int c, int z){
   bool result = grid->swap(r, c, z);
   if(result){
+    
     vector<int> scores = grid->process();
     int output = 0;
     for(int i = 0; i < scores.size(); i++){
       output += pow(2, i+1)*scores[i];
     }
-    return output;
+    if(output){
+      return output;  
+    }
+    else{
+      // swap the square back if it doesnt create a match
+      grid->swap(r, c, z);
+      return 0;
+    }
   }
   return 0;
 }
