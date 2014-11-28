@@ -177,15 +177,12 @@ vector<int> Grid::process(){
             // if the current square creates a pattern
             // if at least one square was removed
             if(pendingRemove.size()){
-              // if one of the squares involved in the match is locked, remove the lock
-              for(int s = 0; s < pendingRemove.size(); s++){
-                if(isLocked(pendingRemove[s]->getRow(), pendingRemove[s]->getCol())){
-                  locked[r*10+c] = false;
-                }  
-              }
               
               string color = pendingRemove[0]->getColor();
               for(int i = 0; i< pendingRemove.size(); i++){
+                if(isLocked(pendingRemove[i]->getRow(), pendingRemove[int]->getCol())){
+                  locked[r*10+c] = false;
+                } 
                 // cerr << "removing " << pendingRemove[i]->getRow() << " " << pendingRemove[i]->getCol() << endl;
                 // cerr << "color: " << pendingRemove[i]->getColor() << endl;
                 pendingRemove[i]->remove(pendingRemove.size());  
@@ -267,7 +264,8 @@ void Grid::scramble(){
 
   for(int r = 0; r < board.size(); r++){
     for(int c = 0; c < board.size(); c++){
-      board[r][c] = linear.pop();
+      board[r][c] = linear.back();
+      linear.pop_back();
       if(board[r][c]){
         board[r][c]->setRow(r);
         board[r][c]->setCol(c);
@@ -393,11 +391,12 @@ void Grid::levelChanged(int l){
 }
 
 void Grid::drawSquares(Xwindow *window) {
+  cerr << "draeing all squares!!" << endl;
   for(int r = 0; r < board.size(); r++){
       for(int c = 0; c < board[r].size(); c++){
         Square* target = getSquare(r, c);
         if(target){
-          target->draw(window, r * Settings::SQUARE_WIDTH, c * Settings::SQUARE_HEIGHT);
+          target->draw(window, c * Settings::SQUARE_WIDTH, r * Settings::SQUARE_HEIGHT);
         }
       }
   }

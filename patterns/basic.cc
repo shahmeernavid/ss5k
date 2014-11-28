@@ -15,7 +15,6 @@ vector<Square*> BasicPattern::check(int r, int c, const Grid& g) {
   }
 
   string color = start->getColor();
-  cerr << color << endl;
   // down
   if(g.getSquare(r+1, c, color) && g.getSquare(r+2, c, color)){
     output.push_back(start);

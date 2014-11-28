@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
 #include "grid.h"
 #include "game.h"
 #include "squares/square.h"
@@ -17,35 +18,40 @@ void play(int x, int y, int z){
 
 
 int main(int argc, char* args[]){
-  // srand(time(NULL));
-  game->init();
-  game->setUpDisplay(cout, false);
-  //game->init(10, 10);
+  int level = 0;
+  string script = "";
+  bool text = false;
+  int seed = time(NULL);
+  for(int i =0; i < argc; i++){
+    if(string(args[i]) == "-scriptfile"){
+      script = args[i+1];
+    }
+    if(string(args[i]) == "-text"){
+      text = true;
+    }
+    if(string(args[i]) == "-seed"){
+      seed = atoi(args[i+1]);
+    }
+    if(string(args[i]) == "-startlevel"){
+      level = atoi(args[i+1]);
+    }
+  }
 
-  // game->print(cout);
+  srand(seed);
 
-
-  //ScoreBoard *sb = new ScoreBoard;
-  //Xwindow *window = new Xwindow;
-
-  //GameDisplay *d = new GameDisplay(game->getGrid(), sb);
-  //d->setWindow(window);
-  //d->update();
-  //cerr << "before swap" << endl;
-  //game->swap(0, 0, 1);
-  //game->print(cout);
-  // cerr << "done" << endl;
-  //game->print(cout);
-  //d->update();
-
-
-  //   int n;
-  // while (cin >> n) {
-
-  // }
-
+  game->setUpDisplay(cout, !text);
+  game->setLevel(level, true);
+  if(script.size()){
+    fstream file(script);
+    game->init(file, Settings::GRID_ROWS);
+  }
+  else{
+    game->init(Settings::GRID_ROWS, Settings::GRID_COLS);
+  }
 
   string cmd;
+
+  game->start();
   
   while(cin >> cmd){
     if(cmd == "swap"){
@@ -57,7 +63,7 @@ int main(int argc, char* args[]){
       game->hint();
     }
     else if(cmd == "scramble"){
-      // game->shuffle();
+      game->scramble();
     }
     else if(cmd == "levelup"){
       game->incrementLevel();
@@ -66,7 +72,7 @@ int main(int argc, char* args[]){
       game->decrementLevel();
     }
     else if(cmd == "restart"){
-      // game->restart();
+      game->reset();
     }
     else if(cmd == "print"){
       game->print(cerr);

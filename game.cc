@@ -22,7 +22,7 @@ Game* Game::getInstance(){
   return instance;
 }
 
-Game::Game():grid(NULL),level(0),settings(Settings::getInstance()),display(NULL),scoreboard(NULL){}
+Game::Game():grid(NULL),level(0),settings(Settings::getInstance()),display(NULL),scoreboard(new ScoreBoard()){}
 
 Game::~Game(){
   delete grid;
@@ -31,18 +31,19 @@ Game::~Game(){
 }
 
 void Game::init(){
-  scoreboard = new ScoreBoard();
   // creates a new grid
-  reset();
+  reset(false);
+}
+
+void Game::start(){
+  display->update();
 }
 
 void Game::init(istream& in, int rows){
-  scoreboard = new ScoreBoard();
   grid = new Grid(in, rows, level);
 }
 
 void Game::init(int n, int m){
-  scoreboard = new ScoreBoard();
   grid = new Grid(n, m, level);
 }
 
@@ -51,12 +52,13 @@ void Game::setUpDisplay(ostream& out, bool window){
   if(window){
     display->createWindow();
   }
-  display->update();
 }
 
 
-int Game::setLevel(int l){
-  grid->levelChanged(l);
+int Game::setLevel(int l, bool init){
+  if(!init){
+    grid->levelChanged(l);  
+  }
   return level = l;
 }
 
@@ -105,11 +107,10 @@ void Game::swap(int r, int c, int z){
       if(scoreboard->getLevelScore() > settings->levelUpScore(level)){
         scoreboard->resetLevel();
         incrementLevel();
-        reset();
+        reset(false);
         display->output("---------------------");
         display->output("Level Up!!");
         display->output("---------------------");
-        cerr << "here3!" << endl;
       }  
     }
     else{
@@ -182,7 +183,7 @@ void Game::hint(){
 
 }
 void Game::scramble(){
-  int hint - grid->hint();
+  int hint = grid->hint();
   if(hint == -1){
     grid->scramble();
   }
@@ -193,7 +194,7 @@ void Game::scramble(){
   }
 }
 
-void Game::reset(){
+void Game::reset(bool print){
   delete grid;
   string inputFile = settings->getInputFile(level);
   if(inputFile.size()){
@@ -203,6 +204,7 @@ void Game::reset(){
   else{
     grid = new Grid(Settings::GRID_ROWS, Settings::GRID_COLS, level);
   }
+  if(print && display) display->update();
 }
 
 void Game::print(ostream& out){

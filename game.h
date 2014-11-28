@@ -23,7 +23,7 @@ class Game{
   static Game* instance;
 
 
-  int setLevel(int l);
+  
 
   public:
     static Game* getInstance();
@@ -39,9 +39,11 @@ class Game{
     void swap(int r, int c, int z);
     int incrementLevel();
     int decrementLevel();
+    int setLevel(int l, bool init = false);
     void hint();
     void scramble();
-    void reset();
+    void reset(bool print = true);
+    void start();
 
     int getLevel();
     void drawSquares(Xwindow* window);
