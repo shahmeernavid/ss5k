@@ -7,6 +7,8 @@
 #include "squarefactory.h"
 #include "settings.h"
 
+class GameDisplay;
+
 class Grid{
   std::vector<std::vector<Square*> > board;
   std::map<int, bool> locked;
@@ -29,7 +31,7 @@ class Grid{
     int hint();
     void scramble();
     int getLevel();
-    std::vector<int> process();
+    std::vector<int> process(GameDisplay* d = NULL);
     void remove(int r, int c);
     void removeRow(int r);
     void removeCol(int c);

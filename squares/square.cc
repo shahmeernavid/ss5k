@@ -99,3 +99,7 @@ ostream& operator<<(ostream& out, Square& square){
   
   return out;
 }
+
+void Square::drawEmptySquare(Xwindow *window, int x, int y){
+  window->fillRectangle(x, y, Settings::SQUARE_HEIGHT, Settings::SQUARE_WIDTH, 1); 
+}

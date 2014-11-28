@@ -36,7 +36,7 @@ int main(int argc, char* args[]){
       level = atoi(args[i+1]);
     }
   }
-
+  cerr << "TIMER SEED " << seed << endl;
   srand(seed);
 
   game->setUpDisplay(cout, !text);

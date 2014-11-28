@@ -6,6 +6,7 @@
 #include <utility>
 #include <algorithm>
 #include "grid.h"
+#include "display/game_display.h"
 #include "squares/square.h"
 
 using namespace std;
@@ -155,7 +156,7 @@ bool Grid::isLocked(int r, int c){
 // cell removes itself
 // we identify matches
 
-vector<int> Grid::process(){
+vector<int> Grid::process(GameDisplay* d){
   vector<int> scores;
   int oldLength = -1;
   vector<Pattern*> patterns = settings->getPatterns(level);
@@ -180,7 +181,7 @@ vector<int> Grid::process(){
               
               string color = pendingRemove[0]->getColor();
               for(int i = 0; i< pendingRemove.size(); i++){
-                if(isLocked(pendingRemove[i]->getRow(), pendingRemove[int]->getCol())){
+                if(isLocked(pendingRemove[i]->getRow(), pendingRemove[i]->getCol())){
                   locked[r*10+c] = false;
                 } 
                 // cerr << "removing " << pendingRemove[i]->getRow() << " " << pendingRemove[i]->getCol() << endl;
@@ -208,21 +209,41 @@ vector<int> Grid::process(){
       }
     }
 
-    for(int i = 0; i < toAdd.size(); i++){
-      board[toAdd[i]->getRow()][toAdd[i]->getCol()] = toAdd[i];
-    }
     oldLength = scores.size();
     if(loopCount > 0){
       scores.push_back(loopCount);
       loopCount = 0;
     }
+
+    if(d && scores.size() != oldLength){
+      d->update();
+    }
+
+    for(int i = 0; i < toAdd.size(); i++){
+      board[toAdd[i]->getRow()][toAdd[i]->getCol()] = toAdd[i];
+    }
+    
     cerr << "this" << endl;
     cerr << *this << endl;
+
+    if(d && scores.size() != oldLength){
+      d->update();
+    }
+
     // fill all the holes!
     // called once more than we need it
     // can result in infinite chains
     collapse();
+
+    if(d && scores.size() != oldLength){
+      d->update();
+    }
+
     fill();
+
+    if(d && scores.size() != oldLength){
+      d->update();
+    }
     //cerr << "done this loop " << loopCount << endl;
 
   }
@@ -391,12 +412,14 @@ void Grid::levelChanged(int l){
 }
 
 void Grid::drawSquares(Xwindow *window) {
-  cerr << "draeing all squares!!" << endl;
   for(int r = 0; r < board.size(); r++){
       for(int c = 0; c < board[r].size(); c++){
         Square* target = getSquare(r, c);
         if(target){
           target->draw(window, c * Settings::SQUARE_WIDTH, r * Settings::SQUARE_HEIGHT);
+        }
+        else{
+          Square::drawEmptySquare(window, c * Settings::SQUARE_WIDTH, r * Settings::SQUARE_HEIGHT);
         }
       }
   }

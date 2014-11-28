@@ -40,6 +40,8 @@ class Square{
     virtual void remove(int count) = 0;
     virtual void draw(Xwindow *window, int x, int y) = 0;
 
+    static void drawEmptySquare(Xwindow *window, int x, int y);
+
 
     // static Square* create(int r, int c, std::string color, std::string type, Grid* g);
     friend std::ostream& operator<<(std::ostream& out, Square& square);

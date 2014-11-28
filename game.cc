@@ -94,9 +94,12 @@ int Game::oppositeDirection(int z){
 
 void Game::swap(int r, int c, int z){
   bool result = grid->swap(r, c, z);
+  cerr << "swap!" << endl;
+  cerr << *grid << endl;
+  display->update();
   if(result){
     
-    vector<int> scores = grid->process();
+    vector<int> scores = grid->process(display);
     int output = 0;
     for(int i = 0; i < scores.size(); i++){
       output += pow(2, i+1)*scores[i];
@@ -177,8 +180,6 @@ void Game::hint(){
   int c = move/10%10;
   int r = move/100%10;
 
-
-
   display->output("Hint: " + toString(r) + " " + toString(c) + " " + toString(z));
 
 }
@@ -186,6 +187,7 @@ void Game::scramble(){
   int hint = grid->hint();
   if(hint == -1){
     grid->scramble();
+    display->update();
   }
   else{
     display->output("---------------------");

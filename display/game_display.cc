@@ -1,6 +1,7 @@
 #include <iostream>
 #include "game_display.h"
 #include "../game.h"
+#include <unistd.h>
 
 using namespace std;
 
@@ -44,6 +45,7 @@ void GameDisplay::update() {
     // update the text display and graphics display, if we have one
     if (w) {
         updateWindowDisplay();
+        usleep(1000*500);
     }
 }
 

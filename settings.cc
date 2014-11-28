@@ -86,15 +86,15 @@ Settings::Settings(){
   typeEncodings["unstable"] = 'b';
   typeEncodings["psychedelic"] = 'p';
 
-  registerPattern(new BasicPattern(0));
-  registerPattern(new FourHorizontalPattern(1));
-  registerPattern(new FourVerticalPattern(2));
-  registerPattern(new FiveHorizontalPattern(7));
-  registerPattern(new FiveVerticalPattern(8));
+  registerPattern(new BasicPattern(8));
+  registerPattern(new FourHorizontalPattern(7));
+  registerPattern(new FourVerticalPattern(6));
+  registerPattern(new FiveHorizontalPattern(5));
+  registerPattern(new FiveVerticalPattern(4));
   registerPattern(new L1Pattern(3));
-  registerPattern(new L2Pattern(4));
-  registerPattern(new L3Pattern(5));
-  registerPattern(new L4Pattern(6));
+  registerPattern(new L2Pattern(2));
+  registerPattern(new L3Pattern(1));
+  registerPattern(new L4Pattern(0));
   
 
 }
