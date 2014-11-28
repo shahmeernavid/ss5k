@@ -9,7 +9,7 @@
 
 class Grid{
   std::vector<std::vector<Square*> > board;
-  int numCols;
+  std::map<int, bool> locked;
   int level;
   Settings const * settings;
   SquareFactory* factory;
@@ -19,16 +19,18 @@ class Grid{
 
   public:
     Grid(int n, int m);
-    Grid(std::istream& in); 
+    Grid(std::istream& in, int rows); 
     ~Grid();
+    int purgeMarked();
+    bool isLocked(int r, int c);
     bool match(int r, int c, std::string color);
     bool swap(int r, int c, int z);
     std::vector<int> process();
-    int remove(int r, int c);
-    int removeRow(int r);
-    int removeCol(int c);
-    int removeColor(std::string color);
-    int removeRect(int tr, int tc, int w, int h);
+    void remove(int r, int c);
+    void removeRow(int r);
+    void removeCol(int c);
+    void removeColor(std::string color);
+    void removeRect(int tr, int tc, int w, int h);
     Square* getSquare(int r, int c);
     Square* getSquare(int r, int c, std::string color);
     void levelChanged(int l);

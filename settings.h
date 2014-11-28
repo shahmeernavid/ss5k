@@ -14,6 +14,10 @@ class Settings{
 
 
   std::map<int, LevelSettings*> levels;
+  // type -> encoding
+  std::map<std::string, char> typeEncodings;
+  // color -> encoding (int)
+  std::map<std::string, char> colorEncodings;
 
   static Settings* instance;
 
@@ -23,8 +27,8 @@ class Settings{
   void registerPattern(Pattern* p, int level = -1);
   void registerLevel(LevelSettings* ls, int level = -1);
   // l = -1 maps to global type
-  void addType(std::string name, std::string encoding, double probability, int l = -1);
-  void addColor(std::string name, std::string encoding, double probability, int l = -1);
+  void addType(std::string name, double probability, int l = -1);
+  void addColor(std::string name, double probability, int l = -1);
 
 
   public:
@@ -39,9 +43,10 @@ class Settings{
     std::vector<std::string> getSquareColors(int l = 0) const;
     std::vector<std::string> getSquareTypes(int l = 0) const;
 
-    std::string getTypeEncoding(std::string type, int l = 0) const;
-    std::string getColorEncoding(std::string color, int l = 0) const;
-    std::string getColorFromEncoding(std::string e) const;
+    char getTypeEncoding(std::string type) const;
+    char getColorEncoding(std::string color) const;
+    std::string getColorFromEncoding(char e) const;
+    std::string getTypeFromEncoding(char e) const;
 
     double getTypeProbability(std::string type, int l = 0) const;
     double getColorProbability(std::string color, int l = 0) const;
@@ -53,6 +58,7 @@ class Settings{
     int calculateScore(int removeCount) const;
 
     int levelUpScore(int l = 0) const;
+    double getLockedPercent(int l = 0) const;
     int getSpecialCount(int l = 0) const;
     
     // these are used to draw the graphical display

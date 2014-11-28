@@ -12,14 +12,13 @@ LevelSettings::~LevelSettings(){
   }
 }
 
-void LevelSettings::addType(string name, string encoding, double prob){
+void LevelSettings::addType(string name, double prob){
+  cerr << "adding type: " << name << " " << prob << endl;
   types.push_back(name);
-  typeEncodings[name] = encoding;
   typeProbabilities[name] = prob;
 }
-void LevelSettings::addColor(string name, string encoding, double prob){
+void LevelSettings::addColor(string name, double prob){
   colors.push_back(name);
-  colorEncodings[name] = encoding;
   colorProbabilities[name] = prob;
 }
 
@@ -35,12 +34,6 @@ map<string, double> LevelSettings::getColorProbabilities() const{
 }
 map<string, double> LevelSettings::getTypeProbabilities() const{
   return typeProbabilities;
-}
-string LevelSettings::getColorEncoding(string name) const{
-  return colorEncodings.at(name);
-}
-string LevelSettings::getTypeEncoding(string name) const{
-  return typeEncodings.at(name);
 }
 vector<string> LevelSettings::getColors() const{
   return colors;

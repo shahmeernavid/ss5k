@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "grid.h"
 #include "game.h"
 #include "squares/square.h"
@@ -16,22 +17,25 @@ void play(int x, int y, int z){
 
 
 int main(int argc, char* args[]){
-  game->init(10, 10);
-  game->print(cout);
+  // srand(time(NULL));
+  fstream file("sequence.txt");
+  game->init(file, 10);
+
+  // game->print(cout);
 
 
-  ScoreBoard *sb = new ScoreBoard;
-  Xwindow *window = new Xwindow;
+  //ScoreBoard *sb = new ScoreBoard;
+  //Xwindow *window = new Xwindow;
 
-  GameDisplay *d = new GameDisplay(game->getGrid(), sb);
-  d->setWindow(window);
-  d->update();
-  cerr << "before swap" << endl;
-  game->swap(0, 0, 1);
-  game->print(cout);
+  //GameDisplay *d = new GameDisplay(game->getGrid(), sb);
+  //d->setWindow(window);
+  //d->update();
+  //cerr << "before swap" << endl;
+  //game->swap(0, 0, 1);
+  //game->print(cout);
   // cerr << "done" << endl;
   //game->print(cout);
-  d->update();
+  //d->update();
 
 
   //   int n;
@@ -40,27 +44,31 @@ int main(int argc, char* args[]){
   // }
 
 
-  // string cmd;
+  string cmd;
   
-  // while(cin >> cmd){
-  //   if(cmd == "swap"){
-  //     int x, y, z;
-  //     cin >> x >> y >> z;
-  //   }
-  //   else if(cmd == "hint"){
-  //     // game->hint();
-  //   }
-  //   else if(cmd == "scramble"){
-  //     // game->shuffle();
-  //   }
-  //   else if(cmd == "levelup"){
-  //     game->incrementLevel();
-  //   }
-  //   else if(cmd == "leveldown"){
-  //     game->decrementLevel();
-  //   }
-  //   else if(cmd == "restart"){
-  //     // game->restart();
-  //   }
-  // }
+  while(cin >> cmd){
+    if(cmd == "swap"){
+      int x, y, z;
+      cin >> x >> y >> z;
+      game->swap(x, y, z);
+    }
+    else if(cmd == "hint"){
+      // game->hint();
+    }
+    else if(cmd == "scramble"){
+      // game->shuffle();
+    }
+    else if(cmd == "levelup"){
+      game->incrementLevel();
+    }
+    else if(cmd == "leveldown"){
+      game->decrementLevel();
+    }
+    else if(cmd == "restart"){
+      // game->restart();
+    }
+    else if(cmd == "print"){
+      game->print(cerr);
+    }
+  }
 }

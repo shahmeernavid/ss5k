@@ -29,7 +29,7 @@ class Game{
 
 
     // gameplay interactions
-    void init(std::istream& in);
+    void init(std::istream& in, int rows);
     void init(int n, int m);
     int swap(int r, int c, int z);
     int incrementLevel();

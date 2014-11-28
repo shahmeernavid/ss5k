@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ostream>
+#include <sstream>
 #include <cstdlib>
 #include <vector>
 #include <utility>
@@ -9,20 +10,49 @@
 using namespace std;
 
 // initialize a grid using a predefined sequence
-Grid::Grid(istream& in):settings(Settings::getInstance()){
-  while(cin){
-    char x, y, z;
-    cin >> x >> y >> z;
+Grid::Grid(istream& in, int rows):level(0),settings(Settings::getInstance()),factory(SquareFactory::getInstance()){
+  locked = map<int, bool>();
+  board = vector<vector<Square*> >();
+  string line;
+  int cr = 0;
+  int cc = 0;
+  while(getline(in, line)){
+    // we still have more lines
+    if(line.size() && cr < rows){
+      stringstream ss(line);
+      board.push_back(vector<Square*>());
+      char x, y, z; 
+      while(ss >> x >> y >> z){
+        string color = settings->getColorFromEncoding(z);
+        string type = settings->getTypeFromEncoding(y);
+        board[cr].push_back(factory->createSquare(cr, cc, color, type, true));
+        if(x == 'l'){
+          locked[cr*10+cc] = true;
+        }
+        cc++;
+      }
+      cr++;
+      cc = 0;
+    }
+    else if(cr == rows){
+      cerr << "LINE " << line << endl;
+      factory->setSequence(line);
+    }
   }
 }
 
-Grid::Grid(int n, int m):numCols(m),level(0),settings(Settings::getInstance()),factory(SquareFactory::getInstance()){
+Grid::Grid(int n, int m):level(0),settings(Settings::getInstance()),factory(SquareFactory::getInstance()){
+  locked = map<int, bool>();
   board = vector<vector<Square*> >(n, vector<Square*>(m, NULL));
-  for(int r = 0; r < n; r++){
-    for(int c = 0; c < m; c++){
+  for(int r = n-1; r > -1; r--){
+    for(int c = m-1; c > -1; c--){
       // generate random type and color
-      board[r][c] = factory->generateSquare(r, c, level);
+      board[r][c] = factory->generateIndependantSquare(r, c, level, *this, "", false);
       board[r][c]->setGrid(this);
+      double random = rand() % 100;
+      if(random < settings->getLockedPercent()){
+        locked[r*10+c] = true;
+      }
     }
   }
 }
@@ -36,64 +66,66 @@ Grid::~Grid(){
 }
 
 
-int Grid::remove(int r, int c){
+void Grid::remove(int r, int c){
   Square* target = getSquare(r, c);
   if(target){
-    board[r][c] = NULL;
-    delete target;
-    return 1;  
+    target->mark();
   }
-  
-  return 0;
 }
 
-int Grid::removeRow(int r){
-  int count = 0;
+void Grid::removeRow(int r){
   for(int c = 0; c < board[r].size(); c++){
     Square* target = getSquare(r, c);
-    count += (target) ? 1 : 0;
-    board[r][c] = NULL;
-    delete target;
+    if(target){
+      target->mark();
+    }
   }
-  return count;
 }
 
-int Grid::removeCol(int c){
-  int count = 0;
-  for(int r = 0; r < board[r].size(); r++){
+void Grid::removeCol(int c){
+  for(int r = 0; r < board.size(); r++){
     Square* target = getSquare(r, c);
-    count += (target) ? 1 : 0;
-    board[r][c] = NULL;
-    delete target;
+    if(target){
+      target->mark();
+    }
   }
-  return count;
 }
-int Grid::removeColor(string color){
-  int count = 0;
+void Grid::removeColor(string color){
+  // cerr << "removing color " << color << endl;
   for(int r = 0; r < board.size(); r++){
     for(int c = 0; c < board[r].size(); c++){
       Square* target = getSquare(r, c, color);
       if(target){
-        count++;
+        target->mark();
+      }
+    }
+  }
+}
+
+void Grid::removeRect(int tr, int tc, int w, int h){
+  for(int r = tr; r < tr+h; r++){
+    for(int c = tr; c < tc+w; c++){
+      Square* target = getSquare(r, c);
+      if(target){
+        target->mark();
+      }
+    }
+  }
+}
+
+int Grid::purgeMarked(){
+  int count = 0;
+  for(int r = 0; r < board.size(); r++){
+    for(int c = 0; c < board[r].size(); c++){
+      Square* target = getSquare(r, c);
+      if(target && target->isMarked()){
         board[r][c] = NULL;
-        delete target;  
+        delete target;
+        count++;
       }
     }
   }
   return count;
-}
-
-int Grid::removeRect(int tr, int tc, int w, int h){
-  int count = 0;
-  for(int r = tr; r < tr+h; r++){
-    for(int c = tr; c < tc+w; c++){
-      Square* target = getSquare(r, c);
-      count += (target) ? 1 : 0;
-      board[r][c] = NULL;
-      delete target;
-    }
-  }
-  return count; 
 }
 
 Square* Grid::getSquare(int r, int c){
@@ -113,6 +145,9 @@ Square* Grid::getSquare(int r, int c, string color){
   return board[r][c];
 }
 
+bool Grid::isLocked(int r, int c){
+  return locked[r*10+c];
+}
 // cell removes itself
 // we identify matches
 
@@ -138,13 +173,19 @@ vector<int> Grid::process(){
             // if the current square creates a pattern
             // if at least one square was removed
             if(pendingRemove.size()){
-              string color = pendingRemove[0]->getColor();
-              int removeCount = 0;
-              for(int i = 0; i< pendingRemove.size(); i++){
-                cerr << "removing " << pendingRemove[i]->getRow() << " " << pendingRemove[i]->getCol() << endl;
-                cerr << "color: " << pendingRemove[i]->getColor() << endl;
-                removeCount += pendingRemove[i]->remove(pendingRemove.size());
+              // if one of the squares involved in the match is locked, remove the lock
+              if(isLocked(r, c)){
+                locked[r*10+c] = false;
+                break;
               }
+              string color = pendingRemove[0]->getColor();
+              for(int i = 0; i< pendingRemove.size(); i++){
+                // cerr << "removing " << pendingRemove[i]->getRow() << " " << pendingRemove[i]->getCol() << endl;
+                // cerr << "color: " << pendingRemove[i]->getColor() << endl;
+                pendingRemove[i]->remove(pendingRemove.size());  
+              }
+
+              int removeCount = purgeMarked();
               // add to the loop count
               loopCount += settings->calculateScore(removeCount);
               pair<int, int> coord = patterns[p]->newPos(r, c);
@@ -152,7 +193,7 @@ vector<int> Grid::process(){
               int nc = coord.second;
               string nt = patterns[p]->newType(); 
               if(nr > -1 && nc > -1 && nt.size()){
-                toAdd.push_back(factory->createSquare(nr, nc, color, nt));
+                toAdd.push_back(factory->createSquare(nr, nc, color, nt, true));
                 toAdd.back()->setGrid(this);  
               }
               // dont check for any more patterns
@@ -197,6 +238,7 @@ bool Grid::match(int r, int c, string color){
     vector<Square*> result = patterns[i]->check(r, c, *this);
     if(result.size()){
       output =  true;
+      break;
     }
   }
   // delete the temp square
@@ -213,15 +255,16 @@ void Grid::fill(){
   for(int r = 0; r < board.size(); r++){
     for(int c = 0; c < board[r].size(); c++){
       if(getSquare(r, c) == NULL){
-        board[r][c] = factory->generateIndependantSquare(r, c, level, *this);
+        board[r][c] = factory->generateIndependantSquare(r, c, level, *this, "", true);
         // remember to set grid!
         board[r][c]->setGrid(this);  
       }
     }
   }
 
-  cerr << "fill" << endl;
+  cerr << "Filled" << endl;
   cerr << *this << endl;
+  cerr << "---------------" << endl;
 }
 
 void Grid::collapse(){
@@ -242,6 +285,7 @@ void Grid::collapse(){
 
   cerr << "collapse" << endl;
   cerr << *this << endl;  
+  cerr << "---------------" << endl;
 }
 
 bool Grid::swap(int r, int c, int z){
@@ -277,7 +321,6 @@ bool Grid::swap(int r, int c, int z){
       board[r][c]->setCol(c);
       board[r][c]->setRow(r);
     }
-
     return true;  
   }
   return false;
@@ -301,7 +344,7 @@ ostream& operator<<(ostream& out, Grid& grid){
     for(int c = 0; c < grid.board[r].size(); c++){
       Square* s = grid.getSquare(r, c); 
       if(s){
-        out << "_";
+        out << ((grid.isLocked(r, c)) ? "l" : "_");
         out << *s;
         out << " ";
       }

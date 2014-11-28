@@ -19,6 +19,7 @@ class Square{
     // cell's color
     std::string color;
     std::string type;
+    bool removed;
 
   public:
     // constructors
@@ -34,8 +35,11 @@ class Square{
     void setRow(int row);
     void setCol(int col);
     void setGrid(Grid* g);
-    virtual int remove(int count = 0);
+    void mark();
+    bool isMarked();
+    virtual void remove(int count) = 0;
     virtual void draw(Xwindow *window, int x, int y) = 0;
+
 
     // static Square* create(int r, int c, std::string color, std::string type, Grid* g);
     friend std::ostream& operator<<(std::ostream& out, Square& square);

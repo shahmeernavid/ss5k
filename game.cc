@@ -27,8 +27,8 @@ Game::~Game(){
   delete grid;
 }
 
-void Game::init(istream& in){
-  grid = new Grid(in);
+void Game::init(istream& in, int rows){
+  grid = new Grid(in, rows);
 }
 
 void Game::init(int n, int m){

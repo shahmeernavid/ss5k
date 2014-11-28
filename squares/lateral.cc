@@ -6,7 +6,7 @@ using namespace std;
 
 LateralSquare::LateralSquare(int r, int c, string color):Square(r, c, color, "lateral"){}
 
-int LateralSquare::remove(int count){
+void LateralSquare::remove(int count){
   return grid->removeRow(r);
 }
 

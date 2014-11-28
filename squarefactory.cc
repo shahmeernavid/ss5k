@@ -33,16 +33,15 @@ void SquareFactory::clean(){
 }
 
 
-Square* SquareFactory::generateSquare(int r, int c, int level, string type){
-  productionCount++;
+Square* SquareFactory::generateSquare(int r, int c, int level, string type, bool count){
   // generate square using probabilities here
   string color = getColor(r, c, level);
   type = (type.size()) ? type : getType(r, c, level);
-  cerr << "generating square " << productionCount << " " << color << " " << type << endl;
-  return createSquare(r, c, color, type, false);
+  // cerr << "generating square " << productionCount << " " << color << " " << type << endl;
+  return createSquare(r, c, color, type, count);
 }
 
-Square* SquareFactory::generateIndependantSquare(int r, int c, int level, Grid& g, string type){
+Square* SquareFactory::generateIndependantSquare(int r, int c, int level, Grid& g, string type, bool count){
   map<string, double> colors = settings->getColorProbabilities(level);
   if(index == -1){
     int invalidCount = 0;
@@ -59,7 +58,7 @@ Square* SquareFactory::generateIndependantSquare(int r, int c, int level, Grid& 
         }
       }
     }
-    return createSquare(r, c, pick(colors), (type.size()) ? type : getType(r, c, level), false);
+    return createSquare(r, c, pick(colors), (type.size()) ? type : getType(r, c, level), count);
   }
   map<string, bool> invalids;
   for(map<string, double>::iterator i = colors.begin(); i != colors.end(); i++){
@@ -78,7 +77,7 @@ Square* SquareFactory::generateIndependantSquare(int r, int c, int level, Grid& 
   }
   string color = colorSequence[(index++)%colorSequence.size()];
   string t = (type.size()) ? type : "basic"; 
-  return createSquare(r, c, color, t, false);
+  return createSquare(r, c, color, t, count);
   
 }
 
@@ -128,12 +127,12 @@ string SquareFactory::pick(map<string, double> mapping){
   double random = rand() % 100;
   for(map<string, double>::iterator i = mapping.begin(); i != mapping.end(); i++){
     // if we are in the right range
-    if(random <= sum+i->second*100 && random >= sum){
+    if(random < sum+i->second*100 && random >= sum){
       return i->first;
     }
     sum += i->second*100;
   }
-  cerr << "ERROR: " << random << endl;
+  cerr << "ERROR: " << random << " " << mapping["basic"] << endl;
   return "";
 }
 
@@ -173,6 +172,6 @@ void SquareFactory::setSequence(string seq){
   stringstream stream(seq);
   char current;
   while(stream >> current){
-    colorSequence.push_back(settings->getColorFromEncoding(string(1, current)));
+    colorSequence.push_back(settings->getColorFromEncoding(current));
   }
 }

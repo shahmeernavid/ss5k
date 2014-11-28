@@ -6,7 +6,7 @@ using namespace std;
 
 UprightSquare::UprightSquare(int r, int c, string color):Square(r, c, color, "upright"){}
 
-int UprightSquare::remove(int count){
+void UprightSquare::remove(int count){
  return grid->removeCol(c);
 }
 

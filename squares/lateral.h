@@ -9,7 +9,7 @@ class LateralSquare: public Square{
 
   public:
     LateralSquare(int r, int c, std::string color);
-    int remove(int count = 0);
+    void remove(int count);
     void draw(Xwindow *window, int x, int y);
 
 };

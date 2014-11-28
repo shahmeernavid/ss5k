@@ -33,11 +33,11 @@ vector<Square*> BasicPattern::check(int r, int c, Grid& g) {
 
 
 pair<int, int> BasicPattern::newPos(int r, int c){
-  return make_pair(r, c);
+  return make_pair(-1, -1);
 }
 
 string BasicPattern::newType(){
-  return "basic";
+  return "";
 }
 
 Pattern* BasicPattern::copy(){

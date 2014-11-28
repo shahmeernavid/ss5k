@@ -9,7 +9,7 @@ class UnstableSquare: public Square{
 
   public:
     UnstableSquare(int r, int c, std::string color);
-    int remove(int count = 0);
+    void remove(int count);
     void draw(Xwindow *window, int x, int y);
 
 };

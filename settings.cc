@@ -22,32 +22,62 @@ void Settings::clean(){
 Settings::Settings(){
   // configure everything here
   registerLevel(new LevelSettings(), 0);
-  levels[0]->addColor("red", "1", .25);
-  levels[0]->addColor("blue", "3", .25);
-  levels[0]->addColor("green", "2", .25);
-  levels[0]->addColor("white", "0", .25);
+  levels[0]->addColor("red", .25);
+  levels[0]->addColor("blue", .25);
+  levels[0]->addColor("green", .25);
+  levels[0]->addColor("white", .25);
+
+  levels[0]->addType("basic", .96);
+  levels[0]->addType("lateral", .01);
+  levels[0]->addType("upright", .01);
+  levels[0]->addType("unstable", .01);
+  levels[0]->addType("psychedelic", .01);
+
   levels[0]->setLevelUpScore(200);
+///////////////////////
 
   registerLevel(new LevelSettings(), 1);
-  levels[1]->addColor("red", "1", 1/3);
-  levels[1]->addColor("blue", "3", 1/6);
-  levels[1]->addColor("green", "2", 1/6);
-  levels[1]->addColor("white", "0", 1/3);
+  levels[1]->addColor("red", .33);
+  levels[1]->addColor("blue", .17);
+  levels[1]->addColor("green", .17);
+  levels[1]->addColor("white", .33);
+
+  levels[1]->addType("basic", .2);
+  levels[1]->addType("lateral", .2);
+  levels[1]->addType("upright", .2);
+  levels[1]->addType("unstable", .2);
+  levels[1]->addType("psychedelic", .2);
+
   levels[1]->setLevelUpScore(300);
   levels[1]->setSpecialCount(5);
+///////////////////////
 
   registerLevel(new LevelSettings(), 2);
-  levels[2]->addColor("red", "1", 1/4);
-  levels[2]->addColor("blue", "3", 1/4);
-  levels[2]->addColor("green", "2", 1/4);
-  levels[2]->addColor("white", "0", 1/4);
+  levels[2]->addColor("red", .25);
+  levels[2]->addColor("blue", .25);
+  levels[2]->addColor("green", .25);
+  levels[2]->addColor("white", .25);
+
+  levels[2]->addType("basic", 1);
+  levels[2]->addType("lateral", 0);
+  levels[2]->addType("upright", 0);
+  levels[2]->addType("unstable", 0);
+  levels[2]->addType("psychedelic", 0);
+
   levels[2]->setLevelUpScore(500);
   levels[2]->setLockedCellsPercent(.2);
-  
 
+  colorEncodings["red"] = '1';
+  colorEncodings["white"] = '0';
+  colorEncodings["blue"] = '3';
+  colorEncodings["green"] = '2';
+  typeEncodings["basic"] = '_';
+  typeEncodings["lateral"] = 'h';
+  typeEncodings["upright"] = 'v';
+  typeEncodings["unstable"] = 'b';
+  typeEncodings["psychedelic"] = 'p';
 
   registerPattern(new BasicPattern(0));
-  addType("basic", "_", 1);
   
 
 }
@@ -73,24 +103,24 @@ void Settings::registerPattern(Pattern* p, int level){
 void Settings::registerLevel(LevelSettings* ls, int level){
   levels[level] = ls;
 }
-void Settings::addType(string name, string encoding, double probability, int l){
+void Settings::addType(string name, double probability, int l){
   if(l == -1){
     for(int i = 0; i < levels.size(); i++){
-      levels[i]->addType(name, encoding, probability);
+      levels[i]->addType(name, probability);
     }
   }
   else if(l > -1){
-    levels[l]->addType(name, encoding, probability);
+    levels[l]->addType(name, probability);
   }
 }
-void Settings::addColor(string name, string encoding, double probability, int l){
+void Settings::addColor(string name, double probability, int l){
   if(l == -1){
     for(int i = 0; i < levels.size(); i++){
-      levels[i]->addColor(name, encoding, probability);
+      levels[i]->addColor(name, probability);
     }
   }
   else if(l > -1){
-    levels[l]->addColor(name, encoding, probability);
+    levels[l]->addColor(name, probability);
   }
 }
 
@@ -102,12 +132,12 @@ vector<string> Settings::getSquareTypes(int l) const{
   return levels.at(l)->getTypes();
 }
 
-string Settings::getTypeEncoding(string type, int l) const{
-  return levels.at(l)->getTypeEncoding(type);
+char Settings::getTypeEncoding(string type) const{
+  return typeEncodings.at(type);
 }
 
-string Settings::getColorEncoding(string color, int l) const{
-  return levels.at(l)->getColorEncoding(color);
+char Settings::getColorEncoding(string color) const{
+  return colorEncodings.at(color);
 }
 
 double Settings::getTypeProbability(string type, int l) const{
@@ -141,11 +171,25 @@ int Settings::getSpecialCount(int l) const{
   return levels.at(l)->getSpecialCount(); 
 }
 
-string Settings::getColorFromEncoding(string e) const{
+double Settings::getLockedPercent(int l) const{
+  return levels.at(l)->getLockedCellsPercent();
+}
+
+string Settings::getColorFromEncoding(char e) const{
   vector<string> colors = getSquareColors();
   for(int i = 0; i < colors.size(); i++){
-    if(getColorEncoding(colors[i]) == e){
+    if(colorEncodings.at(colors[i]) == e){
       return colors[i];
+    }
+  }
+  return "";
+}
+
+string Settings::getTypeFromEncoding(char e) const{
+  vector<string> types = getSquareTypes();
+  for(int i = 0; i < types.size(); i++){
+    if(typeEncodings.at(types[i]) == e){
+      return types[i];
     }
   }
   return "";

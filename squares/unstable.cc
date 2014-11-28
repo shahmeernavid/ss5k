@@ -6,11 +6,11 @@ using namespace std;
 
 UnstableSquare::UnstableSquare(int r, int c, string color):Square(r, c, color, "unstable"){}
 
-int UnstableSquare::remove(int count){
+void UnstableSquare::remove(int count){
   if(count == 4){
-    return grid->removeRect(r, c, 5, 5);
+    return grid->removeRect(r-2, c-2, 5, 5);
   }
-  return grid->removeRect(r, c, 3, 3);
+  return grid->removeRect(r-1, c-1, 3, 3);
   
 }
 

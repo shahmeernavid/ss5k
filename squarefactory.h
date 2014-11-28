@@ -37,10 +37,10 @@ class SquareFactory{
     static void clean();
 
     // generate a square based on level/cords, etc
-    Square* generateSquare(int r, int c, int level, std::string type = "");
-    Square* generateIndependantSquare(int r, int c, int level, Grid& g, std::string type = "");
+    Square* generateSquare(int r, int c, int level, std::string type, bool count);
+    Square* generateIndependantSquare(int r, int c, int level, Grid& g, std::string type, bool count);
     // specifically create this square
-    Square* createSquare(int r, int c, std::string color, std::string type, bool count = true);
+    Square* createSquare(int r, int c, std::string color, std::string type, bool count);
     void reset();
 
     void setSequence(std::string seq);

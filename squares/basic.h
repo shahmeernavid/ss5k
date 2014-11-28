@@ -9,6 +9,7 @@ class BasicSquare: public Square{
 
   public:
     BasicSquare(int r, int c, std::string color);
+    void remove(int count);
     void draw(Xwindow *window, int x, int y);
 
 };
