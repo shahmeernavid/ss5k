@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <vector>
 #include <utility>
+#include <algorithm>
 #include "grid.h"
 #include "squares/square.h"
 
@@ -251,6 +252,28 @@ bool Grid::match(int r, int c, string color){
   // restore orignal state of the board
   board[r][c] = holder;
   return output;
+}
+
+void Grid::scramble(){
+  vector<Square*> linear;
+  for(int r = 0; r < board.size(); r++){
+    for(int c = 0; c < board.size(); c++){
+      linear.push_back(getSquare(r, c));
+    }
+  }
+
+  // shuffle
+  random_shuffle(linear.begin(), linear.end());
+
+  for(int r = 0; r < board.size(); r++){
+    for(int c = 0; c < board.size(); c++){
+      board[r][c] = linear.pop();
+      if(board[r][c]){
+        board[r][c]->setRow(r);
+        board[r][c]->setCol(c);
+      }
+    }
+  }
 }
 
 int Grid::match(int r, int c){

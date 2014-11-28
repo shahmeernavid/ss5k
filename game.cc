@@ -105,9 +105,7 @@ void Game::swap(int r, int c, int z){
       if(scoreboard->getLevelScore() > settings->levelUpScore(level)){
         scoreboard->resetLevel();
         incrementLevel();
-        cerr << "here!" << endl;
         reset();
-        cerr << "here2!" << endl;
         display->output("---------------------");
         display->output("Level Up!!");
         display->output("---------------------");
@@ -115,6 +113,9 @@ void Game::swap(int r, int c, int z){
       }  
     }
     else{
+      display->output("---------------------");
+      display->output("No Match!!");
+      display->output("---------------------");
       // swap the square back if it doesnt create a match
       grid->swap(r, c, z);
     }
@@ -181,6 +182,15 @@ void Game::hint(){
 
 }
 void Game::scramble(){
+  int hint - grid->hint();
+  if(hint == -1){
+    grid->scramble();
+  }
+  else{
+    display->output("---------------------");
+    display->output("Valid moves remain!!");
+    display->output("---------------------");
+  }
 }
 
 void Game::reset(){

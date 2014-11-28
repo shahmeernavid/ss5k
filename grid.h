@@ -27,6 +27,7 @@ class Grid{
     int match(int r, int c);
     bool swap(int r, int c, int z);
     int hint();
+    void scramble();
     int getLevel();
     std::vector<int> process();
     void remove(int r, int c);
