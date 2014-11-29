@@ -13,6 +13,7 @@ using namespace std;
 
 // initialize a grid using a predefined sequence
 Grid::Grid(istream& in, int rows, int l):level(l),settings(Settings::getInstance()),factory(SquareFactory::getInstance()){
+  factory->reset();
   locked = map<int, bool>();
   board = vector<vector<Square*> >();
   string line;
@@ -45,6 +46,7 @@ Grid::Grid(istream& in, int rows, int l):level(l),settings(Settings::getInstance
 }
 
 Grid::Grid(int n, int m, int l):level(l),settings(Settings::getInstance()),factory(SquareFactory::getInstance()){
+  factory->reset();
   cerr << "creatin grid" << endl;
   locked = map<int, bool>();
   cerr << "locked grid " << locked.size() << endl;

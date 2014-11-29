@@ -176,8 +176,8 @@ string SquareFactory::getType(int r, int c, int level){
 }
 
 void SquareFactory::reset(){
-  productionCount = 0;
-  index = 0;
+  productionCount = -1;
+  index = -1;
   colorSequence = vector<string>();
 }
 

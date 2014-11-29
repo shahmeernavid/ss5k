@@ -17,7 +17,7 @@ void PsychedelicSquare::draw(Xwindow *window, int x, int y) {
    
     for (int i = 0; i < 5; ++i) {
         for (int j = 0; j < 5; ++j) {
-            window->fillRectangle(x + (i * 10), y + (j * 10), 10, 10, rand() % 10); 
+            window->fillRectangle(x + (i * width/5), y + (j * 10), 10, 10, rand() % 10); 
         }
     }
 

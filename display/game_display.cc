@@ -10,8 +10,8 @@ void GameDisplay::updateTextDisplay() {
     // output score information (make this prettier)
     out << "Level: " << game->getLevel() << endl;
     ScoreBoard *sb = game->getScoreBoard();
-    out << "Score: " << sb->getScore() << endl;
-    out << "Total Score: " << sb->getLevelScore() << endl;
+    out << "Level Score: " << sb->getLevelScore() << endl;
+    out << "Total Score: " << sb->getScore() << endl;
 
     game->print(out);
 
