@@ -2,6 +2,8 @@
 #include "game_display.h"
 #include "../game.h"
 #include <unistd.h>
+#include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -18,10 +20,11 @@ void GameDisplay::updateTextDisplay() {
     out << "-----------------------" << endl;
 }
 
-GameDisplay::GameDisplay(Game* game, ostream& out) :
+GameDisplay::GameDisplay(Game* game, ScoreBoard *sb, ostream& out) :
     game(game),
-    w(NULL),
-    out(out)
+    sb(sb),
+    out(out),
+    w(NULL)
     { }
 
 GameDisplay::~GameDisplay() {
@@ -31,6 +34,22 @@ GameDisplay::~GameDisplay() {
 void GameDisplay::updateWindowDisplay() {
 
     game->drawSquares(w);
+
+    int status_bar_y = Settings::WINDOW_HEIGHT - (Settings::STATUS_BAR_HEIGHT / 2);
+    stringstream score;
+    stringstream level_score;
+    stringstream level;
+
+    score << "Score: " << sb->getScore();
+    level_score << "Level Score: " << sb->getLevelScore();
+    level << "Level: " << game->getLevel();
+
+    // add background for status bar (covers up old strings)
+    w->fillRectangle(0, Settings::WINDOW_HEIGHT - Settings::STATUS_BAR_HEIGHT, 
+        Settings::WINDOW_WIDTH, Settings::STATUS_BAR_HEIGHT, 0);
+    w->drawString(5, status_bar_y, score.str(), 1);
+    w->drawString(Settings::WINDOW_WIDTH / 2 - 50, status_bar_y, level_score.str(), 1);
+    w->drawString(Settings::WINDOW_WIDTH - 50, status_bar_y, level.str(), 1);
 }
 
 
@@ -50,5 +69,5 @@ void GameDisplay::update() {
 }
 
 void GameDisplay::createWindow() {
-    w = new Xwindow();
+    w = new Xwindow(Settings::WINDOW_WIDTH, Settings::WINDOW_HEIGHT);
 }

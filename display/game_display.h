@@ -12,13 +12,14 @@ class GameDisplay {
 
     Game* game;
     Xwindow *w;
+    ScoreBoard *sb;
     std::ostream& out;
 
     void updateTextDisplay();
     void updateWindowDisplay();
 
   public:
-    GameDisplay(Game *game, std::ostream& out);
+    GameDisplay(Game* game, ScoreBoard *sb, std::ostream& out);
     ~GameDisplay(); 
     void update();
     void output(std::string t);

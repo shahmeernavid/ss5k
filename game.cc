@@ -46,7 +46,7 @@ void Game::init(int n, int m){
 }
 
 void Game::setUpDisplay(ostream& out, bool window){
-  display = new GameDisplay(this, out);
+  display = new GameDisplay(this, scoreboard, out);
   if(window){
     display->createWindow();
   }
