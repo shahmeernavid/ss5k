@@ -93,9 +93,8 @@ void Game::swap(int r, int c, int z){
   bool result = grid->swap(r, c, z);
   cerr << "swap!" << endl;
   cerr << *grid << endl;
-  display->update();
+  display->update(false);
   if(result){
-    
     vector<int> scores = grid->process(display);
     int output = 0;
     for(int i = 0; i < scores.size(); i++){

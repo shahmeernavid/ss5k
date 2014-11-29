@@ -20,7 +20,7 @@ class GameDisplay {
   public:
     GameDisplay(Game *game, std::ostream& out);
     ~GameDisplay(); 
-    void update();
+    void update(bool text = true);
     void output(std::string t);
     void createWindow();
 };

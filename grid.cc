@@ -218,7 +218,7 @@ vector<int> Grid::process(GameDisplay* d){
     }
 
     if(d && scores.size() != oldLength){
-      d->update();
+      d->update(false);
     }
 
     for(int i = 0; i < toAdd.size(); i++){
@@ -229,7 +229,7 @@ vector<int> Grid::process(GameDisplay* d){
     cerr << *this << endl;
 
     if(d && scores.size() != oldLength){
-      d->update();
+      d->update(false);
     }
 
     // fill all the holes!
@@ -238,13 +238,13 @@ vector<int> Grid::process(GameDisplay* d){
     collapse();
 
     if(d && scores.size() != oldLength){
-      d->update();
+      d->update(false);
     }
 
     fill();
 
     if(d && scores.size() != oldLength){
-      d->update();
+      d->update(false);
     }
     //cerr << "done this loop " << loopCount << endl;
 
