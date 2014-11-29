@@ -57,6 +57,8 @@ class Settings{
 
     int calculateScore(int removeCount) const;
 
+    int numLevels() const;
+
     int levelUpScore(int l = 0) const;
     double getLockedPercent(int l = 0) const;
     int getSpecialCount(int l = 0) const;
@@ -65,7 +67,7 @@ class Settings{
     // these are used to draw the graphical display
     static const int WINDOW_HEIGHT = 500; 
     static const int WINDOW_WIDTH = 500; 
-    static const int GRID_ROWS = 10; 
+    static const int GRID_ROWS = 5; 
     static const int GRID_COLS = 10; 
     static const int SQUARE_HEIGHT = WINDOW_HEIGHT / GRID_ROWS; 
     static const int SQUARE_WIDTH = WINDOW_WIDTH / GRID_COLS; 

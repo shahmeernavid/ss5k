@@ -23,8 +23,6 @@ class Game{
   static Game* instance;
 
 
-  
-
   public:
     static Game* getInstance();
     static void clean();

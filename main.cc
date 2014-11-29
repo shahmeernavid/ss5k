@@ -40,6 +40,12 @@ int main(int argc, char* args[]){
   srand(seed);
 
   game->setUpDisplay(cout, !text);
+  if(level >= Settings::getInstance()->numLevels()){
+    cout << "-----------------" << endl;
+    cout << "Level Out of Range!" << endl;
+    cout << "-----------------" << endl;
+    level = 0;
+  }
   game->setLevel(level, true);
   if(script.size()){
     fstream file(script);

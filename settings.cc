@@ -104,6 +104,10 @@ Settings::~Settings(){
   }
 }
 
+int Settings::numLevels() const{
+  return levels.size();
+}
+
 // l = -1 means global settings
 void Settings::registerPattern(Pattern* p, int level){
   if(level == -1){

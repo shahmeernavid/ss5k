@@ -4,8 +4,6 @@
 #include <fstream>
 #include "game.h"
 #include "grid.h"
-#include "squares/basic.h"
-#include "patterns/basic.h"
 using namespace std;
 
 Game* Game::instance = NULL;
@@ -56,13 +54,12 @@ void Game::setUpDisplay(ostream& out, bool window){
 
 
 int Game::setLevel(int l, bool init){
+  l = l % settings->numLevels();
   if(!init){
     grid->levelChanged(l);  
   }
   return level = l;
 }
-
-
 
 // gameplay interactions
 
