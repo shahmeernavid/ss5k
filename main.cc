@@ -42,7 +42,7 @@ int main(int argc, char* args[]){
   game->setUpDisplay(cout, !text);
   game->setLevel(level, true);
   if(script.size()){
-    fstream file(script);
+    fstream file(script.c_str());
     game->init(file, Settings::GRID_ROWS);
   }
   else{
