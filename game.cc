@@ -103,7 +103,7 @@ void Game::swap(int r, int c, int z){
     if(output){
       scoreboard->addPoints(output);
 
-      if(scoreboard->getLevelScore() > settings->levelUpScore(level)){
+      if(scoreboard->getLevelScore() > settings->levelUpScore(level) && grid->numLocked() == 0){
         scoreboard->resetLevel();
         incrementLevel();
         reset(false);

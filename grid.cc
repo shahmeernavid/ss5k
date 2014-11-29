@@ -152,6 +152,10 @@ Square* Grid::getSquare(int r, int c, string color) const{
   return board.at(r).at(c);
 }
 
+int Grid::numLocked(){
+  return locked.size();
+}
+
 bool Grid::isLocked(int r, int c){
   return locked[r*10+c];
 }
