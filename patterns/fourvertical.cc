@@ -17,32 +17,32 @@ vector<Square*> FourVerticalPattern::check(int r, int c, const Grid& g) {
 
   string color = start->getColor();
   // leftmost
-  if(g.getSquare(r, c+1, color) && g.getSquare(r, c+2, color) && g.getSquare(r, c+3, color)){
+  if(g.getSquare(r+1, c, color) && g.getSquare(r+2, c, color) && g.getSquare(r+3, c, color)){
     output.push_back(start);
-    output.push_back(g.getSquare(r, c+1, color));
-    output.push_back(g.getSquare(r, c+2, color));
-    output.push_back(g.getSquare(r, c+3, color));
+    output.push_back(g.getSquare(r+1, c, color));
+    output.push_back(g.getSquare(r+2, c, color));
+    output.push_back(g.getSquare(r+3, c, color));
   }
   //rightmost
-  else if(g.getSquare(r, c-1, color) && g.getSquare(r, c-2, color) && g.getSquare(r, c-3, color)){
+  else if(g.getSquare(r-1, c, color) && g.getSquare(r-2, c, color) && g.getSquare(r-3, c, color)){
     output.push_back(start);
-    output.push_back(g.getSquare(r, c-1, color));
-    output.push_back(g.getSquare(r, c-2, color));
-    output.push_back(g.getSquare(r, c-3, color));
+    output.push_back(g.getSquare(r-1, c, color));
+    output.push_back(g.getSquare(r-2, c, color));
+    output.push_back(g.getSquare(r-3, c, color));
   }
   // middle horizontal
-  else if(g.getSquare(r, c-1, color) && g.getSquare(r, c+1, color) && g.getSquare(r, c+2, color)){
+  else if(g.getSquare(r-1, c, color) && g.getSquare(r+1, c, color) && g.getSquare(r+2, c, color)){
     output.push_back(start);
-    output.push_back(g.getSquare(r, c-1, color));
-    output.push_back(g.getSquare(r, c+1, color));
-    output.push_back(g.getSquare(r, c+2, color));
+    output.push_back(g.getSquare(r-1, c, color));
+    output.push_back(g.getSquare(r+1, c, color));
+    output.push_back(g.getSquare(r+2, c, color));
   }
   // middle horizontal
-  else if(g.getSquare(r, c-1, color) && g.getSquare(r, c+1, color) && g.getSquare(r, c-2, color)){
+  else if(g.getSquare(r-1, c, color) && g.getSquare(r+1, c, color) && g.getSquare(r-2, c, color)){
     output.push_back(start);
-    output.push_back(g.getSquare(r, c-1, color));
-    output.push_back(g.getSquare(r, c+1, color));
-    output.push_back(g.getSquare(r, c-2, color));
+    output.push_back(g.getSquare(r-1, c, color));
+    output.push_back(g.getSquare(r+1, c, color));
+    output.push_back(g.getSquare(r-2, c, color));
   }
   return output;
 }
@@ -50,7 +50,7 @@ vector<Square*> FourVerticalPattern::check(int r, int c, const Grid& g) {
 
 // input expected to ne left-top most element
 pair<int, int> FourVerticalPattern::newPos(int r, int c){
-  return make_pair(r, c+1);
+  return make_pair(r+1, c);
 }
 
 string FourVerticalPattern::newType(){
