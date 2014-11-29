@@ -197,7 +197,7 @@ void Game::reset(bool print){
   delete grid;
   string inputFile = settings->getInputFile(level);
   if(inputFile.size()){
-    ifstream file(inputFile);
+    ifstream file(inputFile.c_str());
     grid = new Grid(file, Settings::GRID_ROWS, level);
   }
   else{

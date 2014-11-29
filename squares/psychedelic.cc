@@ -11,6 +11,16 @@ void PsychedelicSquare::remove(int count){
 }
 
 void PsychedelicSquare::draw(Xwindow *window, int x, int y) {
+
+    int height = Settings::SQUARE_HEIGHT; // save us some typing
+    int width = Settings::SQUARE_WIDTH;
    
-   window->fillRectangle(x, y, 50, 50, 1); 
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            window->fillRectangle(x + (i * 10), y + (j * 10), 10, 10, rand() % 10); 
+        }
+    }
+
+    window->fillRectangle(x + 10, y + 10, 30, 30, getColorInt());
+    window->drawString(x + (width / 2) - 3, y + (height / 2) + 3, "P", 9); 
 }
