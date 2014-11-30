@@ -50,7 +50,7 @@ void GameDisplay::updateWindowDisplay() {
         Settings::WINDOW_WIDTH, Settings::STATUS_BAR_HEIGHT, 0);
 
     // for levels 0, 1, or 2 there is no move limit, so we do not display it
-    if (game->movesLeft() != INT_MAX) {
+    if (game->movesLeft() == 1000) {
         // print out score/moves info
         w->drawString(5, status_bar_y, score.str(), 1);
         w->drawString(Settings::WINDOW_WIDTH / 2 - 50, status_bar_y, level_score.str(), 1);
