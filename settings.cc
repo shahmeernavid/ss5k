@@ -93,7 +93,10 @@ Settings::Settings(){
 
   levels[3]->setLevelUpScore(1000);
   levels[3]->setLockedCellsPercent(.2);
+  levels[3]->setMaxMoves(50);
   levels[3]->setInputFile("sequence3.txt");
+
+  /////////////////////////
 
   colorEncodings["red"] = '1';
   colorEncodings["white"] = '0';
@@ -221,20 +224,18 @@ double Settings::getLockedPercent(int l) const{
 }
 
 string Settings::getColorFromEncoding(char e) const{
-  vector<string> colors = getSquareColors();
-  for(int i = 0; i < colors.size(); i++){
-    if(colorEncodings.at(colors[i]) == e){
-      return colors[i];
+  for(map<string, char>::const_iterator i = colorEncodings.begin(); i != colorEncodings.end(); i++){
+    if(i->second == e){
+      return i->first;
     }
   }
   return "";
 }
 
 string Settings::getTypeFromEncoding(char e) const{
-  vector<string> types = getSquareTypes();
-  for(int i = 0; i < types.size(); i++){
-    if(typeEncodings.at(types[i]) == e){
-      return types[i];
+  for(map<string, char>::const_iterator i = typeEncodings.begin(); i != typeEncodings.end(); i++){
+    if(i->second == e){
+      return i->first;
     }
   }
   return "";

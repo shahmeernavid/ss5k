@@ -28,6 +28,7 @@ Grid::Grid(istream& in, int rows, int l):level(l),settings(Settings::getInstance
       while(ss >> x >> y >> z){
         string color = settings->getColorFromEncoding(z);
         string type = settings->getTypeFromEncoding(y);
+        cerr << "TYPE: " << type << y << endl;
         board[cr].push_back(factory->createSquare(cr, cc, color, type, true));
         board[cr].back()->setGrid(this);
         if(x == 'l'){

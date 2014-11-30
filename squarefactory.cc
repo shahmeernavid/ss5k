@@ -187,7 +187,7 @@ void SquareFactory::reset(){
 
 void SquareFactory::setSequence(string seq){
   if(seq.size()){
-
+    cerr << "setting sequence" << endl;
     index = 0;
     stringstream stream(seq);
     char current;
