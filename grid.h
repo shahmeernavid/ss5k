@@ -21,6 +21,8 @@ class Grid{
   void collapse();
   void fill();
 
+  void drawLock(Xwindow *window, int r, int c);
+
   public:
     Grid(int n, int m, int l = 0);
     Grid(std::istream& in, int rows, int l = 0); 

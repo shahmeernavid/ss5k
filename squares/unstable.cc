@@ -28,5 +28,5 @@ void UnstableSquare::draw(Xwindow *window, int x, int y) {
     window->fillRectangle(x, y + ribbon_height, width, 3 * ribbon_height,
         getColorInt());
 
-    window->drawString(x + (width / 2) - 3, y + (height / 2) + 3, "S", 1); 
+    window->drawString(x + (width / 2) - 5, y + (height / 2) + 5, "US", 1);
 }
