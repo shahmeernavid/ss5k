@@ -130,8 +130,8 @@ Settings::Settings(){
 
 }
 Settings::~Settings(){
-  for(int i = 0; i < levels.size(); i++){
-    delete levels[i];
+  for(map<int, LevelSettings*>::iterator i = levels.begin(); i != levels.end(); i++){
+    delete i->second;
   }
 }
 
