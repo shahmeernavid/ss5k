@@ -111,6 +111,8 @@ void Game::swap(int r, int c, int z){
     if(output){
       scoreboard->addPoints(output);
 
+      cerr << "LOCKED INFO: " << grid->numLocked() << " " << (grid->numRooted()) << endl;
+
       if(scoreboard->getLevelScore() > settings->levelUpScore(level) && grid->numLocked() == 0 && grid->numRooted() == 0){
         scoreboard->resetLevel();
         incrementLevel();
