@@ -57,7 +57,7 @@ Grid::Grid(int n, int m, int l):level(l),settings(Settings::getInstance()),facto
       // generate random type and color
       board[r][c] = factory->generateIndependantSquare(r, c, level, *this, "", false);
       board[r][c]->setGrid(this);
-      if(random < settings->getLockedPercent(level)*100){
+      if (rand() % 100 < settings->getLockedPercent(level) * 100) {
         locked[r*10+c] = true;
       }
     }
@@ -442,6 +442,30 @@ void Grid::drawSquares(Xwindow *window) {
         }
       }
   }
+
+    for (int r = 0; r < board.size(); ++r) {
+        for(int c = 0; c < board[r].size(); c++){
+            if (locked[(r * 10) + c]) {
+                drawLock(window, r, c);
+            }
+        }
+    }
+}
+
+void Grid::drawLock(Xwindow *window, int r, int c) {
+    int height = Settings::SQUARE_HEIGHT; // save us some typing
+    int width = Settings::SQUARE_WIDTH;
+
+    int ribbon_height = height / 5;
+    int ribbon_width = width / 5;
+
+    for (int i = 0; i < 5; i += 4) {
+        window->fillRectangle((c * height) + (i * ribbon_width), r * width, ribbon_height, width, 1);
+    }
+
+    for (int i = 0; i < 5; i += 4) {
+        window->fillRectangle(c * height, (r * width) + (i * ribbon_height), height, ribbon_width, 1);
+    }
 }
 
 ostream& operator<<(ostream& out, Grid& grid){
