@@ -3,7 +3,7 @@
 
 using namespace std;
 
-LevelSettings::LevelSettings():levelUpScore(0),specialCount(-1),lockedCellsPercent(0),patterns(vector<Pattern*>(0)), inputFile("") {
+LevelSettings::LevelSettings():levelUpScore(0), maxMoves(-1),specialCount(-1),lockedCellsPercent(0),patterns(vector<Pattern*>(0)), inputFile("") {
 }
 
 LevelSettings::~LevelSettings(){
