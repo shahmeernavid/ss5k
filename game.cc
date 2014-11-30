@@ -106,7 +106,7 @@ void Game::swap(int r, int c, int z){
     vector<int> scores = grid->process(display);
     int output = 0;
     for(int i = 0; i < scores.size(); i++){
-      output += pow(2, i+1)*scores[i];
+      output += pow(2, i)*scores[i];
     }
     if(output){
       scoreboard->addPoints(output);

@@ -80,7 +80,7 @@ void GameDisplay::update(bool text) {
     // update the text display and graphics display, if we have one
     if (w) {
         updateWindowDisplay();
-        usleep(1000);
+        // usleep(1000);
     }
 }
 
