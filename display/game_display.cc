@@ -20,9 +20,9 @@ void GameDisplay::updateTextDisplay() {
     out << "-----------------------" << endl;
 }
 
-GameDisplay::GameDisplay(Game* game, ScoreBoard *sb, ostream& out) :
+GameDisplay::GameDisplay(Game* game, ostream& out) :
     game(game),
-    sb(sb),
+    sb(game->getScoreBoard()),
     out(out),
     w(NULL)
     { }
