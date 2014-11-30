@@ -13,10 +13,20 @@ void RootSquare::remove(int count){
 
 
 void RootSquare::draw(Xwindow *window, int x, int y) {
-  int height = Settings::SQUARE_HEIGHT;
-  int width = Settings::SQUARE_WIDTH;
 
-  window->fillRectangle(x, y, width, height, getColorInt());
+    int height = Settings::SQUARE_HEIGHT; // save us some typing
+    int width = Settings::SQUARE_WIDTH;
 
-  window->drawString(x + (width / 2) - 3, y + (height / 2) + 3, "R", 1); 
+    int ribbon_height = height / 5;
+    int ribbon_width = width / 5;
+
+    window->fillRectangle(x, y, width, height, getColorInt());
+    // vertical/horizontal stripes
+    window->fillRectangle(x + 2 * ribbon_width, y, ribbon_width, height, 0);
+    window->fillRectangle(x, y + 2 * ribbon_height, width, ribbon_height, 0);
+
+    window->fillRectangle(x + 2 * ribbon_width, y + 2 * ribbon_width,
+        ribbon_width, ribbon_height, 1);
+
+    window->drawString(x + (width / 2) - 3, y + (height / 2) + 4, "R", 0); 
 }
