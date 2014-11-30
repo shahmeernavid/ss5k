@@ -168,7 +168,13 @@ int Grid::numRooted(){
 }
 
 int Grid::numLocked(){
-  return locked.size();
+  int out = 0;
+  for(map<int, bool>::iterator i = locked.begin(); i != locked.end(); i++){
+    if(i->second){
+      out++;
+    }
+  }
+  return out;
 }
 
 bool Grid::isLocked(int r, int c){

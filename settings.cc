@@ -8,6 +8,10 @@
 #include "patterns/l2.h"
 #include "patterns/l3.h"
 #include "patterns/l4.h"
+#include "patterns/t1.h"
+#include "patterns/t2.h"
+#include "patterns/t3.h"
+#include "patterns/t4.h"
 #include <iostream>
 #include <cstdlib>
 
@@ -95,6 +99,10 @@ Settings::Settings(){
   levels[3]->setLockedCellsPercent(.2);
   levels[3]->setMaxMoves(50);
   levels[3]->setInputFile("sequence3.txt");
+  levels[3]->registerPattern(new T1Pattern(-1));
+  levels[3]->registerPattern(new T2Pattern(-2));
+  levels[3]->registerPattern(new T3Pattern(-3));
+  levels[3]->registerPattern(new T4Pattern(-4));
 
   /////////////////////////
 
