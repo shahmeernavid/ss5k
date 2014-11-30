@@ -53,7 +53,7 @@ int Game::movesLeft(){
 }
 
 void Game::setUpDisplay(ostream& out, bool window){
-  display = new GameDisplay(this, scoreboard, out);
+  display = new GameDisplay(this, out);
   if(window){
     display->createWindow();
   }

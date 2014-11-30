@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <string>
 #include <sstream>
+#include <climits>
 
 using namespace std;
 
@@ -20,9 +21,9 @@ void GameDisplay::updateTextDisplay() {
     out << "-----------------------" << endl;
 }
 
-GameDisplay::GameDisplay(Game* game, ScoreBoard *sb, ostream& out) :
+GameDisplay::GameDisplay(Game* game, ostream& out) :
     game(game),
-    sb(sb),
+    sb(game->getScoreBoard()),
     out(out),
     w(NULL)
     { }
@@ -47,9 +48,22 @@ void GameDisplay::updateWindowDisplay() {
     // add background for status bar (covers up old strings)
     w->fillRectangle(0, Settings::WINDOW_HEIGHT - Settings::STATUS_BAR_HEIGHT, 
         Settings::WINDOW_WIDTH, Settings::STATUS_BAR_HEIGHT, 0);
-    w->drawString(5, status_bar_y, score.str(), 1);
-    w->drawString(Settings::WINDOW_WIDTH / 2 - 50, status_bar_y, level_score.str(), 1);
-    w->drawString(Settings::WINDOW_WIDTH - 50, status_bar_y, level.str(), 1);
+
+    // for levels 0, 1, or 2 there is no move limit, so we do not display it
+    if (game->movesLeft() != INT_MAX) {
+        // print out score/moves info
+        w->drawString(5, status_bar_y, score.str(), 1);
+        w->drawString(Settings::WINDOW_WIDTH / 2 - 50, status_bar_y, level_score.str(), 1);
+        w->drawString(Settings::WINDOW_WIDTH - 50, status_bar_y, level.str(), 1);
+    } else {
+        stringstream moves;
+        moves << "Moves left: " << game->movesLeft();
+
+        w->drawString(5, status_bar_y, score.str(), 1);
+        w->drawString(Settings::WINDOW_WIDTH / 4 - 50, status_bar_y, level_score.str(), 1);
+        w->drawString(Settings::WINDOW_WIDTH / 4 * 3 - 50, status_bar_y, moves.str(), 1);
+        w->drawString(Settings::WINDOW_WIDTH - 50, status_bar_y, level.str(), 1);
+    }
 }
 
 

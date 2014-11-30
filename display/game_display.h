@@ -19,7 +19,7 @@ class GameDisplay {
     void updateWindowDisplay();
 
   public:
-    GameDisplay(Game* game, ScoreBoard *sb, std::ostream& out);
+    GameDisplay(Game* game, std::ostream& out);
     ~GameDisplay(); 
     void update(bool text = true);
     void output(std::string t);
