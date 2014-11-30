@@ -28,6 +28,7 @@ class Square{
     virtual ~Square();
     // getter for color
     std::string getColor();
+    std::string getType();
     // get for colour, returning int for Xwindow drawing
     int getColorInt();
     int getRow();

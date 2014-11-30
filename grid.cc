@@ -152,6 +152,19 @@ Square* Grid::getSquare(int r, int c, string color) const{
   return board.at(r).at(c);
 }
 
+int Grid::numRooted(){
+  int output = 0;
+  for(int r = 0; r < board.size(); r++){
+    for(int c = 0; c  < board[r].size(); c++){
+      Square* target = getSquare(r, c);
+      if(target){
+        output+=(target->getType() == "root") ? 1 : 0;
+      }
+    }
+  }
+  return output;
+}
+
 int Grid::numLocked(){
   return locked.size();
 }

@@ -111,20 +111,25 @@ void Game::swap(int r, int c, int z){
     if(output){
       scoreboard->addPoints(output);
 
-      if(scoreboard->getLevelScore() > settings->levelUpScore(level) && grid->numLocked() == 0){
+      if(scoreboard->getLevelScore() > settings->levelUpScore(level) && grid->numLocked() == 0 && grid->numRooted() == 0){
         scoreboard->resetLevel();
         incrementLevel();
         reset(false);
         display->output("---------------------");
         display->output("Level Up!!");
         display->output("---------------------");
-      }  
-    }
-    else if(movesLeft() <= 0){
-      display->output("---------------------");
-      display->output("No More moves Left!!");
-      display->output("---------------------");
-      exit(0);
+      }
+      else if(scoreboard->getLevelScore() > settings->levelUpScore(level) && grid->numLocked() != 0 && grid->numRooted() != 0){
+        display->output("---------------------");
+        display->output("Remove all Rooted and Locked Cells!!");
+        display->output("---------------------");
+      }
+      else if(movesLeft() <= 0){
+        display->output("---------------------");
+        display->output("No More Moves Left!!");
+        display->output("---------------------");
+        exit(0);
+      }
     }
     else{
       display->output("---------------------");

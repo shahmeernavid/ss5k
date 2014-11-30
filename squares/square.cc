@@ -59,6 +59,9 @@ bool Square::isMarked(){
 string Square::getColor(){
   return color;
 }
+string Square::getType(){
+  return type;
+}
 
 // this returns the appropriate integer representation of the colour for the
 // Xwindow class

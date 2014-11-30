@@ -73,7 +73,7 @@ Settings::Settings(){
   levels[2]->addType("unstable", 0);
   levels[2]->addType("psychedelic", 0);
 
-  levels[2]->setLevelUpScore(500);
+  levels[2]->setLevelUpScore(50);
   levels[2]->setLockedCellsPercent(.2);
 
   /////////////////////////
@@ -89,9 +89,11 @@ Settings::Settings(){
   levels[3]->addType("upright", 0);
   levels[3]->addType("unstable", 0);
   levels[3]->addType("psychedelic", 0);
+  levels[3]->addType("root", 0);
 
   levels[3]->setLevelUpScore(1000);
   levels[3]->setLockedCellsPercent(.2);
+  levels[3]->setInputFile("sequence3.txt");
 
   colorEncodings["red"] = '1';
   colorEncodings["white"] = '0';
@@ -102,6 +104,7 @@ Settings::Settings(){
   typeEncodings["upright"] = 'v';
   typeEncodings["unstable"] = 'b';
   typeEncodings["psychedelic"] = 'p';
+  typeEncodings["root"] = 'r';
 
   registerPattern(new BasicPattern(8));
   registerPattern(new FourHorizontalPattern(7));

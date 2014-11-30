@@ -11,6 +11,7 @@
 #include "squares/upright.h"
 #include "squares/psychedelic.h"
 #include "squares/unstable.h"
+#include "squares/root.h"
 
 
 using namespace std;
@@ -110,6 +111,9 @@ Square* SquareFactory::createSquare(int r, int c, string color, string type, boo
   else if(type == "psychedelic"){
     return new PsychedelicSquare(r, c, color);
   }
+  else if(type == "root"){
+    return new RootSquare(r, c, color);
+  }
   else{
     return NULL;
   }
@@ -182,10 +186,13 @@ void SquareFactory::reset(){
 }
 
 void SquareFactory::setSequence(string seq){
-  index = 0;
-  stringstream stream(seq);
-  char current;
-  while(stream >> current){
-    colorSequence.push_back(settings->getColorFromEncoding(current));
+  if(seq.size()){
+
+    index = 0;
+    stringstream stream(seq);
+    char current;
+    while(stream >> current){
+      colorSequence.push_back(settings->getColorFromEncoding(current));
+    }
   }
 }

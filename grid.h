@@ -16,6 +16,8 @@ class Grid{
   Settings const * settings;
   SquareFactory* factory;
 
+
+
   void collapse();
   void fill();
 
@@ -32,6 +34,7 @@ class Grid{
     int hint();
     void scramble();
     int getLevel();
+    int numRooted();
     std::vector<int> process(GameDisplay* d = NULL);
     void remove(int r, int c);
     void removeRow(int r);
