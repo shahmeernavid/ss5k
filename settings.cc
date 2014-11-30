@@ -146,6 +146,8 @@ void Settings::registerPattern(Pattern* p, int level){
       Pattern* copy = p->copy();
       levels[i]->registerPattern(copy);
     }
+    // we dont want a memory leak!
+    delete p;
   }
   else if(level > -1){
     levels[level]->registerPattern(p);
