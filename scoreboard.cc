@@ -11,6 +11,17 @@ void ScoreBoard::addPoints(int n) {
     score += n;
 }
 
+int ScoreBoard::getMoves(){
+    return movesMade;
+}
+
+void ScoreBoard::addMoves(int n){
+    movesMade += n;
+}
+void ScoreBoard::resetMoves(){
+    movesMade = 0;
+}
+
 int ScoreBoard::getLevelScore() {
     return levelScore;
 }

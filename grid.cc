@@ -152,6 +152,10 @@ Square* Grid::getSquare(int r, int c, string color) const{
   return board.at(r).at(c);
 }
 
+int Grid::numLocked(){
+  return locked.size();
+}
+
 bool Grid::isLocked(int r, int c){
   return locked[r*10+c];
 }
@@ -218,7 +222,7 @@ vector<int> Grid::process(GameDisplay* d){
     }
 
     if(d && scores.size() != oldLength){
-      d->update();
+      d->update(false);
     }
 
     for(int i = 0; i < toAdd.size(); i++){
@@ -229,7 +233,7 @@ vector<int> Grid::process(GameDisplay* d){
     cerr << *this << endl;
 
     if(d && scores.size() != oldLength){
-      d->update();
+      d->update(false);
     }
 
     // fill all the holes!
@@ -238,13 +242,13 @@ vector<int> Grid::process(GameDisplay* d){
     collapse();
 
     if(d && scores.size() != oldLength){
-      d->update();
+      d->update(false);
     }
 
     fill();
 
     if(d && scores.size() != oldLength){
-      d->update();
+      d->update(false);
     }
     //cerr << "done this loop " << loopCount << endl;
 

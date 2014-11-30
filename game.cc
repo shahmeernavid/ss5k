@@ -45,6 +45,13 @@ void Game::init(int n, int m){
   grid = new Grid(n, m, level);
 }
 
+int Game::movesLeft(){
+  if(scoreboard->getMoves() == -1){
+    return 1000;
+  }
+  return settings->getMaxMoves(level) - scoreboard->getMoves();
+}
+
 void Game::setUpDisplay(ostream& out, bool window){
   display = new GameDisplay(this, scoreboard, out);
   if(window){
@@ -93,9 +100,9 @@ void Game::swap(int r, int c, int z){
   bool result = grid->swap(r, c, z);
   cerr << "swap!" << endl;
   cerr << *grid << endl;
-  display->update();
+  display->update(false);
   if(result){
-    
+    scoreboard->addMoves(1);
     vector<int> scores = grid->process(display);
     int output = 0;
     for(int i = 0; i < scores.size(); i++){
@@ -104,7 +111,7 @@ void Game::swap(int r, int c, int z){
     if(output){
       scoreboard->addPoints(output);
 
-      if(scoreboard->getLevelScore() > settings->levelUpScore(level)){
+      if(scoreboard->getLevelScore() > settings->levelUpScore(level) && grid->numLocked() == 0){
         scoreboard->resetLevel();
         incrementLevel();
         reset(false);
@@ -112,6 +119,12 @@ void Game::swap(int r, int c, int z){
         display->output("Level Up!!");
         display->output("---------------------");
       }  
+    }
+    else if(movesLeft() <= 0){
+      display->output("---------------------");
+      display->output("No More moves Left!!");
+      display->output("---------------------");
+      exit(0);
     }
     else{
       display->output("---------------------");
@@ -194,6 +207,7 @@ void Game::scramble(){
 }
 
 void Game::reset(bool print){
+  scoreboard->resetLevel();
   delete grid;
   string inputFile = settings->getInputFile(level);
   if(inputFile.size()){

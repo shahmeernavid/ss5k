@@ -44,6 +44,7 @@ class Game{
     void start();
 
     int getLevel();
+    int movesLeft();
     void drawSquares(Xwindow* window);
     ScoreBoard* getScoreBoard();
 

@@ -43,7 +43,7 @@ Square* SquareFactory::generateSquare(int r, int c, int level, string type, bool
 
 Square* SquareFactory::generateIndependantSquare(int r, int c, int level, Grid& g, string type, bool count){
   map<string, double> colors = settings->getColorProbabilities(level);
-  if(index == -1){
+  if(index == -1 || colorSequence.size() == 0){
     int invalidCount = 0;
     for(map<string, double>::iterator i = colors.begin(); i != colors.end(); i++){
       if(g.match(r, c, i->first)){
@@ -146,7 +146,7 @@ string SquareFactory::pick(map<string, double> mapping){
 }
 
 string SquareFactory::getColor(int r, int c, int level){
-  if(index == -1){
+  if(index == -1 || colorSequence.size() == 0){
     return pick(settings->getColorProbabilities(level));  
   }
   string color = colorSequence[(index)%colorSequence.size()];

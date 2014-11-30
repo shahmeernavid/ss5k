@@ -3,7 +3,7 @@
 
 using namespace std;
 
-LevelSettings::LevelSettings():levelUpScore(0),specialCount(-1),lockedCellsPercent(0),patterns(vector<Pattern*>(0)), inputFile("") {
+LevelSettings::LevelSettings():levelUpScore(0), maxMoves(-1),specialCount(-1),lockedCellsPercent(0),patterns(vector<Pattern*>(0)), inputFile("") {
 }
 
 LevelSettings::~LevelSettings(){
@@ -23,6 +23,15 @@ void LevelSettings::addColor(string name, double prob){
 }
 
 // accessor methods
+
+void LevelSettings::setMaxMoves(int m){
+  maxMoves = m;
+}
+
+int LevelSettings::getMaxMoves(){
+  return maxMoves;
+}
+
 double LevelSettings::getColorProbability(string name) const{
   return colorProbabilities.at(name);
 }

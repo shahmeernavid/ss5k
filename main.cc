@@ -52,7 +52,7 @@ int main(int argc, char* args[]){
     game->init(file, Settings::GRID_ROWS);
   }
   else{
-    game->init(Settings::GRID_ROWS, Settings::GRID_COLS);
+    game->init();
   }
 
   string cmd;

@@ -76,6 +76,23 @@ Settings::Settings(){
   levels[2]->setLevelUpScore(500);
   levels[2]->setLockedCellsPercent(.2);
 
+  /////////////////////////
+
+  registerLevel(new LevelSettings(), 3);
+  levels[3]->addColor("red", .25);
+  levels[3]->addColor("blue", .25);
+  levels[3]->addColor("green", .25);
+  levels[3]->addColor("white", .25);
+
+  levels[3]->addType("basic", 1);
+  levels[3]->addType("lateral", 0);
+  levels[3]->addType("upright", 0);
+  levels[3]->addType("unstable", 0);
+  levels[3]->addType("psychedelic", 0);
+
+  levels[3]->setLevelUpScore(1000);
+  levels[3]->setLockedCellsPercent(.2);
+
   colorEncodings["red"] = '1';
   colorEncodings["white"] = '0';
   colorEncodings["blue"] = '3';
@@ -119,6 +136,10 @@ void Settings::registerPattern(Pattern* p, int level){
   else if(level > -1){
     levels[level]->registerPattern(p);
   }
+}
+
+int Settings::getMaxMoves(int l) const{
+  return levels.at(l)->getMaxMoves();
 }
 
 void Settings::registerLevel(LevelSettings* ls, int level){

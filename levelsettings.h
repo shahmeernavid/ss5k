@@ -10,6 +10,7 @@
 class LevelSettings{
   int levelUpScore;
   int specialCount;
+  int maxMoves;
   double lockedCellsPercent;
   std::string inputFile;
 
@@ -47,6 +48,8 @@ class LevelSettings{
     void setLockedCellsPercent(double p);
     double getLockedCellsPercent() const;
     void setInputFile(std::string name);
+    void setMaxMoves(int m);
+    int getMaxMoves();
     std::string getInputFile();
    
 };

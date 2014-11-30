@@ -24,6 +24,7 @@ class Grid{
     Grid(std::istream& in, int rows, int l = 0); 
     ~Grid();
     int purgeMarked();
+    int numLocked();
     bool isLocked(int r, int c);
     bool match(int r, int c, std::string color);
     int match(int r, int c);
