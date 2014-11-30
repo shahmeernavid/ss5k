@@ -58,6 +58,7 @@ class Settings{
     int calculateScore(int removeCount) const;
 
     int numLevels() const;
+    int getMaxMoves(int l) const;
 
     int levelUpScore(int l = 0) const;
     double getLockedPercent(int l = 0) const;

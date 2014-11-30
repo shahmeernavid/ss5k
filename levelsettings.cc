@@ -23,6 +23,15 @@ void LevelSettings::addColor(string name, double prob){
 }
 
 // accessor methods
+
+void LevelSettings::setMaxMoves(int m){
+  maxMoves = m;
+}
+
+int LevelSettings::getMaxMoves(){
+  return maxMoves;
+}
+
 double LevelSettings::getColorProbability(string name) const{
   return colorProbabilities.at(name);
 }

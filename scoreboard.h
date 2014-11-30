@@ -14,6 +14,8 @@ class ScoreBoard {
     int getLevelScore();
     void resetScore();
     void resetLevel();
+
+    int getMoves();
     
     void addMoves(int n);
     void resetMoves();
