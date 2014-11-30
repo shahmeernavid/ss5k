@@ -218,7 +218,14 @@ vector<Pattern*> Settings::getPatterns(int l) const{
 }
 
 int Settings::calculateScore(int removeCount) const{
+  if(removeCount >= 5){
+    return 3*removeCount;
+  }
+  else if(removeCount == 4){
+    return 2*removeCount;
+  }
   return removeCount;
+
 }
 
 int Settings::levelUpScore(int l) const{
