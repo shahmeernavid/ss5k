@@ -57,7 +57,7 @@ Grid::Grid(int n, int m, int l):level(l),settings(Settings::getInstance()),facto
       // generate random type and color
       board[r][c] = factory->generateIndependantSquare(r, c, level, *this, "", false);
       board[r][c]->setGrid(this);
-      if(random < settings->getLockedPercent(level)*100){
+      if(rand() % 100 < settings->getLockedPercent(level)*100){
         locked[r*10+c] = true;
       }
     }
@@ -81,6 +81,7 @@ void Grid::remove(int r, int c){
 }
 
 void Grid::removeRow(int r){
+  cerr << "removing row" << endl;
   for(int c = 0; c < board[r].size(); c++){
     Square* target = getSquare(r, c);
     if(target){
@@ -90,6 +91,7 @@ void Grid::removeRow(int r){
 }
 
 void Grid::removeCol(int c){
+  cerr << "removing col" << endl;
   for(int r = 0; r < board.size(); r++){
     Square* target = getSquare(r, c);
     if(target){
@@ -111,7 +113,7 @@ void Grid::removeColor(string color){
 
 void Grid::removeRect(int tr, int tc, int w, int h){
   for(int r = tr; r < tr+h; r++){
-    for(int c = tr; c < tc+w; c++){
+    for(int c = tc; c < tc+w; c++){
       Square* target = getSquare(r, c);
       if(target){
         target->mark();

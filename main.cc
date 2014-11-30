@@ -73,9 +73,11 @@ int main(int argc, char* args[]){
     }
     else if(cmd == "levelup"){
       game->incrementLevel();
+      game->reset();
     }
     else if(cmd == "leveldown"){
       game->decrementLevel();
+      game->reset();
     }
     else if(cmd == "restart"){
       game->reset();
