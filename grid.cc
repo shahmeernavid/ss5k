@@ -57,8 +57,7 @@ Grid::Grid(int n, int m, int l):level(l),settings(Settings::getInstance()),facto
       // generate random type and color
       board[r][c] = factory->generateIndependantSquare(r, c, level, *this, "", false);
       board[r][c]->setGrid(this);
-      double random = rand() % 100;
-      if(random < settings->getLockedPercent()){
+      if(random < settings->getLockedPercent(level)*100){
         locked[r*10+c] = true;
       }
     }
