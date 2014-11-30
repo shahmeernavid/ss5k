@@ -46,7 +46,7 @@ void Game::init(int n, int m){
 }
 
 int Game::movesLeft(){
-  if(scoreboard->getMoves() == -1){
+  if(settings->getMaxMoves(level) == -1){
     return 1000;
   }
   return settings->getMaxMoves(level) - scoreboard->getMoves();
