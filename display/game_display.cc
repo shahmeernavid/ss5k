@@ -59,8 +59,8 @@ void GameDisplay::updateWindowDisplay() {
         stringstream moves;
         moves << "Moves left: " << game->movesLeft();
 
-        w->drawString(5, status_bar_y, score.str(), 1);
-        w->drawString(Settings::WINDOW_WIDTH / 4 - 50, status_bar_y, level_score.str(), 1);
+        w->drawString(5, status_bar_y - 7, score.str(), 1);
+        w->drawString(5, status_bar_y + 7, level_score.str(), 1);
         w->drawString(Settings::WINDOW_WIDTH / 4 * 3 - 50, status_bar_y, moves.str(), 1);
         w->drawString(Settings::WINDOW_WIDTH - 50, status_bar_y, level.str(), 1);
     }
