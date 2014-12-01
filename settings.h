@@ -66,13 +66,13 @@ class Settings{
     std::string getInputFile(int l = 0) const;
     
     // these are used to draw the graphical display
-    static const int WINDOW_HEIGHT = 550; 
-    static const int WINDOW_WIDTH = 500; 
-    static const int GRID_ROWS = 10; 
-    static const int GRID_COLS = 10; 
-    static const int STATUS_BAR_HEIGHT = 50;
-    static const int SQUARE_HEIGHT = (WINDOW_HEIGHT - STATUS_BAR_HEIGHT) / GRID_ROWS; 
-    static const int SQUARE_WIDTH = WINDOW_WIDTH / GRID_COLS; 
+    static int WINDOW_HEIGHT;
+    static int WINDOW_WIDTH;
+    static int GRID_ROWS;
+    static int GRID_COLS;
+    static int STATUS_BAR_HEIGHT;
+    static int SQUARE_HEIGHT;
+    static int SQUARE_WIDTH;
 
     
 };

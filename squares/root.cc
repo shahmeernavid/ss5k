@@ -22,11 +22,11 @@ void RootSquare::draw(Xwindow *window, int x, int y) {
 
     window->fillRectangle(x, y, width, height, getColorInt());
     // vertical/horizontal stripes
-    window->fillRectangle(x + 2 * ribbon_width, y, ribbon_width, height, 0);
-    window->fillRectangle(x, y + 2 * ribbon_height, width, ribbon_height, 0);
+    window->fillRectangle(x + width/2 - ribbon_width, y, ribbon_width, height, 7);
+    window->fillRectangle(x, y + height / 2 - ribbon_height, width, ribbon_height, 7);
 
-    window->fillRectangle(x + 2 * ribbon_width, y + 2 * ribbon_width,
-        ribbon_width, ribbon_height, 1);
+    window->fillRectangle(x + width/2 -  ribbon_width, y + height/2 - ribbon_height,
+        ribbon_width, ribbon_height, getColorInt());
 
-    window->drawString(x + (width / 2) - 3, y + (height / 2) + 4, "R", 0); 
+    window->drawString(x + (width / 2) - 3, y + (height / 2) + 4, "R", 1); 
 }

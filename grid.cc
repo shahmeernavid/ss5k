@@ -462,13 +462,10 @@ void Grid::drawLock(Xwindow *window, int r, int c) {
     int ribbon_height = height / 5;
     int ribbon_width = width / 5;
 
-    for (int i = 0; i < 5; i += 4) {
-        window->fillRectangle((c * height) + (i * ribbon_width), r * width, ribbon_height, width, 1);
-    }
-
-    for (int i = 0; i < 5; i += 4) {
-        window->fillRectangle(c * height, (r * width) + (i * ribbon_height), height, ribbon_width, 1);
-    }
+    window->fillRectangle(c*width, r*height, ribbon_width, height, 1);
+    window->fillRectangle(c*width + width - ribbon_width, r*height, ribbon_width, height, 1);
+    window->fillRectangle(c*width, r*height, width, ribbon_height, 1);
+    window->fillRectangle(c*width, r*height + height - ribbon_height, width, ribbon_height, 1);
 }
 
 ostream& operator<<(ostream& out, Grid& grid){

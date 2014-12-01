@@ -39,6 +39,26 @@ int main(int argc, char* args[]){
     if(string(args[i]) == "-progress"){
       progress = true;
     }
+    if(string(args[i]) == "-r"){
+      Settings::GRID_ROWS = atoi(args[i+1]);
+      Settings::SQUARE_HEIGHT = (Settings::WINDOW_HEIGHT - Settings::STATUS_BAR_HEIGHT) / Settings::GRID_ROWS; 
+      Settings::SQUARE_WIDTH = Settings::WINDOW_WIDTH / Settings::GRID_COLS; 
+    }
+    if(string(args[i]) == "-c"){
+      Settings::GRID_COLS = atoi(args[i+1]);
+      Settings::SQUARE_HEIGHT = (Settings::WINDOW_HEIGHT - Settings::STATUS_BAR_HEIGHT) / Settings::GRID_ROWS; 
+      Settings::SQUARE_WIDTH = Settings::WINDOW_WIDTH / Settings::GRID_COLS; 
+    }
+    if(string(args[i]) == "-h"){
+      Settings::WINDOW_HEIGHT = atoi(args[i+1]);
+      Settings::SQUARE_HEIGHT = (Settings::WINDOW_HEIGHT - Settings::STATUS_BAR_HEIGHT) / Settings::GRID_ROWS; 
+      Settings::SQUARE_WIDTH = Settings::WINDOW_WIDTH / Settings::GRID_COLS; 
+    }
+    if(string(args[i]) == "-w"){
+      Settings::WINDOW_WIDTH = atoi(args[i+1]);
+      Settings::SQUARE_HEIGHT = (Settings::WINDOW_HEIGHT - Settings::STATUS_BAR_HEIGHT) / Settings::GRID_ROWS; 
+      Settings::SQUARE_WIDTH = Settings::WINDOW_WIDTH / Settings::GRID_COLS; 
+    }
   }
   srand(seed);
 

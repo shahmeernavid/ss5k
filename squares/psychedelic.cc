@@ -17,18 +17,22 @@ void PsychedelicSquare::draw(Xwindow *window, int x, int y) {
 
     int ribbon_height = height / 5;
     int ribbon_width = width / 5;
-   
+
+
+    window->fillRectangle(x, y, width, height, getColorInt());
+
+    // top + bottom side
     for (int i = 0; i < 5; ++i) {
         window->fillRectangle(x + (i * ribbon_width), y, ribbon_width, ribbon_height, rand() % 10); 
-        window->fillRectangle(x + (i * ribbon_width), y + 4 * ribbon_height, ribbon_width, ribbon_height, rand() % 10); 
+        window->fillRectangle(x + (i * ribbon_width), y + height - ribbon_height, ribbon_width, ribbon_height, rand() % 10); 
     }
-
+    // left + right
     for (int i = 0; i < 5; ++i) {
         window->fillRectangle(x, y + (i * ribbon_height), ribbon_width, ribbon_height, rand() % 10); 
-        window->fillRectangle(x + 4 * ribbon_height, y + (i * ribbon_height), ribbon_width, ribbon_height, rand() % 10); 
+        window->fillRectangle(x + width - ribbon_width, y + (i * ribbon_height), ribbon_width, ribbon_height, rand() % 10); 
     }
 
-    window->fillRectangle(x + ribbon_width, y + ribbon_height, 3 * ribbon_width,
-        3 * ribbon_height, getColorInt());
+    
+
     window->drawString(x + (width / 2) - 3, y + (height / 2) + 3, "P", 1); 
 }

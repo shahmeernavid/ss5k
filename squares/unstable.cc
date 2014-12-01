@@ -22,11 +22,12 @@ void UnstableSquare::draw(Xwindow *window, int x, int y) {
     int ribbon_height = height / 5;
     int ribbon_width = width / 5;
 
-    window->fillRectangle(x, y, width, height, 1);
-    window->fillRectangle(x + ribbon_width, y, 3 * ribbon_width, height,
-        getColorInt());
-    window->fillRectangle(x, y + ribbon_height, width, 3 * ribbon_height,
-        getColorInt());
+    window->fillRectangle(x, y, width, height,
+        1);
+
+    window->fillRectangle(x+ribbon_width, y, width - ribbon_width*2, height, getColorInt());
+    window->fillRectangle(x, y+ribbon_height, width, height- ribbon_height*2, getColorInt());
+    
 
     window->drawString(x + (width / 2) - 5, y + (height / 2) + 5, "US", 1);
 }

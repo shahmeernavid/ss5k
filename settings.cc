@@ -18,6 +18,13 @@
 using namespace std;
 
 Settings* Settings::instance = NULL;
+int Settings::WINDOW_HEIGHT = 550; 
+int Settings::WINDOW_WIDTH = 500; 
+int Settings::GRID_ROWS = 10; 
+int Settings::GRID_COLS = 10; 
+int Settings::STATUS_BAR_HEIGHT = 50;
+int Settings::SQUARE_HEIGHT = (Settings::WINDOW_HEIGHT - Settings::STATUS_BAR_HEIGHT) / Settings::GRID_ROWS; 
+int Settings::SQUARE_WIDTH = Settings::WINDOW_WIDTH / Settings::GRID_COLS; 
 
 Settings const* Settings::getInstance(){
   if(!instance){
@@ -26,6 +33,7 @@ Settings const* Settings::getInstance(){
   }
   return instance;
 }
+
 
 void Settings::clean(){
   delete instance;
