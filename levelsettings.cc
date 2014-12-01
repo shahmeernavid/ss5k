@@ -13,7 +13,6 @@ LevelSettings::~LevelSettings(){
 }
 
 void LevelSettings::addType(string name, double prob){
-  cerr << "adding type: " << name << " " << prob << endl;
   types.push_back(name);
   typeProbabilities[name] = prob;
 }

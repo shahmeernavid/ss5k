@@ -94,10 +94,7 @@ int Square::getColorInt() {
 
 ostream& operator<<(ostream& out, Square& square){
   Settings const * settings = Settings::getInstance();
-  // cerr << endl << "type: " << square.type << endl;
   out << settings->getTypeEncoding(square.type);
-  // cerr << endl << "color: " << square.color << endl;
-  // cerr << square.r << " " << square.c << endl;
   out << settings->getColorEncoding(square.color);
   
   return out;

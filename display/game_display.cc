@@ -47,7 +47,7 @@ void GameDisplay::updateWindowDisplay() {
 
     // add background for status bar (covers up old strings)
     w->fillRectangle(0, Settings::WINDOW_HEIGHT - Settings::STATUS_BAR_HEIGHT, 
-        Settings::WINDOW_WIDTH, Settings::STATUS_BAR_HEIGHT, 0);
+    Settings::WINDOW_WIDTH, Settings::STATUS_BAR_HEIGHT, 0);
 
     // for levels 0, 1, or 2 there is no move limit, so we do not display it
     if (game->movesLeft() == 1000) {
@@ -79,8 +79,8 @@ void GameDisplay::update(bool text) {
 
     // update the text display and graphics display, if we have one
     if (w) {
-        updateWindowDisplay();
-        // usleep(1000);
+      updateWindowDisplay();
+      // usleep(1000);
     }
 }
 

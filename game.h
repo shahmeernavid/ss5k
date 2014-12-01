@@ -34,7 +34,7 @@ class Game{
     void init(int n, int m);
     void init();
     int oppositeDirection(int z);
-    void swap(int r, int c, int z);
+    void swap(int r, int c, int z, bool d = false);
     int incrementLevel();
     int decrementLevel();
     int setLevel(int l, bool init = false);

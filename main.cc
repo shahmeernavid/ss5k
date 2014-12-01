@@ -21,6 +21,7 @@ int main(int argc, char* args[]){
   int level = 0;
   string script = "";
   bool text = false;
+  bool progress = false;
   int seed = time(NULL);
   for(int i =0; i < argc; i++){
     if(string(args[i]) == "-scriptfile"){
@@ -35,8 +36,10 @@ int main(int argc, char* args[]){
     if(string(args[i]) == "-startlevel"){
       level = atoi(args[i+1]);
     }
+    if(string(args[i]) == "-progress"){
+      progress = true;
+    }
   }
-  cerr << "TIMER SEED " << seed << endl;
   srand(seed);
 
   game->setUpDisplay(cout, !text);
@@ -63,7 +66,7 @@ int main(int argc, char* args[]){
     if(cmd == "swap"){
       int x, y, z;
       cin >> x >> y >> z;
-      game->swap(x, y, z);
+      game->swap(x, y, z, progress);
     }
     else if(cmd == "hint"){
       game->hint();

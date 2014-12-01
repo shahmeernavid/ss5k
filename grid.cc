@@ -28,7 +28,6 @@ Grid::Grid(istream& in, int rows, int l):level(l),settings(Settings::getInstance
       while(ss >> x >> y >> z){
         string color = settings->getColorFromEncoding(z);
         string type = settings->getTypeFromEncoding(y);
-        cerr << "TYPE: " << type << y << endl;
         board[cr].push_back(factory->createSquare(cr, cc, color, type, true));
         board[cr].back()->setGrid(this);
         if(x == 'l'){
@@ -40,7 +39,6 @@ Grid::Grid(istream& in, int rows, int l):level(l),settings(Settings::getInstance
       cc = 0;
     }
     else if(cr == rows){
-      cerr << "LINE " << line << endl;
       factory->setSequence(line);
     }
   }
@@ -48,9 +46,7 @@ Grid::Grid(istream& in, int rows, int l):level(l),settings(Settings::getInstance
 
 Grid::Grid(int n, int m, int l):level(l),settings(Settings::getInstance()),factory(SquareFactory::getInstance()){
   factory->reset();
-  cerr << "creatin grid" << endl;
   locked = map<int, bool>();
-  cerr << "locked grid " << locked.size() << endl;
   board = vector<vector<Square*> >(n, vector<Square*>(m, NULL));
   for(int r = n-1; r > -1; r--){
     for(int c = m-1; c > -1; c--){
@@ -81,7 +77,6 @@ void Grid::remove(int r, int c){
 }
 
 void Grid::removeRow(int r){
-  cerr << "removing row" << endl;
   for(int c = 0; c < board[r].size(); c++){
     Square* target = getSquare(r, c);
     if(target){
@@ -91,7 +86,6 @@ void Grid::removeRow(int r){
 }
 
 void Grid::removeCol(int c){
-  cerr << "removing col" << endl;
   for(int r = 0; r < board.size(); r++){
     Square* target = getSquare(r, c);
     if(target){
@@ -100,7 +94,6 @@ void Grid::removeCol(int c){
   }
 }
 void Grid::removeColor(string color){
-  // cerr << "removing color " << color << endl;
   for(int r = 0; r < board.size(); r++){
     for(int c = 0; c < board[r].size(); c++){
       Square* target = getSquare(r, c, color);
@@ -183,13 +176,15 @@ bool Grid::isLocked(int r, int c){
 // cell removes itself
 // we identify matches
 
-vector<int> Grid::process(GameDisplay* d){
+vector<int> Grid::process(bool display){
   vector<int> scores;
   int oldLength = -1;
   vector<Pattern*> patterns = settings->getPatterns(level);
+  int iterations = 0;
 
   // keep looking until we've found all combo matches
   while(scores.size() != oldLength){
+
     // # of sqares removed for this passthrough of the grid
     int loopCount = 0;
     vector<Square*> toAdd = vector<Square*>();
@@ -211,8 +206,6 @@ vector<int> Grid::process(GameDisplay* d){
                 if(isLocked(pendingRemove[i]->getRow(), pendingRemove[i]->getCol())){
                   locked[r*10+c] = false;
                 } 
-                // cerr << "removing " << pendingRemove[i]->getRow() << " " << pendingRemove[i]->getCol() << endl;
-                // cerr << "color: " << pendingRemove[i]->getColor() << endl;
                 pendingRemove[i]->remove(pendingRemove.size());  
               }
 
@@ -242,19 +235,23 @@ vector<int> Grid::process(GameDisplay* d){
       loopCount = 0;
     }
 
-    if(d && scores.size() != oldLength){
-      d->update(false);
+    if(display && scores.size() != oldLength){
+      cout << "------------------" << endl;
+      cout << "Chain Link " << ++iterations << endl;
+      cout << "------------------" << endl;
     }
+
 
     for(int i = 0; i < toAdd.size(); i++){
       board[toAdd[i]->getRow()][toAdd[i]->getCol()] = toAdd[i];
     }
     
-    cerr << "this" << endl;
-    cerr << *this << endl;
 
-    if(d && scores.size() != oldLength){
-      d->update(false);
+    if(display && scores.size() != oldLength){
+      cout << "------------------" << endl;
+      cout << "After Swap and Removal" << endl;
+      cout << "------------------" << endl;
+      cout << *this << endl;
     }
 
     // fill all the holes!
@@ -262,16 +259,22 @@ vector<int> Grid::process(GameDisplay* d){
     // can result in infinite chains
     collapse();
 
-    if(d && scores.size() != oldLength){
-      d->update(false);
+    if(display && scores.size() != oldLength){
+      cout << "------------------" << endl;
+      cout << "After Collapse" << endl;
+      cout << "------------------" << endl;
+      cout << *this << endl;
     }
 
     fill();
 
-    if(d && scores.size() != oldLength){
-      d->update(false);
+    if(display && scores.size() != oldLength){
+      cout << "------------------" << endl;
+      cout << "After Fill" << endl;
+      cout << "------------------" << endl;
+      cout << *this << endl;
     }
-    //cerr << "done this loop " << loopCount << endl;
+    
 
   }
   
@@ -352,7 +355,6 @@ int Grid::hint(){
       }
     }
   }
-  cerr << "HINTING" << endl;
   return -1;
 }
 
@@ -369,9 +371,6 @@ void Grid::fill(){
     }
   }
 
-  cerr << "Filled" << endl;
-  cerr << *this << endl;
-  cerr << "---------------" << endl;
 }
 
 void Grid::collapse(){
@@ -389,10 +388,6 @@ void Grid::collapse(){
       }
     }
   }
-
-  cerr << "collapse" << endl;
-  cerr << *this << endl;  
-  cerr << "---------------" << endl;
 }
 
 bool Grid::swap(int r, int c, int z){

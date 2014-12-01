@@ -96,14 +96,12 @@ int Game::oppositeDirection(int z){
   return -1;
 }
 
-void Game::swap(int r, int c, int z){
+void Game::swap(int r, int c, int z, bool d){
   bool result = grid->swap(r, c, z);
-  cerr << "swap!" << endl;
-  cerr << *grid << endl;
   display->update(false);
   if(result){
     scoreboard->addMoves(1);
-    vector<int> scores = grid->process(display);
+    vector<int> scores = grid->process(d);
     int output = 0;
     for(int i = 0; i < scores.size(); i++){
       output += pow(2, i)*scores[i];
@@ -111,7 +109,6 @@ void Game::swap(int r, int c, int z){
     if(output){
       scoreboard->addPoints(output);
 
-      cerr << "LOCKED INFO: " << grid->numLocked() << " " << (grid->numRooted()) << endl;
 
       if(scoreboard->getLevelScore() > settings->levelUpScore(level) && grid->numLocked() == 0 && grid->numRooted() == 0){
         scoreboard->resetLevel();
@@ -192,7 +189,6 @@ string toString(int i){
 
 void Game::hint(){
   int move = grid->hint();
-  cerr << "HINT " << string(1, 5) << endl; 
   int z = move%10;
   int c = move/10%10;
   int r = move/100%10;

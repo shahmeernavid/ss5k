@@ -35,17 +35,14 @@ void SquareFactory::clean(){
 
 
 Square* SquareFactory::generateSquare(int r, int c, int level, string type, bool count){
-  cerr << "creating square"<< endl;
   // generate square using probabilities here
   string color = getColor(r, c, level);
   type = (type.size()) ? type : getType(r, c, level);
-  // cerr << "generating square " << productionCount << " " << color << " " << type << endl;
   return createSquare(r, c, color, type, count);
 }
 
 Square* SquareFactory::generateIndependantSquare(int r, int c, int level, Grid& g, string type, bool count){
   map<string, double> colors = settings->getColorProbabilities(level);
-  cerr << "INDEX " << index << " " << colorSequence.size() << endl; 
   if(index == -1 || colorSequence.size() == 0){
     int invalidCount = 0;
     for(map<string, double>::iterator i = colors.begin(); i != colors.end(); i++){
@@ -77,9 +74,7 @@ Square* SquareFactory::generateIndependantSquare(int r, int c, int level, Grid& 
   // create a chain reaction
   // int start = index;
   // while(invalids[colorSequence[index%colorSequence.size()]]) {
-  //   // cerr << colorSequence[index%colorSequence.size()] << endl;
   //   index++;
-  //   // cerr << "in loop " << index << endl;
   //   // however, if we;ve checked everythikng, stop the loop and just return it
   //   if((index)%colorSequence.size() == (start)%colorSequence.size()){
   //     index = rand()%colorSequence.size();
@@ -87,7 +82,6 @@ Square* SquareFactory::generateIndependantSquare(int r, int c, int level, Grid& 
   //   }
   // }
   string color = colorSequence[(index)%colorSequence.size()];
-  cerr << "COLOR " << color << endl; 
   index++;
   string t = (type.size()) ? type : "basic"; 
   return createSquare(r, c, color, t, count);
@@ -96,7 +90,6 @@ Square* SquareFactory::generateIndependantSquare(int r, int c, int level, Grid& 
 
 // specifically create this square
 Square* SquareFactory::createSquare(int r, int c, string color, string type, bool count){
-  cerr << "making square" << endl;
   if(count){
     productionCount=(productionCount==-1) ? 1 : productionCount+1;
   }
@@ -149,7 +142,6 @@ string SquareFactory::pick(map<string, double> mapping){
     }
     sum += i->second*100;
   }
-  cerr << "ERROR: " << random << " " << (mapping.begin())->first << endl;
   return "";
 }
 
@@ -191,7 +183,6 @@ void SquareFactory::reset(){
 
 void SquareFactory::setSequence(string seq){
   if(seq.size()){
-    cerr << "setting sequence" << endl;
     index = 0;
     stringstream stream(seq);
     char current;

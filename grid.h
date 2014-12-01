@@ -37,7 +37,7 @@ class Grid{
     void scramble();
     int getLevel();
     int numRooted();
-    std::vector<int> process(GameDisplay* d = NULL);
+    std::vector<int> process(bool display = false);
     void remove(int r, int c);
     void removeRow(int r);
     void removeCol(int c);
